@@ -10,7 +10,6 @@ public class Bullet extends Entity
     public Bullet(EntityManager manager, int xpos, int ypos, int dmg, int alnc)
     {
         super(manager);
-        tag = "bullet";
         x=xpos;lastX=x;
         y=ypos;lastY=y;
         width=10;
@@ -67,7 +66,7 @@ public class Bullet extends Entity
     
     public void Collide(Entity other)
     {
-        if(other.tag == "enemy")
+        if(other instanceof Enemy)
         {
             Enemy enemy = (Enemy)other;
             if(alliance!=enemy.getAlliance())
@@ -78,7 +77,7 @@ public class Bullet extends Entity
             
         }
         
-        else if(other.tag == "player")
+        else if(other instanceof Player)
         {
             Player player = (Player)other;
             if(alliance!=player.getAlliance())

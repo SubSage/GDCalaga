@@ -62,7 +62,7 @@ public class GamePanel extends JPanel
             
             if(Input.WasKeyPressed(KeyEvent.VK_SPACE))
             {
-                    player.fire();
+                player.fire();
             }
             
         }

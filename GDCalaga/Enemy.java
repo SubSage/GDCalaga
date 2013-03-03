@@ -12,7 +12,6 @@ public class Enemy extends Entity
     public Enemy(EntityManager manager, int xpos, int ypos)
     {
         super(manager);
-        tag = "enemy";
         x=xpos;lastX=x;
         y=ypos;lastY=y;
         ship=Toolkit.getDefaultToolkit().getImage("Pics/BlueSquaretrans.png");

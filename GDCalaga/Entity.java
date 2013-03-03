@@ -16,7 +16,6 @@ public abstract class Entity
     
     protected Shape shape;
     
-    public String tag;
     
     public Entity(EntityManager manager)
     {

@@ -15,7 +15,6 @@ public class Player extends Entity
     public Player(EntityManager manager, int xpos, int ypos)
     {
         super(manager);
-        tag = "player";
         x=xpos;lastX=x;
         y=ypos;lastY=y;
         ship=Toolkit.getDefaultToolkit().getImage("Pics/BlueSquare.png");
