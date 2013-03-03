@@ -7,20 +7,17 @@ public class Manifest extends JFrame //implements ActionListener
     int Width=1920;
     int Height=1280;
     private GamePanel gamePanel = new GamePanel(Width,Height);
-    private boolean running = true;
-    private boolean paused = false;
     
     
     public Manifest()
     {
-        super("Fixed Timestep Game Loop Test");
+        super("GDCalaga");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Container cp = getContentPane();
         cp.setLayout(new BorderLayout());
         JPanel p = new JPanel();
-        p.setLayout(new GridLayout(1,2));
         cp.add(gamePanel);
-        setSize(Width,Height);  //1280--720
+        setSize(Width,Height);
         setResizable(true);
         this.setUndecorated(true);
     }
@@ -60,7 +57,7 @@ public class Manifest extends JFrame //implements ActionListener
         double lastRenderTime = System.nanoTime();
         
         //If we are able to get as high as this FPS, don't render again.
-        final double TARGET_FPS = 6000;
+        final double TARGET_FPS = 60;
         final double TARGET_TIME_BETWEEN_RENDERS = 1000000000 / TARGET_FPS;
         
         //Simple way of finding FPS.
@@ -110,12 +107,15 @@ public class Manifest extends JFrame //implements ActionListener
                     //This stops the app from consuming all your CPU. It makes this slightly less accurate, but is worth it.
                     //You can remove this line and it will still work (better), your CPU just climbs on certain OSes.
                     //FYI on some OS's this can cause pretty bad stuttering. Scroll down and have a look at different peoples' solutions to this.
-                    try {Thread.sleep(1);} catch(Exception e) {}
+                    //try {Thread.sleep(1);} catch(Exception e) {}
                     
                     now = System.nanoTime();
                 }
             }
-            
+            else{
+                lastUpdateTime = System.nanoTime();
+                lastRenderTime = System.nanoTime();
+            }
         }
     }
     

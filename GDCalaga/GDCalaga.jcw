@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<workspace>
+	<settings>
+		<label>GDCalaga</label>
+		<id>0</id>
+		<version>0</version>
+	</settings>
+	<users>
+		<user>
+			<path>GDCalaga.jcu</path>
+		</user>
+	</users>
+	<projects>
+		<project>
+			<path>GDCalaga.jcp</path>
+		</project>
+	</projects>
+</workspace>

@@ -13,7 +13,10 @@ public class GamePanel extends JPanel implements KeyListener
     public int frameCount = 0;
     float interpolation;
     Image img=Toolkit.getDefaultToolkit().getImage("Pics/BackGroundTest2.png");
-    boolean w,s,paused;
+    boolean w,s,a,d,paused;
+    Player player;
+    ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+    
     
     
     public GamePanel(int WIDTH, int HEIGHT)
@@ -21,7 +24,10 @@ public class GamePanel extends JPanel implements KeyListener
         img=Toolkit.getDefaultToolkit().getImage("Pics/Blankblack.png");
         w=s=false;
         addKeyListener(this);
-        
+        player= new Player(50,25);
+        for(int a=0;a<1;a++){
+            enemies.add(new Enemy(250,250));
+        }
     }
     
     public void setInterpolation(float interp)
@@ -33,6 +39,32 @@ public class GamePanel extends JPanel implements KeyListener
     {
         if(!paused)
         {
+            for(Enemy enemy: enemies)
+            {
+                enemy.update(interpolation);
+            }
+            
+            player.update(interpolation);
+            
+            for(Bullet b : player.bullets)
+            {
+                b.update(interpolation);
+            }
+            
+            
+            if(w){
+                player.moveUp();
+            }
+            if(s){
+                player.moveDown();
+            }
+            if(a){
+                player.moveLeft();
+            }
+            if(d){
+                player.moveRight();
+            }
+            
             
         }
         
@@ -51,6 +83,14 @@ public class GamePanel extends JPanel implements KeyListener
         g.drawImage(img,0,0,null); //Deleting this will stop the image buffering, cool effects
         
         if(!paused){
+            for(Enemy en: enemies){
+                en.draw(g,interpolation);
+            }
+            player.draw(g,interpolation);
+            
+            for(Bullet b: player.bullets){
+                b.draw(g,interpolation);
+            }
             
         }
         
@@ -73,9 +113,13 @@ public class GamePanel extends JPanel implements KeyListener
     public void keyPressed(KeyEvent e){
         
         
-        if(e.getKeyCode()==KeyEvent.VK_SPACE)
+        if(e.getKeyCode()==KeyEvent.VK_ESCAPE)
         {
             paused=!paused;
+        }
+        
+        if(e.getKeyCode()==KeyEvent.VK_SPACE){
+            player.fire();
         }
         
         if(e.getKeyCode()==KeyEvent.VK_H)
@@ -98,10 +142,33 @@ public class GamePanel extends JPanel implements KeyListener
                 System.out.println("screencaptures\\"+serial+".png");
             }
             
-            catch (Exception eee)
+            catch (Exception ee)
             {
                 System.out.println("Something happened with saving image. Likely didn't save.");
+                System.out.println("It's probably that you don't have the \"screencaptures\"");
+                System.out.println("folder...or the data file number is wrong...make the data");
+                System.out.println("file (txt) and enter the number of the img count");
             }
+        }
+        
+        if(e.getKeyCode()==KeyEvent.VK_W)
+        {
+            w=true;
+        }
+        
+        if(e.getKeyCode()==KeyEvent.VK_S)
+        {
+            s=true;
+        }
+        
+        if(e.getKeyCode()==KeyEvent.VK_A)
+        {
+            a=true;
+        }
+        
+        if(e.getKeyCode()==KeyEvent.VK_D)
+        {
+            d=true;
         }
         
     }
@@ -116,6 +183,16 @@ public class GamePanel extends JPanel implements KeyListener
         if(e.getKeyCode()==KeyEvent.VK_S)
         {
             s=false;
+        }
+        
+        if(e.getKeyCode()==KeyEvent.VK_A)
+        {
+            a=false;
+        }
+        
+        if(e.getKeyCode()==KeyEvent.VK_D)
+        {
+            d=false;
         }
         
     }

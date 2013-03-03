@@ -1,3 +1,6 @@
+"C:\\Users\\Luis\\Documents\\JCreator LE\\MyProjects\\GDCalaga\\Bullet.java"
+"C:\\Users\\Luis\\Documents\\JCreator LE\\MyProjects\\GDCalaga\\Enemy.java"
+"C:\\Users\\Luis\\Documents\\JCreator LE\\MyProjects\\GDCalaga\\Entity.java"
 "C:\\Users\\Luis\\Documents\\JCreator LE\\MyProjects\\GDCalaga\\GamePanel.java"
 "C:\\Users\\Luis\\Documents\\JCreator LE\\MyProjects\\GDCalaga\\Manifest.java"
-"C:\\Users\\Luis\\Documents\\JCreator LE\\MyProjects\\GDCalaga\\test.java"
+"C:\\Users\\Luis\\Documents\\JCreator LE\\MyProjects\\GDCalaga\\Player.java"

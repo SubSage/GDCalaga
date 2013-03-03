@@ -19,13 +19,41 @@
 			<applet_ref/>
 			<debugger_ref/>
 			<param/>
-			<run/>
+			<run>Manifest</run>
 			<verify>true</verify>
 		</runtime>
 	</runtimes>
 	<libraries/>
 	<files>
-		<include/>
+		<include>
+			<folderitem>
+				<path>Pics</path>
+			</folderitem>
+			<fileitem>
+				<path>Bullet.java</path>
+			</fileitem>
+			<fileitem>
+				<path>Enemy.java</path>
+			</fileitem>
+			<fileitem>
+				<path>Entity.java</path>
+			</fileitem>
+			<fileitem>
+				<path>GamePanel.java</path>
+			</fileitem>
+			<fileitem>
+				<path>GDCalaga.jar</path>
+			</fileitem>
+			<fileitem>
+				<path>Manifest.java</path>
+			</fileitem>
+			<fileitem>
+				<path>Player.java</path>
+			</fileitem>
+			<fileitem>
+				<path>Workings.txt</path>
+			</fileitem>
+		</include>
 	</files>
 	<tasks/>
 </project>

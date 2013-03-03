@@ -1,0 +1,6 @@
+At the moment, the game isn't much.
+
+Needs :
+
+Player entity
+Enemy entities
