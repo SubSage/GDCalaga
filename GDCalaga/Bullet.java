@@ -4,19 +4,20 @@ import java.awt.*;
 public class Bullet extends Entity
 {
     private float damage, lastX, lastY, xVel, yVel;
-    private int  width, height;
+    private int  width, height, alliance;
     private Image bullet;
     
-    public Bullet(EntityManager manager, int xpos, int ypos, int dmg)
+    public Bullet(EntityManager manager, int xpos, int ypos, int dmg, int alnc)
     {
         super(manager);
-        tag = "bullet";
         x=xpos;lastX=x;
         y=ypos;lastY=y;
         width=10;
         height=10;
         damage=dmg;
         yVel=0;
+        xVel=0;
+        alliance=alnc;
         bullet=Toolkit.getDefaultToolkit().getImage("Pics/BlueSquaretrans.png");
         
         shape = new RectShape(x, y, width, height);
@@ -65,11 +66,26 @@ public class Bullet extends Entity
     
     public void Collide(Entity other)
     {
-        if(other.tag == "enemy")
+        if(other instanceof Enemy)
         {
             Enemy enemy = (Enemy)other;
-            enemy.Hurt(damage);
-            Destroy();
+            if(alliance!=enemy.getAlliance())
+            {
+                enemy.Hurt(damage);
+                Destroy();
+            }
+            
+        }
+        
+        else if(other instanceof Player)
+        {
+            Player player = (Player)other;
+            if(alliance!=player.getAlliance())
+            {
+                player.Hurt(damage);
+                Destroy();
+            }
+            
         }
     }
 }

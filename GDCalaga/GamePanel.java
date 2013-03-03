@@ -12,7 +12,7 @@ public class GamePanel extends JPanel
     public int fps = 60;
     public int frameCount = 0;
     float interpolation;
-    Image img=Toolkit.getDefaultToolkit().getImage("Pics/BackGroundTest2.png");
+    Image img;//=Toolkit.getDefaultToolkit().getImage("Pics/BackGroundTest2.png");
     boolean paused;
     Player player;
     ArrayList<Enemy> enemies = new ArrayList<Enemy>();
@@ -22,7 +22,8 @@ public class GamePanel extends JPanel
     
     public GamePanel(int WIDTH, int HEIGHT)
     {
-        img=Toolkit.getDefaultToolkit().getImage("Pics/Blankblack.png");
+        
+        
         addKeyListener(Input);
         player= new Player(Entities,50,300);
         
@@ -58,10 +59,10 @@ public class GamePanel extends JPanel
                 player.moveRight();
             }
             
-
+            
             if(Input.WasKeyPressed(KeyEvent.VK_SPACE))
             {
-                    player.fire();
+                player.fire();
             }
             
         }
@@ -71,13 +72,13 @@ public class GamePanel extends JPanel
             
         }
         
-
+        
         if(Input.WasKeyPressed(KeyEvent.VK_H))
         {
             screenShot();
         }
         
-
+        
         if(Input.WasKeyPressed(KeyEvent.VK_ESCAPE))
         {
             paused=!paused;
@@ -92,10 +93,14 @@ public class GamePanel extends JPanel
         //BS way of clearing out the old rectangle to save CPU.
         g.setColor( new Color(0,0,0));//R,G,B
         g.fillRect(0, 0,getWidth(),getHeight());
-        g.drawImage(img,0,0,null); //Deleting this will stop the image buffering, cool effects
+        //g.drawImage(img,0,0,null); //Deleting this segment will stop the image buffering, cool effects
         
         float interp = paused ? 0 : interpolation;
         Entities.draw(g, interp);
+        
+        
+        g.setColor(Color.WHITE);
+        g.drawString("Player HP: " + player.getHealth(), 5, 10);
         
         
         g.dispose();
@@ -108,7 +113,8 @@ public class GamePanel extends JPanel
         frameCount=0;
     }
     
-    public void screenShot(){
+    public void screenShot()
+    {
         try
         {
             Scanner reader= new Scanner(new File("screencaptures\\data.txt"));

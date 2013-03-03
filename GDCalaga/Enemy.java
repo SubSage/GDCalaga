@@ -12,7 +12,6 @@ public class Enemy extends Entity
     public Enemy(EntityManager manager, int xpos, int ypos)
     {
         super(manager);
-        tag = "enemy";
         x=xpos;lastX=x;
         y=ypos;lastY=y;
         ship=Toolkit.getDefaultToolkit().getImage("Pics/BlueSquaretrans.png");
@@ -55,6 +54,10 @@ public class Enemy extends Entity
                 yVel*=-1;
             }
             
+            if(y>450 && y<500){
+                fire();
+            }
+            
             
         }
         
@@ -89,9 +92,20 @@ public class Enemy extends Entity
         
     }
     
+    public void fire()
+    {
+        Bullet newBullet = new Bullet(entities, (int)x, (int)y ,1 , alliance);
+        newBullet.setSpeed(-40, 0);
+    }
+    
+    
     public void Hurt(float dmg)
     {
         health -= dmg;
         if(health<=0) Destroy();
+    }
+    
+    public int getAlliance(){
+        return alliance;
     }
 }
