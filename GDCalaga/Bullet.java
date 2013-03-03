@@ -1,19 +1,25 @@
 import java.awt.*;
 
 
-public class Bullet
+public class Bullet extends Entity
 {
-    private float x, y, damage, lastX, lastY, xVel, yVel;
+    private float damage, lastX, lastY, xVel, yVel;
     private int  width, height;
     private Image bullet;
     
-    public Bullet(int xpos, int ypos, int dmg)
+    public Bullet(EntityManager manager, int xpos, int ypos, int dmg)
     {
+    	super(manager);
+    	tag = "bullet";
         x=xpos;lastX=x;
         y=ypos;lastY=y;
+        width=10;
+        height=10;
         damage=dmg;
         yVel=0;
         bullet=Toolkit.getDefaultToolkit().getImage("Pics/BlueSquaretrans.png");
+        
+        shape = new RectShape(x, y, width, height);
     }
     
     
@@ -26,8 +32,11 @@ public class Bullet
         x+= xVel * delta;
         y+= yVel * delta;
         
+
+        RectShape rect = (RectShape)shape;
+        rect.xpos = x;
+        rect.ypos = y;
     }
-    
     
     
     public void draw(Graphics g, float interp)
@@ -42,7 +51,7 @@ public class Bullet
         int drawY = (int) ((y - lastY) * interp + lastY - height/2);
         
         
-        g2d.drawImage(bullet,drawX,drawY,null);
+        g2d.drawImage(bullet,drawX,drawY,width,height,null);
         g2d.setColor(Color.WHITE);
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1));
         
@@ -54,4 +63,11 @@ public class Bullet
         yVel=b;
     }
     
+    public void Collide(Entity other){
+    	if(other.tag == "enemy"){
+    		Enemy enemy = (Enemy)other;
+    		enemy.Hurt(damage);
+    		Destroy();
+    	}
+    }
 }

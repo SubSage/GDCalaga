@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.lang.String;
 
 
 //Entity class. An entity is anything that moves and shoots. Main "thing" the player plays against.
@@ -7,13 +8,25 @@ import java.awt.*;
 
 public abstract class Entity
 {
-    private float x, y, alliance, interp;
+	
+	public int id;
+	protected EntityManager entities;
+    protected float x, y, width, height, alliance, interp;
+    private boolean dying;
     
-    public Entity()
+    protected Shape shape;
+    
+    public String tag;
+    
+    public Entity(EntityManager manager)
     {
+    	entities = manager;
+    	entities.AddEntity(this);
+    	
+    	dying = false;
         x=y=alliance=0;
     }
-    
+
     public Entity(int xpos, int ypos)
     {
         x=xpos;
@@ -21,11 +34,28 @@ public abstract class Entity
         alliance=0;
     }
     
+    public Entity(int xpos, int ypos, float w, float h)
+    {
+        x=xpos;
+        y=ypos;//Thinking of things, x and xpos should be switched, but the convenience....
+        width = w;
+        height = h;
+        alliance=0;
+    }
+    
+    public boolean IsDying(){
+    	return dying;
+    }
+    
+    public void Destroy(){
+    	dying = true;
+    }
+    
     public abstract void update(float delta);
     
     public abstract void draw(Graphics g, float interp);
     
-    
+    public abstract void Collide(Entity other);
     
     
 }

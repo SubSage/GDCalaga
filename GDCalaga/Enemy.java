@@ -9,8 +9,9 @@ public class Enemy extends Entity
     private int height, width, alliance;
     Image ship;
     
-    public Enemy(int xpos, int ypos){
-        super();
+    public Enemy(EntityManager manager, int xpos, int ypos){
+        super(manager);
+        tag = "enemy";
         x=xpos;lastX=x;
         y=ypos;lastY=y;
         ship=Toolkit.getDefaultToolkit().getImage("Pics/BlueSquaretrans.png");
@@ -20,6 +21,9 @@ public class Enemy extends Entity
         yVel=10;
         health=10;
         alliance=0;
+        
+
+        shape = new RectShape(x, y, width, height);
     }
     
     
@@ -41,21 +45,24 @@ public class Enemy extends Entity
             y+= yVel * delta;
             
             
-            if(y<10){
-                y=10;
+            if(y<0){
+                y=0;
                 yVel*=-1;
             }
             
             
-            if(y>900){
-                y=900;
+            if(y>720){
+                y=720;
                 yVel*=-1;
             }
             
             
         }
         
-        
+
+        RectShape rect = (RectShape)shape;
+        rect.xpos = x;
+        rect.ypos = y;
     }
     
     
@@ -72,11 +79,18 @@ public class Enemy extends Entity
             int drawX = (int) ((x - lastX) * interp + lastX - width/2);
             int drawY = (int) ((y - lastY) * interp + lastY - height/2);
             
-            
-            g2d.drawImage(ship,drawX,drawY,null);
+            g2d.drawImage(ship,drawX,drawY, width, height,null);
             g2d.setColor(Color.WHITE);
             g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1));
         }
     }
+
+    public void Collide(Entity other){
+    	
+    }
     
+    public void Hurt(float dmg){
+    	health -= dmg;
+    	if(health<=0) Destroy();
+    }
 }

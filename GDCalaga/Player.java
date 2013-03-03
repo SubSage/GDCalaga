@@ -12,19 +12,23 @@ public class Player extends Entity
     
     ArrayList<Bullet> bullets;
     
-    public Player(int xpos, int ypos)
+    public Player(EntityManager manager, int xpos, int ypos)
     {
-        super();
+        super(manager);
+        tag = "player";
         x=xpos;lastX=x;
         y=ypos;lastY=y;
         ship=Toolkit.getDefaultToolkit().getImage("Pics/BlueSquare.png");
-        width=50;
-        height=50;
+        width=25;
+        height=25;
         xVel=20;
         yVel=20;
         health=10;
         alliance=1;
         bullets = new ArrayList<Bullet>();
+        
+        shape = new RectShape(x, y, width, height);
+        
     }
     
     
@@ -50,7 +54,10 @@ public class Player extends Entity
             
         }
         
-        
+
+        RectShape rect = (RectShape)shape;
+        rect.xpos = x;
+        rect.ypos = y;
     }
     
     
@@ -67,7 +74,7 @@ public class Player extends Entity
             int drawX = (int) ((x - lastX) * interp + lastX - width/2);
             int drawY = (int) ((y - lastY) * interp + lastY - height/2);
             
-            g2d.drawImage(ship,drawX,drawY,null);
+            g2d.drawImage(ship,drawX,drawY, width, height,null);
             g2d.setColor(Color.WHITE);
             g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1));
         }
@@ -96,8 +103,11 @@ public class Player extends Entity
     
     public void fire()
     {
-        bullets.add(new Bullet((int)x,(int)y,1));
-        bullets.get(bullets.size()-1).setSpeed(25,0);
+    	Bullet newBullet = new Bullet(entities, (int)x,(int)y,1);
+    	newBullet.setSpeed(40, 0);
     }
-    
+
+    public void Collide(Entity other){
+    	
+    }
 }

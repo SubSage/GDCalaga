@@ -18,17 +18,17 @@ public class GamePanel extends JPanel implements KeyListener
     Player player;
     ArrayList<Enemy> enemies = new ArrayList<Enemy>();
     
-    
+    EntityManager Entities = new EntityManager();
     
     public GamePanel(int WIDTH, int HEIGHT)
     {
         img=Toolkit.getDefaultToolkit().getImage("Pics/Blankblack.png");
         w=s=false;
         addKeyListener(this);
-        player= new Player(50,25);
+        player= new Player(Entities,50,300);
         
         for(int a=0;a<1;a++){
-            enemies.add(new Enemy(1250,250));
+            new Enemy(Entities,1200,250);
         }
     }
     
@@ -41,18 +41,9 @@ public class GamePanel extends JPanel implements KeyListener
     {
         if(!paused)
         {
-            for(Enemy enemy: enemies)
-            {
-                enemy.update(interpolation);
-            }
-            
-            player.update(interpolation);
-            
-            for(Bullet b : player.bullets)
-            {
-                b.update(interpolation);
-            }
-            
+        	Collision.CheckCollisions(Entities.GetEntities());
+        	
+            Entities.update(interpolation);
             
             if(w){
                 player.moveUp();
@@ -66,6 +57,7 @@ public class GamePanel extends JPanel implements KeyListener
             if(d){
                 player.moveRight();
             }
+
             
             
         }
@@ -85,15 +77,7 @@ public class GamePanel extends JPanel implements KeyListener
         g.drawImage(img,0,0,null); //Deleting this will stop the image buffering, cool effects
         
         if(!paused){
-            for(Enemy en: enemies){
-                en.draw(g,interpolation);
-            }
-            player.draw(g,interpolation);
-            
-            for(Bullet b: player.bullets){
-                b.draw(g,interpolation);
-            }
-            
+        	Entities.draw(g, interpolation);
         }
         
         

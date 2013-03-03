@@ -4,8 +4,8 @@ import java.awt.event.*;
 
 public class Manifest extends JFrame //implements ActionListener
 {
-    int Width=1920;
-    int Height=1280;
+    int Width=1280;
+    int Height=720;
     private GamePanel gamePanel = new GamePanel(Width,Height);
     
     
@@ -19,7 +19,7 @@ public class Manifest extends JFrame //implements ActionListener
         cp.add(gamePanel);
         setSize(Width,Height);
         setResizable(true);
-        this.setUndecorated(true);
+        //this.setUndecorated(true); //Commented this out for now, easier to debug when you can move the window around and stuff
     }
     
     public static void main(String[] args)
