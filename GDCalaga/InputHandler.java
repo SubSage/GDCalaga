@@ -4,8 +4,11 @@ import java.io.*;
 
 public class InputHandler implements KeyListener {
 
-    private boolean[] bufferKeyState = new boolean[KeyEvent.KEY_LAST + 1];
-    private boolean[] currentKeyState = new boolean[KeyEvent.KEY_LAST + 1];
+    
+    private int maxKeys = 110;
+    
+    private boolean[] bufferKeyState = new boolean[maxKeys];
+    private boolean[] currentKeyState = new boolean[maxKeys];
     private boolean[] lastKeyState = currentKeyState.clone();
     
     //TODO: Add states for mouse position and mouse buttons
@@ -27,7 +30,7 @@ public class InputHandler implements KeyListener {
     
     public boolean IsKeyDown(int key)
     {
-        if(key > KeyEvent.KEY_LAST){
+        if(key >= maxKeys){
             return false;
         } else {
             return currentKeyState[key];
@@ -36,7 +39,7 @@ public class InputHandler implements KeyListener {
     
     public boolean WasKeyPressed(int key)
     {
-        if(key > KeyEvent.KEY_LAST){
+        if(key >= maxKeys){
             return false;
         } else {
             return currentKeyState[key] && !lastKeyState[key];
@@ -45,7 +48,7 @@ public class InputHandler implements KeyListener {
     
     public boolean WasKeyReleased(int key)
     {
-        if(key > KeyEvent.KEY_LAST){
+        if(key >= maxKeys){
             return false;
         } else {
             return !currentKeyState[key] && lastKeyState[key];
@@ -54,8 +57,10 @@ public class InputHandler implements KeyListener {
     
     public void update()
     {
-        lastKeyState = currentKeyState.clone();
-        currentKeyState = bufferKeyState.clone();
+    	for(int i = 0; i < maxKeys; i++){
+    		lastKeyState[i] = currentKeyState[i];
+    		currentKeyState[i] = bufferKeyState[i];
+    	}
     }
 
 }
