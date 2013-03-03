@@ -76,9 +76,8 @@ public class GamePanel extends JPanel implements KeyListener
         g.fillRect(0, 0,getWidth(),getHeight());
         g.drawImage(img,0,0,null); //Deleting this will stop the image buffering, cool effects
         
-        if(!paused){
-        	Entities.draw(g, interpolation);
-        }
+        float interp = paused ? 0 : interpolation;
+    	Entities.draw(g, interp);
         
         
         g.dispose();
