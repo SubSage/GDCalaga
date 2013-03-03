@@ -1,9 +1,13 @@
-At the moment, the game isn't much.
+This game is a side scroller shooter. It can also be seen as a top down shooter, but that's up to the art department.
 
-Needs :
+Critical Bugs/Glitches:
+None.
 
+What needs to be worked on:
 Collision detection between bullets and entities (player and enemy)
+Enemy retaliation (they do nothing)
 Enemy spawn system
 Point System (score)
 Real art
 Audio
+
