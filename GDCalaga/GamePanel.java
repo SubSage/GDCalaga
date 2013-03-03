@@ -41,8 +41,8 @@ public class GamePanel extends JPanel implements KeyListener
     {
         if(!paused)
         {
-        	Collision.CheckCollisions(Entities.GetEntities());
-        	
+            Collision.CheckCollisions(Entities.GetEntities());
+            
             Entities.update(interpolation);
             
             if(w){
@@ -57,7 +57,7 @@ public class GamePanel extends JPanel implements KeyListener
             if(d){
                 player.moveRight();
             }
-
+            
             
             
         }
@@ -77,7 +77,7 @@ public class GamePanel extends JPanel implements KeyListener
         g.drawImage(img,0,0,null); //Deleting this will stop the image buffering, cool effects
         
         float interp = paused ? 0 : interpolation;
-    	Entities.draw(g, interp);
+        Entities.draw(g, interp);
         
         
         g.dispose();
@@ -86,7 +86,7 @@ public class GamePanel extends JPanel implements KeyListener
     }
     
     public void resetFPS(){
-        fps =frameCount;
+        fps = frameCount;
         frameCount=0;
     }
     

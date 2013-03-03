@@ -9,8 +9,8 @@ public class Bullet extends Entity
     
     public Bullet(EntityManager manager, int xpos, int ypos, int dmg)
     {
-    	super(manager);
-    	tag = "bullet";
+        super(manager);
+        tag = "bullet";
         x=xpos;lastX=x;
         y=ypos;lastY=y;
         width=10;
@@ -32,7 +32,7 @@ public class Bullet extends Entity
         x+= xVel * delta;
         y+= yVel * delta;
         
-
+        
         RectShape rect = (RectShape)shape;
         rect.xpos = x;
         rect.ypos = y;
@@ -63,11 +63,13 @@ public class Bullet extends Entity
         yVel=b;
     }
     
-    public void Collide(Entity other){
-    	if(other.tag == "enemy"){
-    		Enemy enemy = (Enemy)other;
-    		enemy.Hurt(damage);
-    		Destroy();
-    	}
+    public void Collide(Entity other)
+    {
+        if(other.tag == "enemy")
+        {
+            Enemy enemy = (Enemy)other;
+            enemy.Hurt(damage);
+            Destroy();
+        }
     }
 }

@@ -8,9 +8,9 @@ import java.lang.String;
 
 public abstract class Entity
 {
-	
-	public int id;
-	protected EntityManager entities;
+    
+    public int id;
+    protected EntityManager entities;
     protected float x, y, width, height, alliance, interp;
     private boolean dying;
     
@@ -20,10 +20,10 @@ public abstract class Entity
     
     public Entity(EntityManager manager)
     {
-    	entities = manager;
-    	entities.AddEntity(this);
-    	
-    	dying = false;
+        entities = manager;
+        entities.AddEntity(this);
+        
+        dying = false;
         x=y=alliance=0;
     }
 
@@ -43,12 +43,14 @@ public abstract class Entity
         alliance=0;
     }
     
-    public boolean IsDying(){
-    	return dying;
+    public boolean IsDying()
+    {
+        return dying;
     }
     
-    public void Destroy(){
-    	dying = true;
+    public void Destroy()
+    {
+        dying = true;
     }
     
     public abstract void update(float delta);

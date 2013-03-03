@@ -107,7 +107,8 @@ public class Player extends Entity
     	newBullet.setSpeed(40, 0);
     }
 
-    public void Collide(Entity other){
-    	
+    public void Collide(Entity other)
+    {
+        
     }
 }

@@ -9,7 +9,8 @@ public class Enemy extends Entity
     private int height, width, alliance;
     Image ship;
     
-    public Enemy(EntityManager manager, int xpos, int ypos){
+    public Enemy(EntityManager manager, int xpos, int ypos)
+    {
         super(manager);
         tag = "enemy";
         x=xpos;lastX=x;
@@ -21,8 +22,6 @@ public class Enemy extends Entity
         yVel=10;
         health=10;
         alliance=0;
-        
-
         shape = new RectShape(x, y, width, height);
     }
     
@@ -59,7 +58,7 @@ public class Enemy extends Entity
             
         }
         
-
+        
         RectShape rect = (RectShape)shape;
         rect.xpos = x;
         rect.ypos = y;
@@ -85,12 +84,14 @@ public class Enemy extends Entity
         }
     }
 
-    public void Collide(Entity other){
-    	
+    public void Collide(Entity other)
+    {
+        
     }
     
-    public void Hurt(float dmg){
-    	health -= dmg;
-    	if(health<=0) Destroy();
+    public void Hurt(float dmg)
+    {
+        health -= dmg;
+        if(health<=0) Destroy();
     }
 }
