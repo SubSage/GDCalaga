@@ -14,6 +14,7 @@ public class GamePanel extends JPanel implements KeyListener
     float interpolation;
     Image img=Toolkit.getDefaultToolkit().getImage("Pics/BackGroundTest2.png");
     boolean w,s,a,d,paused;
+    boolean playerCanFire=true;
     Player player;
     ArrayList<Enemy> enemies = new ArrayList<Enemy>();
     
@@ -25,8 +26,9 @@ public class GamePanel extends JPanel implements KeyListener
         w=s=false;
         addKeyListener(this);
         player= new Player(50,25);
+        
         for(int a=0;a<1;a++){
-            enemies.add(new Enemy(250,250));
+            enemies.add(new Enemy(1250,250));
         }
     }
     
@@ -94,8 +96,6 @@ public class GamePanel extends JPanel implements KeyListener
             
         }
         
-        //g.setColor(Color.WHITE);
-        //g.drawString("FPS: " + fps, 5, 10);
         
         g.dispose();
         
@@ -118,8 +118,15 @@ public class GamePanel extends JPanel implements KeyListener
             paused=!paused;
         }
         
-        if(e.getKeyCode()==KeyEvent.VK_SPACE){
-            player.fire();
+        if(e.getKeyCode()==KeyEvent.VK_SPACE)
+        {
+            if(playerCanFire)
+            {
+                player.fire();
+                playerCanFire=false;
+            }
+            
+            
         }
         
         if(e.getKeyCode()==KeyEvent.VK_H)
@@ -175,6 +182,7 @@ public class GamePanel extends JPanel implements KeyListener
     
     public void keyReleased(KeyEvent e)
     {
+        
         if(e.getKeyCode()==KeyEvent.VK_W)
         {
             w=false;
@@ -193,6 +201,12 @@ public class GamePanel extends JPanel implements KeyListener
         if(e.getKeyCode()==KeyEvent.VK_D)
         {
             d=false;
+        }
+        
+        if(e.getKeyCode()==KeyEvent.VK_SPACE)
+        {
+            playerCanFire=true;
+            
         }
         
     }
