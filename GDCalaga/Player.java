@@ -54,7 +54,7 @@ public class Player extends Entity
             
         }
         
-
+        
         RectShape rect = (RectShape)shape;
         rect.xpos = x;
         rect.ypos = y;
@@ -103,12 +103,24 @@ public class Player extends Entity
     
     public void fire()
     {
-    	Bullet newBullet = new Bullet(entities, (int)x,(int)y,1);
-    	newBullet.setSpeed(40, 0);
+        Bullet newBullet = new Bullet(entities, (int)x, (int)y ,1 , alliance);
+        newBullet.setSpeed(40, 0);
     }
-
+    
     public void Collide(Entity other)
     {
         
+    }
+    
+    public void Hurt(float dmg){
+        health-=dmg;
+    }
+    
+    public int getHealth(){
+        return (int)health;
+    }
+    
+    public int getAlliance(){
+        return alliance;
     }
 }

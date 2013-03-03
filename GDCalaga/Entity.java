@@ -31,7 +31,6 @@ public abstract class Entity
     {
         x=xpos;
         y=ypos;//Thinking of things, x and xpos should be switched, but the convenience....
-        alliance=0;
     }
     
     public Entity(int xpos, int ypos, float w, float h)

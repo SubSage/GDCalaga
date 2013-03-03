@@ -8,6 +8,9 @@
 		<project>
 			<label>GDCalaga</label>
 			<showfiles>false</showfiles>
+			<folderitem>
+				<path>Pics</path>
+			</folderitem>
 		</project>
 	</projects>
 </workspace_user>

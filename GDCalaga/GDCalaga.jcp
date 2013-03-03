@@ -33,10 +33,16 @@
 				<path>Bullet.java</path>
 			</fileitem>
 			<fileitem>
+				<path>Collision.java</path>
+			</fileitem>
+			<fileitem>
 				<path>Enemy.java</path>
 			</fileitem>
 			<fileitem>
 				<path>Entity.java</path>
+			</fileitem>
+			<fileitem>
+				<path>EntityManager.java</path>
 			</fileitem>
 			<fileitem>
 				<path>GamePanel.java</path>
@@ -45,10 +51,19 @@
 				<path>GDCalaga.jar</path>
 			</fileitem>
 			<fileitem>
+				<path>InputHandler.java</path>
+			</fileitem>
+			<fileitem>
 				<path>Manifest.java</path>
 			</fileitem>
 			<fileitem>
 				<path>Player.java</path>
+			</fileitem>
+			<fileitem>
+				<path>RectShape.java</path>
+			</fileitem>
+			<fileitem>
+				<path>Shape.java</path>
 			</fileitem>
 			<fileitem>
 				<path>Workings.txt</path>

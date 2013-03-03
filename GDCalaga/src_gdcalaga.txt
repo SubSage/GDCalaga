@@ -1,10 +1,11 @@
-"C:\\Users\\Luis\\Documents\\JCreator LE\\MyProjects\\GDCalaga\\Bullet.java"
-"C:\\Users\\Luis\\Documents\\JCreator LE\\MyProjects\\GDCalaga\\Collision.java"
-"C:\\Users\\Luis\\Documents\\JCreator LE\\MyProjects\\GDCalaga\\Enemy.java"
-"C:\\Users\\Luis\\Documents\\JCreator LE\\MyProjects\\GDCalaga\\Entity.java"
-"C:\\Users\\Luis\\Documents\\JCreator LE\\MyProjects\\GDCalaga\\EntityManager.java"
-"C:\\Users\\Luis\\Documents\\JCreator LE\\MyProjects\\GDCalaga\\GamePanel.java"
-"C:\\Users\\Luis\\Documents\\JCreator LE\\MyProjects\\GDCalaga\\Manifest.java"
-"C:\\Users\\Luis\\Documents\\JCreator LE\\MyProjects\\GDCalaga\\Player.java"
-"C:\\Users\\Luis\\Documents\\JCreator LE\\MyProjects\\GDCalaga\\RectShape.java"
-"C:\\Users\\Luis\\Documents\\JCreator LE\\MyProjects\\GDCalaga\\Shape.java"
+C:\Users\Luis\Documents\GitHub\GDCalaga\GDCalaga\Bullet.java
+C:\Users\Luis\Documents\GitHub\GDCalaga\GDCalaga\Collision.java
+C:\Users\Luis\Documents\GitHub\GDCalaga\GDCalaga\Enemy.java
+C:\Users\Luis\Documents\GitHub\GDCalaga\GDCalaga\Entity.java
+C:\Users\Luis\Documents\GitHub\GDCalaga\GDCalaga\EntityManager.java
+C:\Users\Luis\Documents\GitHub\GDCalaga\GDCalaga\GamePanel.java
+C:\Users\Luis\Documents\GitHub\GDCalaga\GDCalaga\InputHandler.java
+C:\Users\Luis\Documents\GitHub\GDCalaga\GDCalaga\Manifest.java
+C:\Users\Luis\Documents\GitHub\GDCalaga\GDCalaga\Player.java
+C:\Users\Luis\Documents\GitHub\GDCalaga\GDCalaga\RectShape.java
+C:\Users\Luis\Documents\GitHub\GDCalaga\GDCalaga\Shape.java
