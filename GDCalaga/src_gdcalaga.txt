@@ -9,3 +9,4 @@ C:\Users\Luis\Documents\GitHub\GDCalaga\GDCalaga\Manifest.java
 C:\Users\Luis\Documents\GitHub\GDCalaga\GDCalaga\Player.java
 C:\Users\Luis\Documents\GitHub\GDCalaga\GDCalaga\RectShape.java
 C:\Users\Luis\Documents\GitHub\GDCalaga\GDCalaga\Shape.java
+C:\Users\Luis\Documents\GitHub\GDCalaga\GDCalaga\Spawn.java

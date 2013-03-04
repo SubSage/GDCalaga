@@ -37,6 +37,13 @@ public class Bullet extends Entity
         RectShape rect = (RectShape)shape;
         rect.xpos = x;
         rect.ypos = y;
+        
+        if( x<0    && xVel<=0 ||
+            x>1280 && xVel>=0 ||
+            y<0    && yVel<=0 ||
+            y>780  && yVel>=0){
+                Destroy();
+            }
     }
     
     

@@ -52,7 +52,7 @@ public class Manifest extends JFrame //implements ActionListener
         final double TIME_BETWEEN_UPDATES = 1000000000 / GAME_HERTZ;
         //At the very most we will update the game this many times before a new render.
         //If you're worried about visual hitches more than perfect timing, set this to 1.
-        final int MAX_UPDATES_BEFORE_RENDER =50;
+        final int MAX_UPDATES_BEFORE_RENDER =5;
         double lastUpdateTime = System.nanoTime();
         double lastRenderTime = System.nanoTime();
         
@@ -104,7 +104,7 @@ public class Manifest extends JFrame //implements ActionListener
                 //This stops the app from consuming all your CPU. It makes this slightly less accurate, but is worth it.
                 //You can remove this line and it will still work (better), your CPU just climbs on certain OSes.
                 //FYI on some OS's this can cause pretty bad stuttering. Scroll down and have a look at different peoples' solutions to this.
-                //try {Thread.sleep(1);} catch(Exception e) {}
+                try {Thread.sleep(1);} catch(Exception e) {}
                 
                 now = System.nanoTime();
             }

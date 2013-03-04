@@ -2,7 +2,8 @@ import java.awt.*;
 import java.util.*;
 
 public class EntityManager {
-    int newID;
+    
+    int newID;//Need clarification as to what this variable is for.
     
     private ArrayList<Entity> ents = new ArrayList<Entity>();
     private ArrayList<Entity> addedEnts = new ArrayList<Entity>();
