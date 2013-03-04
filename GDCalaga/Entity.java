@@ -1,5 +1,4 @@
-import java.awt.*;
-import java.lang.String;
+import org.newdawn.slick.*;
 
 
 //Entity class. An entity is anything that moves and shoots. Main "thing" the player plays against.
@@ -53,7 +52,7 @@ public abstract class Entity
     
     public abstract void update(float delta);
     
-    public abstract void draw(Graphics g, float interp);
+    public abstract void draw(Graphics g);
     
     public abstract void Collide(Entity other);
     

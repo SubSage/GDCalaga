@@ -1,4 +1,4 @@
-import java.awt.*;
+import org.newdawn.slick.*;
 import java.util.*;
 
 public class EntityManager {
@@ -53,13 +53,13 @@ public class EntityManager {
         UpdateLists();
     }
     
-    public void draw(Graphics g, float interp)
+    public void draw(Graphics g)
     {
-        
-        for(int a=0; a<ents.size();a++)
+
+        for(Iterator<Entity> i = ents.iterator(); i.hasNext(); )
         {
-            Entity ent = ents.get(a);
-            ent.draw(g, interp);
+            Entity ent = i.next();
+            ent.draw(g);
         }
     }
     

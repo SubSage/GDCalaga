@@ -1,6 +1,4 @@
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+import org.newdawn.slick.*;
 
 
 public class Enemy extends Entity
@@ -14,14 +12,21 @@ public class Enemy extends Entity
         super(manager);
         x=xpos;lastX=x;
         y=ypos;lastY=y;
-        ship=Toolkit.getDefaultToolkit().getImage("Pics/BlueSquaretrans.png");
         width=50;
         height=50;
         xVel=0;
-        yVel=10;
+        yVel=100;
         health=10;
         alliance=0;
         shape = new RectShape(x, y, width, height);
+        
+
+        try {
+			ship = new Image("Pics/BlueSquaretrans.png");
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+        
     }
     
     
@@ -39,8 +44,8 @@ public class Enemy extends Entity
             lastX = x;
             lastY = y;
             
-            x+= xVel * delta;
-            y+= yVel * delta;
+            x+= xVel * delta / 1000;
+            y+= yVel * delta / 1000;
             
             
             if(y<0){
@@ -69,9 +74,9 @@ public class Enemy extends Entity
     
     
     
-    public void draw(Graphics g, float interp)
+    public void draw(Graphics g)
     {
-        
+        /*
         if(health>0)
         {
             Graphics2D g2d=(Graphics2D)g; // Create a Java2D version of g.
@@ -85,6 +90,13 @@ public class Enemy extends Entity
             g2d.setColor(Color.WHITE);
             g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1));
         }
+        */
+
+        int drawX = (int) (x - width/2);
+        int drawY = (int) (y - height/2);
+        float scale = width / ship.getWidth();
+        ship.draw(drawX, drawY, scale);
+    	
     }
 
     public void Collide(Entity other)
@@ -95,7 +107,7 @@ public class Enemy extends Entity
     public void fire()
     {
         Bullet newBullet = new Bullet(entities, (int)x, (int)y ,1 , alliance);
-        newBullet.setSpeed(-40, 0);
+        newBullet.setSpeed(-250, 0);
     }
     
     
@@ -108,4 +120,5 @@ public class Enemy extends Entity
     public int getAlliance(){
         return alliance;
     }
+
 }
