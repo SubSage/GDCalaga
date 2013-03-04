@@ -4,7 +4,7 @@ import java.io.*;
 
 public class InputHandler implements KeyListener {
 
-    private int maxKeys = 110;
+    private int maxKeys = 116;
     
     private boolean[] bufferKeyState = new boolean[maxKeys];
     private boolean[] currentKeyState = new boolean[maxKeys];
