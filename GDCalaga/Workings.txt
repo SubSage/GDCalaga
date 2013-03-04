@@ -1,7 +1,8 @@
 This game is a side scroller shooter. It can also be seen as a top down shooter, but that's up to the art department.
 
 Critical Bugs/Glitches:
-Alt + f4 seems to not shut down game. Not sure why.
+
+Fixed issue with alt + f4, input handler class didn't hold value for f4 (115)
 
 What needs to be worked on:
 Point System (score)
