@@ -11,6 +11,9 @@
 			<folderitem>
 				<path>Pics</path>
 			</folderitem>
+			<folderitem>
+				<path>screencaptures</path>
+			</folderitem>
 		</project>
 	</projects>
 	<open_files>
@@ -30,13 +33,13 @@
 			<path>Collision.java</path>
 			<source>true</source>
 			<index>2</index>
-			<active>false</active>
+			<active>true</active>
 		</docitem>
 		<docitem>
 			<path>Spawn.java</path>
 			<source>true</source>
 			<index>3</index>
-			<active>true</active>
+			<active>false</active>
 		</docitem>
 		<docitem>
 			<path>GamePanel.java</path>

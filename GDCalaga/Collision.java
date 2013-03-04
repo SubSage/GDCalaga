@@ -12,19 +12,23 @@ public class Collision {
         for(int entA = 0; entA < ents.size(); entA++)
         {
             
-            if(ents.get(entA).shape.type != Shape.ShapeType.Null)
+            Entity A = ents.get(entA);
+            
+            if(A.shape.type != Shape.ShapeType.Null)
             {
                 
                 for(int entB = entA + 1; entB < ents.size(); entB++)
                 {
                     
-                    if(ents.get(entB).shape.type != Shape.ShapeType.Null)
+                    Entity B = ents.get(entB);
+                    
+                    if(B.shape.type != Shape.ShapeType.Null)
                     {
                         
-                        if(ents.get(entA).shape.Intersects(ents.get(entB).shape))
+                        if(A.shape.Intersects(B.shape))
                         {
-                            ents.get(entA).Collide(ents.get(entB));
-                            ents.get(entB).Collide(ents.get(entA));
+                            A.Collide(B);
+                            B.Collide(A);
                             
                         }
                         
