@@ -66,6 +66,9 @@
 				<path>Shape.java</path>
 			</fileitem>
 			<fileitem>
+				<path>Spawn.java</path>
+			</fileitem>
+			<fileitem>
 				<path>Workings.txt</path>
 			</fileitem>
 		</include>

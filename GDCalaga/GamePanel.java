@@ -23,12 +23,11 @@ public class GamePanel extends JPanel
     public GamePanel(int WIDTH, int HEIGHT)
     {
         
-        
         addKeyListener(Input);
         player= new Player(Entities,50,300);
         
-        for(int a=0;a<1;a++){
-            new Enemy(Entities,1200,250);
+        for(int a=0;a<10;a++){
+            //new Enemy(Entities,1200,(int)(Math.random()*400));
         }
     }
     
@@ -43,7 +42,7 @@ public class GamePanel extends JPanel
         if(!paused)
         {
             Collision.CheckCollisions(Entities.GetEntities());
-            
+            Spawn.spawnWave(Entities.GetEntities(),Entities);
             Entities.update(interpolation);
             
             if(Input.IsKeyDown(KeyEvent.VK_W)){
