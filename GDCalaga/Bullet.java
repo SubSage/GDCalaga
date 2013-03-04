@@ -12,8 +12,8 @@ public class Bullet extends Entity
         super(manager);
         x=xpos;lastX=x;
         y=ypos;lastY=y;
-        width=1;
-        height=1;
+        width=10;
+        height=10;
         damage=dmg;
         yVel=0;
         xVel=0;
