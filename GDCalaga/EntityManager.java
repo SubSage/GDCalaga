@@ -55,9 +55,10 @@ public class EntityManager {
     
     public void draw(Graphics g, float interp)
     {
-        for(Iterator<Entity> i = ents.iterator(); i.hasNext(); )
+        
+        for(int a=0; a<ents.size();a++)
         {
-            Entity ent = i.next();//This line is throwing exceptions with concurrent modification. Might want to restructure this
+            Entity ent = ents.get(a);
             ent.draw(g, interp);
         }
     }
