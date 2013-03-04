@@ -9,26 +9,22 @@ public class Collision {
         
         //Very inefficient, but should work fine for now
         
-        for(int i = 0; i < ents.size(); i++)
+        for(int entA = 0; entA < ents.size(); entA++)
         {
             
-            Entity ent1 = ents.get(i);
-            
-            if(ent1.shape.type != Shape.ShapeType.Null)
+            if(ents.get(entA).shape.type != Shape.ShapeType.Null)
             {
                 
-                for(int j = i + 1; j < ents.size(); j++)
+                for(int entB = entA + 1; entB < ents.size(); entB++)
                 {
                     
-                    Entity ent2 = ents.get(j);
-                    
-                    if(ent2.shape.type != Shape.ShapeType.Null)
+                    if(ents.get(entB).shape.type != Shape.ShapeType.Null)
                     {
                         
-                        if(ent1.shape.Intersects(ent2.shape))
+                        if(ents.get(entA).shape.Intersects(ents.get(entB).shape))
                         {
-                            ent1.Collide(ent2);
-                            ent2.Collide(ent1);
+                            ents.get(entA).Collide(ents.get(entB));
+                            ents.get(entB).Collide(ents.get(entA));
                             
                         }
                         
