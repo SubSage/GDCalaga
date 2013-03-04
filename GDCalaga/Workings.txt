@@ -1,12 +1,9 @@
 This game is a side scroller shooter. It can also be seen as a top down shooter, but that's up to the art department.
 
 Critical Bugs/Glitches:
-None.
+Alt + f4 seems to not shut down game. Not sure why.
 
 What needs to be worked on:
-Collision detection between bullets and entities (player and enemy)
-Enemy retaliation (they do nothing)
-Enemy spawn system
 Point System (score)
 Real art
 Audio
