@@ -57,7 +57,7 @@ public class EntityManager {
     {
         for(Iterator<Entity> i = ents.iterator(); i.hasNext(); )
         {
-            Entity ent = i.next();
+            Entity ent = i.next();//This line is throwing exceptions with concurrent modification. Might want to restructure this
             ent.draw(g, interp);
         }
     }

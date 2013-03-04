@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 
 
-
 public class Collision {
     
     public static void CheckCollisions(ArrayList<Entity> ents)
@@ -27,6 +26,7 @@ public class Collision {
                         
                         if(A.shape.Intersects(B.shape))
                         {
+                            
                             A.Collide(B);
                             B.Collide(A);
                             

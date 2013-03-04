@@ -2,6 +2,18 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+/*
+ *
+ *Created by Luis Martinez (Subsage)
+ *with major contributions from
+ *reddit.com/u/bananavice (code)
+ *
+ *
+ *Thread for game discussion at reddit.com/r/gamedevclub under the name of GDCalaga
+ *
+ *
+ */
+
 public class Manifest extends JFrame //implements ActionListener
 {
     int Width=1280;
