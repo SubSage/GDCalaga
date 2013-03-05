@@ -98,7 +98,7 @@ public class Enemy extends Entity
     private void Explode(){
     	shape.type = Shape.ShapeType.Null;
 
-        exp = new Explosion(x, y, 25, 25, width, height);
+        exp = new Explosion(x, y, 5, 5, width, height);
         exp.SetImage(ship);
         
         exploding = true;
