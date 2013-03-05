@@ -59,7 +59,7 @@ public class Bullet extends Entity
         int drawY = (int) (y - height/2);
         float bw = bullet.getWidth();
         float scale = width / bw;
-        bullet.draw(drawX, drawY, scale);
+        bullet.draw(drawX, drawY, scale, Color.white);
     }
     
     public void setSpeed(float a, float b)

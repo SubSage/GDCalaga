@@ -6,6 +6,8 @@ public class Enemy extends Entity
     private float x, y, lastX, lastY, xVel, yVel, health;
     private int height, width, alliance;
     Image ship;
+    private Explosion exp;
+    private boolean exploding;
     
     public Enemy(EntityManager manager, int xpos, int ypos)
     {
@@ -16,9 +18,10 @@ public class Enemy extends Entity
         height=50;
         xVel=0;
         yVel=100;
-        health=10;
+        health=3;
         alliance=0;
         shape = new RectShape(x, y, width, height);
+        
         
 
         try {
@@ -27,39 +30,32 @@ public class Enemy extends Entity
 			e.printStackTrace();
 		}
         
+        
     }
     
     
     public void update(float delta)
     {
         
-        if(health<0)
+        if(exploding)
         {
-            health=0;
-        }
-        
-        else
-        {
-            
-            lastX = x;
-            lastY = y;
-            
+            exp.update(delta);
+            if(exp.IsDead()) Destroy();
+        } else {
             x+= xVel * delta / 1000;
             y+= yVel * delta / 1000;
-            
             
             if(y<0){
                 y=0;
                 yVel*=-1;
             }
             
-            
             if(y>720){
                 y=720;
                 yVel*=-1;
             }
             
-            if(Math.random()*100<5){
+            if(Math.random()*100*delta < 100){
                 fire();
             }
             
@@ -76,26 +72,15 @@ public class Enemy extends Entity
     
     public void draw(Graphics g)
     {
-        /*
-        if(health>0)
-        {
-            Graphics2D g2d=(Graphics2D)g; // Create a Java2D version of g.
-            
-            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
-            
-            int drawX = (int) ((x - lastX) * interp + lastX - width/2);
-            int drawY = (int) ((y - lastY) * interp + lastY - height/2);
-            
-            g2d.drawImage(ship,drawX,drawY, width, height,null);
-            g2d.setColor(Color.WHITE);
-            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1));
-        }
-        */
 
         int drawX = (int) (x - width/2);
         int drawY = (int) (y - height/2);
         float scale = width / ship.getWidth();
-        ship.draw(drawX, drawY, scale);
+        if(!exploding){
+        	ship.draw(drawX, drawY, scale, Color.white);
+        } else {
+        	exp.render(g);
+        }
     	
     }
 
@@ -110,11 +95,21 @@ public class Enemy extends Entity
         newBullet.setSpeed(-250, 0);
     }
     
+    private void Explode(){
+    	shape.type = Shape.ShapeType.Null;
+
+        exp = new Explosion(x, y, 25, 25, width, height);
+        exp.SetImage(ship);
+        
+        exploding = true;
+        
+    }
+    
     
     public void Hurt(float dmg)
     {
         health -= dmg;
-        if(health<=0) Destroy();
+        if(health<=0) Explode();
     }
     
     public int getAlliance(){

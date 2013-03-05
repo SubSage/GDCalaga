@@ -43,7 +43,7 @@ public class Player extends Entity
         int drawX = (int) (x - width/2);
         int drawY = (int) (y - height/2);
         float scale = width / ship.getWidth();
-        ship.draw(drawX, drawY, scale);
+        ship.draw(drawX, drawY, scale, Color.white);
     }
     
     
