@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Collision {
     
-    public static void CheckCollisions(ArrayList<Entity> ents)
+    public static void checkCollisions(ArrayList<Entity> ents)
     {
         
         //Very inefficient, but should work fine for now

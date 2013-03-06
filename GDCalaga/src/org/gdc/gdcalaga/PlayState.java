@@ -7,34 +7,32 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class PlayState extends BasicGameState {
-	public static int ID = 0;
+	public static final int ID = 0;
 
-    boolean paused = false;
-    Player player;
+    private boolean paused = false;
+    private Player player;
 
-    private EntityManager Entities = new EntityManager();
+    private EntityManager entities = new EntityManager();
     private Input input;
 
-	public void init(GameContainer container, StateBasedGame game)
-			throws SlickException {
-
+    @Override
+	public void init(GameContainer container, StateBasedGame game) throws SlickException {
         input = container.getInput();
-        player= new Player(Entities,50,300);
-		
+        player= new Player(entities,50,300);
 	}
 
-	public void render(GameContainer container, StateBasedGame game, Graphics g)
-			throws SlickException {
-		Entities.draw(g);
+	@Override
+	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
+		entities.draw(g);
         g.drawString("Player HP: " + player.getHealth(), 5, 30);
 	}
 
-	public void update(GameContainer container, StateBasedGame game, int delta)
-			throws SlickException {
+	@Override
+	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		if(!paused){
-	        Collision.CheckCollisions(Entities.GetEntities());
-	        Spawn.spawnWave(Entities.GetEntities(),Entities);
-            Entities.update(delta);
+	        Collision.checkCollisions(entities.getEntities());
+	        Spawn.spawnWave(entities.getEntities(), entities);
+            entities.update(delta);
             
             if(input.isKeyDown(Input.KEY_W)){
                 player.moveUp(delta);
@@ -49,7 +47,6 @@ public class PlayState extends BasicGameState {
                 player.moveRight(delta);
             }
             
-
             if(input.isKeyPressed(Input.KEY_SPACE))
             {
                 player.fire();
@@ -71,8 +68,8 @@ public class PlayState extends BasicGameState {
         */
 	}
 
+	@Override
 	public int getID() {
 		return ID;
 	}
-
 }

@@ -66,7 +66,7 @@ public class EntityManager {
         }
     }
     
-    public ArrayList<Entity> GetEntities()
+    public ArrayList<Entity> getEntities()
     {
         return new ArrayList<Entity>(ents);
     }

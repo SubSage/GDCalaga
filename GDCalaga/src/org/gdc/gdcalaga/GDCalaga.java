@@ -31,7 +31,6 @@ public class GDCalaga {
 			fieldSysPath.setAccessible( true );
 			fieldSysPath.set( null, null );
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
