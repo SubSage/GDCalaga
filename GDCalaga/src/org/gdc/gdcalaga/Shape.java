@@ -1,3 +1,4 @@
+package org.gdc.gdcalaga;
 
 
 public class Shape {

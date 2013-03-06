@@ -1,5 +1,7 @@
-import org.newdawn.slick.*;
-import org.newdawn.slick.particles.*;
+package org.gdc.gdcalaga;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 
 
 public class ExplosionParticle{

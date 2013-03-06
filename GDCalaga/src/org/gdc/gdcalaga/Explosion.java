@@ -1,6 +1,6 @@
-import org.newdawn.slick.*;
-import org.newdawn.slick.opengl.Texture;
-import org.newdawn.slick.particles.*;
+package org.gdc.gdcalaga;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 
 public class Explosion {
 

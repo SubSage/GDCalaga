@@ -1,5 +1,8 @@
-import org.newdawn.slick.*;
-import java.util.*;
+package org.gdc.gdcalaga;
+import java.util.ArrayList;
+import java.util.Iterator;
+
+import org.newdawn.slick.Graphics;
 
 public class EntityManager {
     

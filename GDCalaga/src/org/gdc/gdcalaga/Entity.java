@@ -1,4 +1,5 @@
-import org.newdawn.slick.*;
+package org.gdc.gdcalaga;
+import org.newdawn.slick.Graphics;
 
 
 //Entity class. An entity is anything that moves and shoots. Main "thing" the player plays against.
