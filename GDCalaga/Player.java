@@ -15,8 +15,8 @@ public class Player extends Entity
         y=ypos;
         width=25;
         height=25;
-        xVel=20;
-        yVel=20;
+        xVel=220;
+        yVel=220;
         health=10;
         alliance=1;
         
@@ -47,24 +47,24 @@ public class Player extends Entity
     }
     
     
-    public void moveUp()
+    public void moveUp(float delta)
     {
-        y-=yVel;
+        y-=yVel*delta/1000;
     }
     
-    public void moveDown()
+    public void moveDown(float delta)
     {
-        y+=yVel;
+        y+=yVel*delta/1000;
     }
     
-    public void moveLeft()
+    public void moveLeft(float delta)
     {
-        x-=xVel;
+        x-=xVel*delta/1000;
     }
     
-    public void moveRight()
+    public void moveRight(float delta)
     {
-        x+=xVel;
+        x+=xVel*delta/1000;
     }
     
     public void fire()

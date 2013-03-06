@@ -32,16 +32,16 @@ public class PlayState extends BasicGameState {
             Entities.update(delta);
             
             if(input.isKeyDown(Input.KEY_W)){
-                player.moveUp();
+                player.moveUp(delta);
             }
             if(input.isKeyDown(Input.KEY_S)){
-                player.moveDown();
+                player.moveDown(delta);
             }
             if(input.isKeyDown(Input.KEY_A)){
-                player.moveLeft();
+                player.moveLeft(delta);
             }
             if(input.isKeyDown(Input.KEY_D)){
-                player.moveRight();
+                player.moveRight(delta);
             }
             
 

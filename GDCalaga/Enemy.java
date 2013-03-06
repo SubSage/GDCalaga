@@ -55,7 +55,7 @@ public class Enemy extends Entity
                 yVel*=-1;
             }
             
-            if(Math.random()*100*delta < 100){
+            if(Math.random()*1000*delta < 100){
                 fire();
             }
             
