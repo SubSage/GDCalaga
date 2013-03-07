@@ -47,7 +47,7 @@ public class Player extends Entity
         int drawX = (int) (x - width/2);
         int drawY = (int) (y - height/2);
         float scale = width / ship.getWidth();
-        ship.draw(drawX, drawY, scale, Color.white);
+        ship.draw(drawX, drawY, scale, Color.red);
     }
     
     
@@ -79,7 +79,10 @@ public class Player extends Entity
     
     public void Collide(Entity other)
     {
-        
+    	if(other instanceof Bullet && ((Bullet)other).getAlliance()!=alliance)
+    	{
+    		Hurt(((Bullet)other).getDamage());
+    	}
     }
     
     public void Hurt(float dmg){

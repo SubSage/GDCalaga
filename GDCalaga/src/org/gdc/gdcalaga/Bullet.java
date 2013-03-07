@@ -76,10 +76,8 @@ public class Bullet extends Entity
     {
         if(other instanceof Enemy)
         {
-            Enemy enemy = (Enemy)other;
-            if(alliance!=enemy.getAlliance())
+            if(alliance!=((Enemy)other).getAlliance())
             {
-                enemy.Hurt(damage);
                 Destroy();
             }
             
@@ -87,13 +85,20 @@ public class Bullet extends Entity
         
         else if(other instanceof Player)
         {
-            Player player = (Player)other;
-            if(alliance!=player.getAlliance())
+            if(alliance!=((Player)other).getAlliance())
             {
-                player.Hurt(damage);
                 Destroy();
             }
             
         }
     }
+    
+    public float getDamage(){
+    	return damage;
+    }
+
+
+	public int getAlliance() {
+		return alliance;
+	}
 }

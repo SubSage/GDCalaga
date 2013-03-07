@@ -24,7 +24,7 @@ public class PlayState extends BasicGameState {
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		entities.draw(g);
-        g.drawString("Player HP: " + player.getHealth(), 5, 30);
+        g.drawString("Player HP: " + player.getHealth() + "        Round " + Spawn.wave, 5, 30);
 	}
 
 	@Override
