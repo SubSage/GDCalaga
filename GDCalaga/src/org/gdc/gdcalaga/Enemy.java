@@ -18,8 +18,8 @@ public class Enemy extends Entity
         super(manager);
         x=xpos;lastX=x;
         y=ypos;lastY=y;
-        width=50;
-        height=50;
+        width=41;
+        height=32;
         xVel=0;
         yVel=100;
         health=3;
@@ -29,7 +29,7 @@ public class Enemy extends Entity
         
 
         try {
-			ship = new Image("Pics/BlueSquaretrans.png");
+			ship = new Image("Pics/Enemy.png");
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
@@ -106,7 +106,7 @@ public class Enemy extends Entity
     private void Explode(){
     	shape.type = Shape.ShapeType.Null;
 
-        exp = new Explosion(x, y, 5, 5, width, height);
+        exp = new Explosion(x, y, 41, 8, width, height);
         exp.SetImage(ship);
         
         exploding = true;

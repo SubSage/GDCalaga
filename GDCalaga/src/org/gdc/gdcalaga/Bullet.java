@@ -16,8 +16,8 @@ public class Bullet extends Entity
         super(manager);
         x=xpos;lastX=x;
         y=ypos;lastY=y;
-        width=10;
-        height=10;
+        width=9;
+        height=5;
         damage=dmg;
         yVel=0;
         xVel=0;
@@ -27,7 +27,7 @@ public class Bullet extends Entity
         
 
         try {
-			bullet = new Image("Pics/BlueSquaretrans.png");
+			bullet = new Image("Pics/Bullet.png");
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}

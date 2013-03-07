@@ -17,8 +17,8 @@ public class Player extends Entity
         super(manager);
         x=xpos;
         y=ypos;
-        width=25;
-        height=25;
+        width=49;
+        height=29;
         xVel=220;
         yVel=220;
         health=10;
@@ -28,7 +28,7 @@ public class Player extends Entity
         
 
         try {
-			ship= new Image("Pics/BlueSquaretrans.png");
+			ship= new Image("Pics/Player.png");
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
@@ -47,7 +47,7 @@ public class Player extends Entity
         int drawX = (int) (x - width/2);
         int drawY = (int) (y - height/2);
         float scale = width / ship.getWidth();
-        ship.draw(drawX, drawY, scale, Color.red);
+        ship.draw(drawX, drawY, scale, Color.white);
     }
     
     
@@ -73,8 +73,8 @@ public class Player extends Entity
     
     public void fire()
     {
-        Bullet newBullet = new Bullet(entities, (int)x, (int)y ,1 , alliance);
-        newBullet.setSpeed(250, 0);
+        Bullet newBullet = new Bullet(entities, (int)x + 20, (int)y ,1 , alliance);
+        newBullet.setSpeed(500, 0);
     }
     
     public void Collide(Entity other)
