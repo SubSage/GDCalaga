@@ -11,9 +11,13 @@ public class Enemy extends Entity
     private int height, width, alliance;
     Image ship;
     private Explosion exp;
-    private boolean exploding;
+    private boolean exploding, pathing;
     
-    public Enemy(EntityManager manager, int xpos, int ypos)
+    private Path path;
+    private PathNode node;
+    private float startX, startY, pathXVel, pathYVel;
+    
+    public Enemy(EntityManager manager, float xpos, float ypos)
     {
         super(manager);
         x=xpos;lastX=x;
@@ -26,6 +30,8 @@ public class Enemy extends Entity
         alliance=0;
         shape = new RectShape(x, y, width, height);
         
+        pathing = false;
+        
         
 
         try {
@@ -37,6 +43,23 @@ public class Enemy extends Entity
         
     }
     
+    public void setPath(Path newPath){
+    	path = newPath;
+    	
+    	//Spawn at the first node in the path
+    	PathNode spawnPos = path.next();
+    	x = spawnPos.goalX;
+    	y = spawnPos.goalY;
+    	
+    	//Then start moving toward the next node
+    	if(path.hasNext()){
+	    	node = path.next();
+	    	startX = x;
+	    	startY = y;
+	    	pathing = true;
+    	}
+    }
+    
     
     public void update(float delta)
     {
@@ -46,22 +69,43 @@ public class Enemy extends Entity
             exp.update(delta);
             if(exp.IsDead()) Destroy();
         } else {
-            x+= xVel * delta / 1000;
-            y+= yVel * delta / 1000;
-            
-            if(y<0){
-                y=0;
-                yVel*=-1;
-            }
-            
-            if(y>720){
-                y=720;
-                yVel*=-1;
-            }
-            
+        	
             if(Math.random()*100*delta < 10){
                 fire();
             }
+        	
+        	if(!pathing){
+	            x+= xVel * delta / 1000;
+	            y+= yVel * delta / 1000;
+	            
+	            if(y<0){
+	                y=0;
+	                yVel*=-1;
+	            }
+	            
+	            if(y>720){
+	                y=720;
+	                yVel*=-1;
+	            }
+	            
+        	} else {
+				pathXVel = (node.goalX - startX) / node.speed;
+				pathYVel = (node.goalY - startY) / node.speed;
+        		x += pathXVel * delta / 1000;
+        		y += pathYVel * delta / 1000;
+        		if(pathXVel * (node.goalX - x) < 0 || pathYVel * (node.goalY - y) < 0){
+        			x = node.goalX;
+        			y = node.goalY;
+        			startX = x;
+        			startY = y;
+        			if(path.hasNext()){
+        				node = path.next();
+        			} else {
+        				pathing = false;
+        			}
+        		}
+        		
+        	}
             
             
         }

@@ -23,9 +23,24 @@ public class Spawn
         }
         if(countOfEnemies==0)
         {
+        	
             for(int a=0; a<numberOfEnemies;a++)
             {
-                new Enemy(mng,(int)(Math.random()*400)+800,(int)(Math.random()*400));
+            	float x, y;
+            	x = (float)(Math.random()*400)+800;
+            	y = (float)(Math.random()*400);
+                Enemy newEnemy = new Enemy(mng,x,y);
+                
+                Path enemyPath = new Path(x, y);
+                enemyPath.addNode(true, 400, 0, 1);
+                enemyPath.addNode(true, -100, -100, 1);
+                enemyPath.addNode(false, 700, 300, 1);
+                enemyPath.addNode(true, -100, 100, 1);
+                enemyPath.addNode(true, 0, 0, 1f);
+                
+                newEnemy.setPath(enemyPath);
+                
+                
             }
             
             numberOfEnemies+=2;
