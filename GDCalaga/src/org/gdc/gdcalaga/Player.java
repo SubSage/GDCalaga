@@ -54,26 +54,30 @@ public class Player extends Entity
     public void moveUp(float delta)
     {
         y-=yVel*delta/1000;
+        y = Math.max(height/2, y);
     }
     
     public void moveDown(float delta)
     {
         y+=yVel*delta/1000;
+        y = Math.min(720 - height/2, y);
     }
     
     public void moveLeft(float delta)
     {
         x-=xVel*delta/1000;
+        x = Math.max(0 + width/2, x);
     }
     
     public void moveRight(float delta)
     {
         x+=xVel*delta/1000;
+        x = Math.min(1280 - width/2, x);
     }
     
     public void fire()
     {
-        Bullet newBullet = new Bullet(entities, (int)x + 20, (int)y ,1 , alliance);
+        Bullet newBullet = new Bullet(entities, (int)x + width/2, (int)y ,1 , alliance);
         newBullet.setSpeed(500, 0);
     }
     
