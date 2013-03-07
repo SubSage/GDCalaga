@@ -28,7 +28,7 @@ public class Player extends Entity
         
 
         try {
-			ship= new Image("Pics/BlueSquare.png");
+			ship= new Image("Pics/BlueSquaretrans.png");
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
