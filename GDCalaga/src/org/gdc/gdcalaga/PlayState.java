@@ -1,4 +1,7 @@
 package org.gdc.gdcalaga;
+import java.util.LinkedList;
+import java.util.List;
+
 import org.gdc.gdcalaga.audio.AudioAsset;
 import org.gdc.gdcalaga.audio.AudioManager;
 import org.newdawn.slick.GameContainer;
@@ -19,6 +22,8 @@ public class PlayState extends BasicGameState {
 
     private AudioManager audioManager = AudioManager.getAudioManager();
     
+    private List<DisplayObject> disObjs = new LinkedList<DisplayObject>();
+    
     @Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
         input = container.getInput();
@@ -26,10 +31,15 @@ public class PlayState extends BasicGameState {
         
         audioManager.loadAudioAssets();
         audioManager.playMusic(AudioAsset.MUSIC_LEVEL_1);
+        
+        disObjs.add(new Background(container.getWidth(), container.getHeight()));
 	}
 
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
+		for (DisplayObject obj : disObjs) {
+        	obj.draw(g);
+        }
 		entities.draw(g);
         g.drawString("Player HP: " + player.getHealth() + "        Round " + Spawn.wave, 5, 30);
 	}
@@ -58,6 +68,10 @@ public class PlayState extends BasicGameState {
             {
                 player.fire();
                 audioManager.playSFX(AudioAsset.SFX_FIRE1);
+            }
+            
+            for (DisplayObject obj : disObjs) {
+            	obj.update(delta);
             }
 		}
 		
