@@ -11,7 +11,7 @@ import org.newdawn.slick.SlickException;
 
 public class Enemy extends Entity
 {
-	private static final int MAX_FIRE = 750;
+	private static final int MAX_FIRE = 1500;
 	
     private float x, y, lastX, lastY, xVel, yVel, health;
     private int height, width, alliance;
@@ -25,6 +25,10 @@ public class Enemy extends Entity
     private float fireRate;
     private float fireRateDT;
     private Random rand;
+    
+    private EnemyGroup group;
+    private boolean grouped;
+    public float relX, relY;
 
 	private AudioManager audioManager;
     
@@ -42,6 +46,9 @@ public class Enemy extends Entity
         shape = new RectShape(x, y, width, height);
         
         pathing = false;
+        grouped = false;
+        relX = 0;
+        relY = 0;
         
         rand = new Random(System.currentTimeMillis());
         fireRate = rand.nextInt(MAX_FIRE);
@@ -73,6 +80,16 @@ public class Enemy extends Entity
     	}
     }
     
+    public void setGroup(EnemyGroup g, float x, float y){
+    	group = g;
+    	grouped = true;
+    	relX = x;
+    	relY = y;
+    	x = relX + group.xPos;
+    	y = relY + group.yPos;
+    	g.addEnemy(this);
+    }
+    
     
     public void update(float delta)
     {
@@ -90,21 +107,32 @@ public class Enemy extends Entity
                 fireRate = rand.nextInt(MAX_FIRE);
             }
         	
+
+        	
+        	
         	if(!pathing){
-	            x+= xVel * delta / 1000;
-	            y+= yVel * delta / 1000;
-	            
-	            if(y<0){
-	                y=0;
-	                yVel*=-1;
-	            }
-	            
-	            if(y>720){
-	                y=720;
-	                yVel*=-1;
-	            }
-	            
+        	    if(grouped){
+                    y = group.yPos + relY;
+                    x = group.xPos + relX;
+                } else {
+    	            x+= xVel * delta / 1000;
+    	            y+= yVel * delta / 1000;
+    	            
+    	            if(y<0 || y>720){
+    	            }
+    
+    	            if(y<0){
+    	            	y = 0;
+    	                yVel*=-1;
+    	            }
+    	            
+    	            if(y>720){
+    	            	y = 720;
+    	                yVel*=-1;
+    	            }
+                }
         	} else {
+                
 				pathXVel = (node.goalX - startX) / node.speed;
 				pathYVel = (node.goalY - startY) / node.speed;
         		x += pathXVel * delta / 1000;
@@ -116,10 +144,15 @@ public class Enemy extends Entity
         			startY = y;
         			if(path.hasNext()){
         				node = path.next();
+        				if(grouped && !path.hasNext()){
+        				    node.goalX = group.xPos + relX;
+        				    node.goalY = group.getYAfterTime(node.speed) + relY;
+        				}
         			} else {
         				pathing = false;
         			}
         		}
+        		
         		
         	}
             
@@ -170,8 +203,9 @@ public class Enemy extends Entity
         exp = new Explosion(x, y, 41, 8, width, height);
         exp.SetImage(ship);
         
-        exploding = true;
+        exploding = true;    
         
+        if(grouped) group.removeEnemy(this);
     }
     
     

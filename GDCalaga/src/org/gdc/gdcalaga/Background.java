@@ -24,9 +24,9 @@ public class Background extends DisplayObject {
 	
 	public Background(int width, int height) throws SlickException {
 	
-		bgImg = new Image(".\\Pics\\space.png");
-		planet1 = new Image(".\\Pics\\planet1.png");
-		planet2 = new Image(".\\Pics\\planet2.png");
+		bgImg = new Image("./Pics/space.png");
+		planet1 = new Image("./Pics/planet1.png");
+		planet2 = new Image("./Pics/planet2.png");
 		
 		wCount = width / bgImg.getWidth() + 2;
 		hCount = height / bgImg.getHeight() + 2;

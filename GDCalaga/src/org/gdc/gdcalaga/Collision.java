@@ -14,7 +14,7 @@ public class Collision {
             
             Entity A = ents.get(entA);
             
-            if(A.shape.type != Shape.ShapeType.Null)
+            if(A.shape != null && A.shape.type != Shape.ShapeType.Null)
             {
                 
                 for(int entB = entA + 1; entB < ents.size(); entB++)
@@ -22,7 +22,7 @@ public class Collision {
                     
                     Entity B = ents.get(entB);
                     
-                    if(B.shape.type != Shape.ShapeType.Null)
+                    if(B.shape != null && B.shape.type != Shape.ShapeType.Null)
                     {
                         
                         if(A.shape.Intersects(B.shape))

@@ -31,21 +31,21 @@ public class Spawn
         
         if(countOfEnemies==0)
         {
+        	EnemyGroup group = new EnemyGroup(mng, 100, 800, 0);
         	
             for(int a=0; a < numberOfEnemies; a++)
             {
             	float x, y;
-            	x = (float)(Math.random()*400)+800;
+            	x = (float)(Math.random()*400);
             	y = (float)(Math.random()*400);
                 Enemy newEnemy = new Enemy(mng,x,y);
                 
-                Path enemyPath = new Path(x, y);
+                Path enemyPath = new Path(group.xPos + x, group.yPos + y);
                 enemyPath.addNode(true, 400, 0, 1);
-                enemyPath.addNode(true, -100, -100, 1);
                 enemyPath.addNode(false, 700, 300, 1);
-                enemyPath.addNode(true, -100, 100, 1);
                 enemyPath.addNode(true, 0, 0, 1f);
-                
+
+                newEnemy.setGroup(group, x, y);
                 newEnemy.setPath(enemyPath);
                 
                 
