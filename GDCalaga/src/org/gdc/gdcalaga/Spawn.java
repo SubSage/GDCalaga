@@ -1,30 +1,38 @@
 package org.gdc.gdcalaga;
 import java.util.ArrayList;
 
+/*
+ * I want this class to learn about the player constantly. It needs to observe the player and from there, decide how to suit the level
+ * for the player. We don't have many enemies yet, but we should later have enemies with unique characteristics and features. The class
+ * should know how often the player shoots, accuracy, how much the player moves or jitters. Place tanky enemies, quick enemies, anything
+ * to make the player adapt, even if it's only a little. The class should also make sure that the player gets a good variety of enemies,
+ * not just one type of enemy all the time. I, subsage will handle it, unless anyone else wants to, going to bed.
+ */
+
 
 public class Spawn 
 {
-    // I might have approached this wrongly with ents and mng...
-    // As for everything else, it's cool. I want to eventually asses how the player does on a round
-    // and then give them a fitting round tailored to how they did.
-    public static int numberOfEnemies=1;
-    public static int wave=1;
+    
+    private static int numberOfEnemies=1;
+    private static int wave=0;
+    
     
     public static void spawnWave(ArrayList<Entity> ents, EntityManager mng) {
         
         int countOfEnemies=0;
         
-        for(Entity e:ents)
+        for(Entity e : ents)
         {
             if(e instanceof Enemy)
             {
                 countOfEnemies++;
             }
         }
+        
         if(countOfEnemies==0)
         {
         	
-            for(int a=0; a<numberOfEnemies;a++)
+            for(int a=0; a < numberOfEnemies; a++)
             {
             	float x, y;
             	x = (float)(Math.random()*400)+800;
@@ -50,4 +58,11 @@ public class Spawn
     }
     
     
+    public static void updateStatistics(){
+    	//TODO: Updates statistics on player. 
+    }
+    
+    public static int getWave(){
+    	return wave;
+    }
 }

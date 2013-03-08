@@ -41,14 +41,18 @@ public class PlayState extends BasicGameState {
         	obj.draw(g);
         }
 		entities.draw(g);
-        g.drawString("Player HP: " + player.getHealth() + "        Round " + Spawn.wave, 5, 30);
+        g.drawString("Player HP: " + player.getHealth() + "        Round " + Spawn.getWave(), 5, 30);
 	}
 
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
+		
 		if(!paused){
+			
 	        Collision.checkCollisions(entities.getEntities());
+	        
 	        Spawn.spawnWave(entities.getEntities(), entities);
+	        
             entities.update(delta);
             
             if(input.isKeyDown(Input.KEY_W)){
