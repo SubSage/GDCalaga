@@ -1,4 +1,6 @@
 package org.gdc.gdcalaga;
+import org.gdc.gdcalaga.audio.AudioAsset;
+import org.gdc.gdcalaga.audio.AudioManager;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -15,10 +17,15 @@ public class PlayState extends BasicGameState {
     private EntityManager entities = new EntityManager();
     private Input input;
 
+    private AudioManager audioManager = AudioManager.getAudioManager();
+    
     @Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
         input = container.getInput();
         player= new Player(entities,50,300);
+        
+        audioManager.loadAudioAssets();
+        audioManager.playMusic(AudioAsset.MUSIC_LEVEL_1);
 	}
 
 	@Override
@@ -50,6 +57,7 @@ public class PlayState extends BasicGameState {
             if(input.isKeyPressed(Input.KEY_SPACE))
             {
                 player.fire();
+                audioManager.playSFX(AudioAsset.SFX_FIRE1);
             }
 		}
 		

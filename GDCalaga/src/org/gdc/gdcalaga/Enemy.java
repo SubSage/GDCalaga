@@ -1,4 +1,8 @@
 package org.gdc.gdcalaga;
+import java.util.Random;
+
+import org.gdc.gdcalaga.audio.AudioAsset;
+import org.gdc.gdcalaga.audio.AudioManager;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -7,6 +11,8 @@ import org.newdawn.slick.SlickException;
 
 public class Enemy extends Entity
 {
+	private static final int MAX_FIRE = 750;
+	
     private float x, y, lastX, lastY, xVel, yVel, health;
     private int height, width, alliance;
     Image ship;
@@ -16,6 +22,11 @@ public class Enemy extends Entity
     private Path path;
     private PathNode node;
     private float startX, startY, pathXVel, pathYVel;
+    private float fireRate;
+    private float fireRateDT;
+    private Random rand;
+
+	private AudioManager audioManager;
     
     public Enemy(EntityManager manager, float xpos, float ypos)
     {
@@ -32,7 +43,9 @@ public class Enemy extends Entity
         
         pathing = false;
         
-        
+        rand = new Random(System.currentTimeMillis());
+        fireRate = rand.nextInt(MAX_FIRE);
+        fireRateDT = 0;
 
         try {
 			ship = new Image("Pics/Enemy.png");
@@ -40,7 +53,7 @@ public class Enemy extends Entity
 			e.printStackTrace();
 		}
         
-        
+        audioManager = AudioManager.getAudioManager();
     }
     
     public void setPath(Path newPath){
@@ -70,8 +83,11 @@ public class Enemy extends Entity
             if(exp.IsDead()) Destroy();
         } else {
         	
-            if(Math.random()*100*delta < 10){
+        	fireRateDT += delta;
+        	if (fireRateDT > fireRate) {
                 fire();
+                fireRateDT = 0;
+                fireRate = rand.nextInt(MAX_FIRE);
             }
         	
         	if(!pathing){
@@ -145,6 +161,7 @@ public class Enemy extends Entity
     {
         Bullet newBullet = new Bullet(entities, (int)x, (int)y ,1 , alliance);
         newBullet.setSpeed(-250, 0);
+        audioManager.playSFX(AudioAsset.SFX_FIRE2);
     }
     
     private void Explode(){

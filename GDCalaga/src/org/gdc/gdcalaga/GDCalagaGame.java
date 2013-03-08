@@ -7,7 +7,6 @@ public class GDCalagaGame extends StateBasedGame{
 
 	public GDCalagaGame() {
 		super("GDCalaga");
-		
 	}
 
 	public void initStatesList(GameContainer arg0) throws SlickException {
