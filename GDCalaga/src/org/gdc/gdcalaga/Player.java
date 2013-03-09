@@ -10,6 +10,7 @@ public class Player extends Entity
 {
     private float xVel, yVel, health;
     private int height, width, alliance;
+    private static int totalPoints = 0; //the score is static in case we give players multiple lives in the future
     Image ship;
     
     public Player(EntityManager manager, int xpos, int ypos)
@@ -93,11 +94,34 @@ public class Player extends Entity
         health-=dmg;
     }
     
-    public int getHealth(){
+    public int getHealth()
+    {
         return (int)health;
     }
     
-    public int getAlliance(){
+    public int getAlliance()
+    {
         return alliance;
     }
+    
+    public static int getTotalPoints()
+    {
+    	return totalPoints;
+    }
+    
+    public static void increaseTotalPoints(int pointValue)
+    {
+    	totalPoints += pointValue;
+    }
+    //my idea here is that ship upgrades will cost points to buy, like in most games.
+    public static void decreaseTotalPoints(int pointValue)
+    {
+    	if( (totalPoints - pointValue) >= 0)
+    	{
+    		totalPoints -= pointValue;
+    	}
+    	else
+    		System.out.println("Can't spend any more points!"); //TODO Fix error message
+    }
+  
 }
