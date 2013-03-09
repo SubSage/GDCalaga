@@ -55,6 +55,11 @@ public class PlayState extends BasicGameState {
 	        
             entities.update(delta);
             
+            if( ( Math.random()*100) < .1  )
+            {
+            	((Background)disObjs.get(0)).addRandomFloater();
+            }
+            
             if(input.isKeyDown(Input.KEY_W)){
                 player.moveUp(delta);
             }

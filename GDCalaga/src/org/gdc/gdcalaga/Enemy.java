@@ -193,7 +193,7 @@ public class Enemy extends Entity
     
     public void fire()
     {
-        Bullet newBullet = new Bullet(entities, (int)x, (int)y ,1 , alliance);
+        Bullet newBullet = new Bullet(entities, (int)x - width/2 + 3, (int)y ,1 , alliance);
         newBullet.setSpeed(-250, 0);
         audioManager.playSFX(AudioAsset.SFX_FIRE2);
     }
