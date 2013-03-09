@@ -19,16 +19,17 @@ public class Background extends DisplayObject {
 	private LinkedList<Point> floaterPoints = new LinkedList<Point>();
 	private LinkedList<Integer> floaterCounts=new LinkedList<Integer>();
 	private LinkedList<Image> images = new LinkedList<Image>();
-	private Image planet1;
-	private Image planet2;
-	
 	public Background(int width, int height) throws SlickException {
 	
 		bgImg = new Image("./Pics/space.png");
-		planet1 = new Image("./Pics/planet1.png");
-		planet2 = new Image("./Pics/planet2.png");
-		images.add(planet1);
-		images.add(planet2);
+		
+		
+		images.add(new Image("./Pics/planet1.png"));
+		images.add(new Image("./Pics/planet2.png"));
+		images.add(new Image("./Pics/Astroid2.png"));
+		images.add(new Image("./Pics/Astroid3.png"));
+		images.add(new Image("./Pics/Astroid4.png"));
+		images.add(new Image("./Pics/Astroid5.png"));
 		
 		wCount = width / bgImg.getWidth() + 2;
 		hCount = height / bgImg.getHeight() + 2;
@@ -40,10 +41,31 @@ public class Background extends DisplayObject {
 				bgPoints.add(new Point(x, y));
 				x = x + bgImg.getWidth();
 				
-				if((int)(Math.random()*100)<4)
+				int chance =(int)(Math.random()*100);
+				if( chance < 3 )
 				{
 					floaterPoints.add(new Point((int)(Math.random()*1280), (int)(Math.random()*720) ));
-					floaterCounts.add((int)(Math.random()*images.size()));
+					floaterCounts.add(0);
+				} else if(chance < 6 )
+				{
+					floaterPoints.add(new Point((int)(Math.random()*1280), (int)(Math.random()*720) ));
+					floaterCounts.add(1);
+				}else if(chance < 30 )
+				{
+					floaterPoints.add(new Point((int)(Math.random()*1280), (int)(Math.random()*720) ));
+					floaterCounts.add(2);
+				}else if(chance < 50 )
+				{
+					floaterPoints.add(new Point((int)(Math.random()*1280), (int)(Math.random()*720) ));
+					floaterCounts.add(3);
+				}else if(chance < 70 )
+				{
+					floaterPoints.add(new Point((int)(Math.random()*1280), (int)(Math.random()*720) ));
+					floaterCounts.add(4);
+				}else if(chance < 90 )
+				{
+					floaterPoints.add(new Point((int)(Math.random()*1280), (int)(Math.random()*720) ));
+					floaterCounts.add(5);
 				}
 				
 			}
@@ -122,7 +144,7 @@ public class Background extends DisplayObject {
 		{
 			Point fpts = floaterPoints.get(f);
 			Image img = images.get(floaterCounts.get(f));
-			g.drawImage(img , fpts.getX() - img.getWidth()/2 ,fpts.getY() + img.getHeight()/2);
+			g.drawImage(img , fpts.getX() - img.getWidth()/2 ,fpts.getY() - img.getHeight()/2);
 			
 		
 		}
@@ -131,8 +153,27 @@ public class Background extends DisplayObject {
 	
 	public void addRandomFloater()
 	{
-		floaterPoints.add(new Point((int)(Math.random()*100)+1300, (int)(Math.random()*720) ));
-		floaterCounts.add((int)(Math.random()*images.size()));
+		floaterPoints.add(new Point((int)(Math.random()*100)+1400, (int)(Math.random()*720) ));
+		int chance =(int)(Math.random()*100);
+		if( chance < 3 )
+		{
+			floaterCounts.add(0);
+		} else if(chance < 6 )
+		{
+			floaterCounts.add(1);
+		}else if(chance < 30 )
+		{
+			floaterCounts.add(2);
+		}else if(chance < 50 )
+		{
+			floaterCounts.add(3);
+		}else if(chance < 70 )
+		{
+			floaterCounts.add(4);
+		}else if(chance < 90 )
+		{
+			floaterCounts.add(5);
+		}
 		
 	}
 }
