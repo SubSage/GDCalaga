@@ -14,7 +14,7 @@ public class Enemy extends Entity
 	private static final int MAX_FIRE = 1500;
 	
     private float x, y, lastX, lastY, xVel, yVel, health;
-    private int height, width, alliance;
+    private int height, width, alliance, pointValue;
     Image ship;
     private Explosion exp;
     private boolean exploding, pathing;
@@ -43,6 +43,7 @@ public class Enemy extends Entity
         yVel=100;
         health=3;
         alliance=0;
+        pointValue = 10;
         shape = new RectShape(x, y, width, height);
         
         pathing = false;
@@ -206,6 +207,7 @@ public class Enemy extends Entity
         exploding = true;    
         
         if(grouped) group.removeEnemy(this);
+        Player.increaseTotalPoints(pointValue);
     }
     
     
