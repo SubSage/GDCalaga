@@ -1,7 +1,6 @@
 package org.gdc.gdcalaga;
 
 import java.util.LinkedList;
-import java.util.Random;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -17,16 +16,19 @@ public class Background extends DisplayObject {
 	private float maxY;
 	
 	private LinkedList<Point> bgPoints = new LinkedList<Point>();
+	private LinkedList<Point> floaterPoints = new LinkedList<Point>();
+	private LinkedList<Integer> floaterCounts=new LinkedList<Integer>();
+	private LinkedList<Image> images = new LinkedList<Image>();
 	private Image planet1;
-	private float p1x, p1y;
 	private Image planet2;
-	private float p2x, p2y;
 	
 	public Background(int width, int height) throws SlickException {
 	
 		bgImg = new Image("./Pics/space.png");
 		planet1 = new Image("./Pics/planet1.png");
 		planet2 = new Image("./Pics/planet2.png");
+		images.add(planet1);
+		images.add(planet2);
 		
 		wCount = width / bgImg.getWidth() + 2;
 		hCount = height / bgImg.getHeight() + 2;
@@ -37,19 +39,23 @@ public class Background extends DisplayObject {
 			for (int col = 0; col < wCount; col++) {
 				bgPoints.add(new Point(x, y));
 				x = x + bgImg.getWidth();
+				
+				if((int)(Math.random()*100)<4)
+				{
+					floaterPoints.add(new Point((int)(Math.random()*1280), (int)(Math.random()*720) ));
+					floaterCounts.add((int)(Math.random()*images.size()));
+				}
+				
 			}
 			x = 0;
 			y = y + bgImg.getHeight();
+			
+			
 		}
 		
 		maxX = bgImg.getWidth() * wCount;
 		maxY = bgImg.getHeight() * hCount;
 		
-		Random rand = new Random(System.currentTimeMillis());
-		p1x = width / 2 + rand.nextInt(width/2);
-		p1y = height / 2 + rand.nextInt(height/2);
-		p2x = width / 2 + rand.nextInt(width/2);
-		p2y = height / 2 + rand.nextInt(height/2);
 	}
 	
 	@Override
@@ -75,9 +81,26 @@ public class Background extends DisplayObject {
 				updateY = true;
 			}
 		}
+		
+		for(int f=0; f<floaterCounts.size(); f++)
+		{
+			Point p=floaterPoints.get(f);
+			Image img=images.get(floaterCounts.get(f));
+			p.setX(p.getX()+diffX);
+			p.setY(p.getY()+diffY);
+			if(p.getX() + img.getWidth()/2 < 0 || p.getY() + img.getHeight()/2 < 0)
+			{
+				floaterCounts.remove(f);
+				floaterPoints.remove(f);
+				f--;
+			}
+			
+		}
+		
 		if (updateX) {
 			maxX = maxX + bgImg.getWidth();
 		}
+		
 		if (updateY) {
 			maxY = maxY + bgImg.getHeight();
 		}
@@ -85,20 +108,31 @@ public class Background extends DisplayObject {
 		diffX = -10 * delta / 1000;
 		diffY = -4 * delta / 1000;
 		
-		p1x += diffX;
-		p2x += diffX;
 		
-		p1y += diffY;
-		p2y += diffY;
 	}
 
 	@Override
 	public void draw(Graphics g) {
+		
 		for (Point p : bgPoints) {
 			g.drawImage(bgImg, p.getX(), p.getY());
 		}
 		
-		g.drawImage(planet1, p1x, p1y);
-		g.drawImage(planet2, p2x, p2y);
+		for(int f=0; f<floaterCounts.size(); f++) 
+		{
+			Point fpts = floaterPoints.get(f);
+			Image img = images.get(floaterCounts.get(f));
+			g.drawImage(img , fpts.getX() - img.getWidth()/2 ,fpts.getY() + img.getHeight()/2);
+			
+		
+		}
+		
+	}
+	
+	public void addRandomFloater()
+	{
+		floaterPoints.add(new Point((int)(Math.random()*100)+1300, (int)(Math.random()*720) ));
+		floaterCounts.add((int)(Math.random()*images.size()));
+		
 	}
 }
