@@ -24,6 +24,8 @@ public class PlayState extends BasicGameState {
     
     private List<DisplayObject> disObjs = new LinkedList<DisplayObject>();
     
+    PathRegistry paths;
+    
     @Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
         input = container.getInput();
@@ -31,6 +33,9 @@ public class PlayState extends BasicGameState {
         
         audioManager.loadAudioAssets();
         audioManager.playMusic(AudioAsset.MUSIC_LEVEL_1);
+        
+        paths = new PathRegistry();
+        paths.loadFromJson("./data/paths.json");
         
         disObjs.add(new Background(container.getWidth(), container.getHeight()));
 	}
@@ -51,7 +56,7 @@ public class PlayState extends BasicGameState {
 			
 	        Collision.checkCollisions(entities.getEntities());
 	        
-	        Spawn.spawnWave(entities.getEntities(), entities);
+	        Spawn.spawnWave(paths, entities);
 	        
             entities.update(delta);
             

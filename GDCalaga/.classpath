@@ -8,5 +8,6 @@
 	<classpathentry kind="lib" path="libs/slick.jar"/>
 	<classpathentry kind="lib" path="libs/jogg-0.0.7.jar"/>
 	<classpathentry kind="lib" path="libs/jorbis-0.0.15.jar"/>
+	<classpathentry kind="lib" path="libs/gson-2.2.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -2,7 +2,7 @@ package org.gdc.gdcalaga;
 
 public class PathNode {
 	public float goalX, goalY, speed;
-	private boolean relative;
+	public boolean relative;
 	
 	PathNode(boolean rel, float x, float y, float moveSpeed){
 		relative = rel;

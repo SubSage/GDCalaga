@@ -17,9 +17,10 @@ public class Spawn
     private static int wave=0;
     
     
-    public static void spawnWave(ArrayList<Entity> ents, EntityManager mng) {
+    public static void spawnWave(PathRegistry paths, EntityManager mng) {
         
         int countOfEnemies=0;
+        ArrayList<Entity> ents = mng.getEntities();
         
         for(Entity e : ents)
         {
@@ -32,7 +33,9 @@ public class Spawn
         if(countOfEnemies==0)
         {
         	EnemyGroup group = new EnemyGroup(mng, 100, 800, 0);
-        	
+
+            int pathNum = (int)Math.floor(Math.random() * 3);
+            
             for(int a=0; a < numberOfEnemies; a++)
             {
             	float x, y;
@@ -40,10 +43,14 @@ public class Spawn
             	y = (float)(Math.random()*400);
                 Enemy newEnemy = new Enemy(mng,x,y);
                 
+                /*
                 Path enemyPath = new Path(group.xPos + x, group.yPos + y);
                 enemyPath.addNode(true, 400, 0, 1);
                 enemyPath.addNode(false, 700, 300, 1);
                 enemyPath.addNode(true, 0, 0, 1f);
+                */
+                
+                Path enemyPath = paths.getPath(pathNum, group.xPos + x, group.yPos + y);
 
                 newEnemy.setGroup(group, x, y);
                 newEnemy.setPath(enemyPath);

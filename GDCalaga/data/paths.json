@@ -1,0 +1,60 @@
+[
+	//Path 0
+	[
+	{goalX : 400,
+	goalY : 0,
+	speed : 1,
+	relative : true},
+	
+	{goalX : 700,
+	goalY : 300,
+	speed : 1,
+	relative : false},
+	
+	{goalX : 0,
+	goalY : 0,
+	speed : 1,
+	relative : true}
+	],
+	
+	//Path 1
+	[
+	{goalX : 1400,
+	goalY : 360,
+	speed : 1,
+	relative : false},
+	
+	{goalX : 700,
+	goalY : 360,
+	speed : 2,
+	relative : false},
+	
+	{goalX : 0,
+	goalY : 0,
+	speed : 1,
+	relative : true}
+	],
+	
+	//Path 2
+	[
+	{goalX : 400,
+	goalY : -50,
+	speed : 1,
+	relative : false},
+	
+	{goalX : 200,
+	goalY : 600,
+	speed : 2,
+	relative : false},
+	
+	{goalX : 900,
+	goalY : 150,
+	speed : 1,
+	relative : false},
+	
+	{goalX : 0,
+	goalY : 0,
+	speed : 1,
+	relative : true}
+	]
+]
