@@ -25,7 +25,7 @@ public class Collision {
                     if(B.shape != null && B.shape.type != Shape.ShapeType.Null)
                     {
                         
-                        if(A.shape.Intersects(B.shape))
+                        if(A.shape.Intersects(B.shape) && !A.IsDying() && !B.IsDying())
                         {
                             
                             A.Collide(B);
