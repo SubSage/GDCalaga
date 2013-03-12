@@ -64,9 +64,6 @@ public class EnemyGroup extends Entity{
 		    changeDir();
 		}
 		
-		if(enemies.size() == 0){
-			Destroy();
-		}
 	}
 
 	public void draw(Graphics g) {
