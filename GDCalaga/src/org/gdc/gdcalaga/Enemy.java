@@ -13,8 +13,8 @@ public class Enemy extends Entity
 {
 	private static final int MAX_FIRE = 1500;
 	
-    private float x, y, lastX, lastY, xVel, yVel, health;
-    private int height, width, alliance, pointValue;
+    protected float x, y, lastX, lastY, xVel, yVel, health;
+    protected int height, width, alliance, pointValue;
     Image ship;
     private Explosion exp;
     private boolean exploding, pathing;
@@ -30,7 +30,7 @@ public class Enemy extends Entity
     private boolean grouped;
     public float relX, relY;
 
-	private AudioManager audioManager;
+	protected AudioManager audioManager;
     
     public Enemy(EntityManager manager, float xpos, float ypos)
     {
