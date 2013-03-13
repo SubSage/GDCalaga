@@ -1,5 +1,4 @@
 package org.gdc.gdcalaga;
-import java.lang.*;
 import java.util.*;
 import org.newdawn.slick.Graphics;
 
@@ -71,7 +70,7 @@ public class Wave extends Entity {
         if(type == "block"){
             float newX = curX * 400 / xCols;
             float newY = curY * 620 / yRows;
-            Enemy newEnemy = new Enemy2(entities, newX, newY);
+            Enemy newEnemy = new Enemy(entities, newX, newY);
             newEnemy.setGroup(group, newX, newY);
             newEnemy.setPath(path.copy(x + newX, y + newY));
             curY++;

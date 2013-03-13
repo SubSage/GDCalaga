@@ -7,15 +7,15 @@ import org.newdawn.slick.SlickException;
 
 public class Bullet extends Entity
 {
-    private float damage, lastX, lastY, xVel, yVel;
+    private float damage, xVel, yVel;
     private int  width, height, alliance;
     private Image bullet;
     
     public Bullet(EntityManager manager, int xpos, int ypos, int dmg, int alnc)
     {
         super(manager);
-        x=xpos;lastX=x;
-        y=ypos;lastY=y;
+        x=xpos;
+        y=ypos;
         width=9;
         height=5;
         damage=dmg;
@@ -37,8 +37,6 @@ public class Bullet extends Entity
     public void update(float delta)
     {
         
-        lastX = x;
-        lastY = y;
         
         x+= xVel * delta / 1000;
         y+= yVel * delta / 1000;

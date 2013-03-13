@@ -1,6 +1,5 @@
 package org.gdc.gdcalaga;
 import java.util.*;
-import java.lang.*;
 import java.io.*;
 import java.lang.reflect.*;
 import com.google.gson.Gson;
@@ -37,6 +36,7 @@ public class PathRegistry {
             while((line = read.readLine()) != null){
                 buffer += line + "\n";
             }
+            read.close();
         } catch(Exception e){
             throw new RuntimeException(e);
         }

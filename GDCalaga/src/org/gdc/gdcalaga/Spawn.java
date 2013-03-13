@@ -13,22 +13,17 @@ import java.util.ArrayList;
 public class Spawn 
 {
     
-    private static int numberOfEnemies=1;
     private static int wave=0;
     
     
     public static void spawnWave(PathRegistry paths, EntityManager mng) {
         
-        int countOfEnemies=0;
         int countWaves = 0;
         ArrayList<Entity> ents = mng.getEntities();
         
         for(Entity e : ents)
         {
-            if(e instanceof Enemy)
-            {
-                countOfEnemies++;
-            }
+            
             if(e instanceof Wave){
                 countWaves++;
             }
