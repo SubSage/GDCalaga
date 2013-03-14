@@ -51,7 +51,7 @@ public class Spawn
             Path enemyPath = paths.getPath(pathNum, group.xPos + x, group.yPos + y);
             
             int rows = (int)Math.ceil(Math.random() * 3 + 4);
-            int cols = (int)Math.ceil(Math.random() * 3);
+            int cols = (int)Math.ceil(Math.random() * 3 + 2);
             
             new Wave(mng, "block", rows, cols, 10, 200, enemyPath);
             

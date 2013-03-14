@@ -13,7 +13,7 @@ public class Enemy extends Entity
 {
 	private static final int MAX_FIRE = 1500;
 	
-    protected float x, y, lastX, lastY, xVel, yVel, health;
+    protected float x, y, xVel, yVel, health;
     protected int height, width, alliance, pointValue;
     Image ship;
     private Explosion exp;
@@ -35,8 +35,8 @@ public class Enemy extends Entity
     public Enemy(EntityManager manager, float xpos, float ypos)
     {
         super(manager);
-        x=xpos;lastX=x;
-        y=ypos;lastY=y;
+        x=xpos;
+        y=ypos;
         width=41;
         height=32;
         xVel=0;
@@ -98,66 +98,23 @@ public class Enemy extends Entity
         if(exploding)
         {
             exp.update(delta);
-            if(exp.IsDead()) Destroy();
-        } else {
-        	
+            if(exp.IsDead())
+            	Destroy();
+        }
+        
+        else
+        {
         	fireRateDT += delta;
-        	if (fireRateDT > fireRate) {
+        	
+        	if (fireRateDT > fireRate)
+        	{
                 fire();
                 fireRateDT = 0;
                 fireRate = rand.nextInt(MAX_FIRE);
             }
         	
-
+        	move(delta);
         	
-        	
-        	if(!pathing){
-        	    if(grouped){
-                    y = group.yPos + relY;
-                    x = group.xPos + relX;
-                } else {
-    	            x+= xVel * delta / 1000;
-    	            y+= yVel * delta / 1000;
-    	            
-    	            if(y<0 || y>720){
-    	            }
-    
-    	            if(y<0){
-    	            	y = 0;
-    	                yVel*=-1;
-    	            }
-    	            
-    	            if(y>720){
-    	            	y = 720;
-    	                yVel*=-1;
-    	            }
-                }
-        	} else {
-                
-				pathXVel = (node.goalX - startX) / node.speed;
-				pathYVel = (node.goalY - startY) / node.speed;
-        		x += pathXVel * delta / 1000;
-        		y += pathYVel * delta / 1000;
-        		if(pathXVel * (node.goalX - x) < 0 || pathYVel * (node.goalY - y) < 0){
-        			x = node.goalX;
-        			y = node.goalY;
-        			startX = x;
-        			startY = y;
-        			if(path.hasNext()){
-        				node = path.next();
-        				if(grouped && !path.hasNext()){
-        				    node.goalX = group.xPos + relX;
-        				    node.goalY = group.getYAfterTime(node.speed) + relY;
-        				}
-        			} else {
-        				pathing = false;
-        			}
-        		}
-        		
-        		
-        	}
-            
-            
         }
         
         
@@ -196,6 +153,68 @@ public class Enemy extends Entity
         Bullet newBullet = new Bullet(entities, (int)x - width/2 + 3, (int)y ,1 , alliance);
         newBullet.setSpeed(-250, 0);
         audioManager.playSFX(AudioAsset.SFX_FIRE2);
+    }
+    
+    
+    public void move(float delta)
+    {
+    	
+    	if(!pathing)
+    	{
+    	    if(grouped)
+    	    {
+                y = group.yPos + relY;
+                x = group.xPos + relX;
+            }
+    	    else
+            {
+	            x+= xVel * delta / 1000;
+	            y+= yVel * delta / 1000;
+	            
+
+	            if(y<0)
+	            {
+	            	y = 0;
+	                yVel*=-1;
+	            }
+	            
+	            else if(y>720)
+	            {
+	            	y = 720;
+	                yVel*=-1;
+	            }
+            }
+    	}
+    	else
+    	{
+            
+			pathXVel = (node.goalX - startX) / node.speed;
+			pathYVel = (node.goalY - startY) / node.speed;
+    		x += pathXVel * delta / 1000;
+    		y += pathYVel * delta / 1000;
+    		if(pathXVel * (node.goalX - x) < 0 || pathYVel * (node.goalY - y) < 0)
+    		{
+    			x = node.goalX;
+    			y = node.goalY;
+    			startX = x;
+    			startY = y;
+    			if(path.hasNext())
+    			{
+    				node = path.next();
+    				if(grouped && !path.hasNext())
+    				{
+    				    node.goalX = group.xPos + relX;
+    				    node.goalY = group.getYAfterTime(node.speed) + relY;
+    				}
+    			}
+    			else
+    			{
+    				pathing = false;
+    			}
+    		}
+    		
+    		
+    	}
     }
     
     private void Explode(){
