@@ -44,12 +44,11 @@ public class RectShape extends Shape {
          || other.pos.y + other.size.y / 2 < this.pos.y - this.size.y / 2
          || other.pos.y - other.size.y / 2 > this.pos.y + this.size.y / 2)
         {
-        	return false;
+            return false;
         } 
         else 
         {
-        	return true;
+            return true;
         }  
     }
-    
 }

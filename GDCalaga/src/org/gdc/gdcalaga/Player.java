@@ -8,9 +8,9 @@ import org.newdawn.slick.geom.Vector2f;
 
 public class Player extends Entity
 {
-	private static final int SIZE_WIDTH = 49;
-	private static final int SIZE_HEIGHT = 29;
-	private static final int SPEED = 220;
+    private static final int SIZE_WIDTH = 49;
+    private static final int SIZE_HEIGHT = 29;
+    private static final int SPEED = 220;
 	
     private float health;
     private Vector2f velocity;
@@ -33,10 +33,10 @@ public class Player extends Entity
         shape = new RectShape(pos, size);
         
         try {
-			ship= new Image("Pics/Player.png");
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
+            ship= new Image("Pics/Player.png");
+        } catch (SlickException e) {
+            e.printStackTrace();
+        }
     }
     
     
@@ -90,7 +90,7 @@ public class Player extends Entity
     {
     	if(other instanceof Bullet && ((Bullet)other).getAlliance()!=alliance)
     	{
-    		Hurt(((Bullet)other).getDamage());
+    	    Hurt(((Bullet)other).getDamage());
     	}
     }
     
@@ -122,10 +122,10 @@ public class Player extends Entity
     {
     	if( (totalPoints - pointValue) >= 0)
     	{
-    		totalPoints -= pointValue;
+    	    totalPoints -= pointValue;
     	}
     	else
-    		System.out.println("Can't spend any more points!"); //TODO Fix error message
+    	    System.out.println("Can't spend any more points!"); //TODO Fix error message
     }
   
 }

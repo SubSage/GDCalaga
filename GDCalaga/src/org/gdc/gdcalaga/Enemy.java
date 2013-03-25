@@ -12,9 +12,9 @@ import org.newdawn.slick.geom.Vector2f;
 
 public class Enemy extends Entity
 {
-	private static final int MAX_FIRE = 1500;
-	private static final int SIZE_WIDTH = 41;
-	private static final int SIZE_HEIGHT = 32;
+    private static final int MAX_FIRE = 1500;
+    private static final int SIZE_WIDTH = 41;
+    private static final int SIZE_HEIGHT = 32;
     
     protected Vector2f pos, velocity, size;
     protected float health;
@@ -34,7 +34,7 @@ public class Enemy extends Entity
     private boolean grouped;
     public Vector2f relPos;
 
-	protected AudioManager audioManager;
+    protected AudioManager audioManager;
     
     public Enemy(EntityManager manager, Vector2f position)
     {
@@ -56,31 +56,34 @@ public class Enemy extends Entity
         fireRateDT = 0;
 
         try {
-			ship = new Image("Pics/Enemy.png");
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
+            ship = new Image("Pics/Enemy.png");
+        } catch (SlickException e) {
+            e.printStackTrace();
+        }
         
         audioManager = AudioManager.getAudioManager();
     }
     
-    public void setPath(Path newPath){
-    	path = newPath;
+    public void setPath(Path newPath)
+    {
+        path = newPath;
     	
     	//Spawn at the first node in the path
     	PathNode spawnPos = path.next();
     	pos = spawnPos.goalPos;
     	
     	//Then start moving toward the next node
-    	if(path.hasNext()){
-	    	node = path.next();
-	    	startPos = pos;
-	    	pathing = true;
+    	if(path.hasNext())
+    	{
+    	    node = path.next();
+    	    startPos = pos;
+    	    pathing = true;
     	}
     }
     
-    public void setGroup(EnemyGroup g, Vector2f relativePosition){
-    	group = g;
+    public void setGroup(EnemyGroup g, Vector2f relativePosition)
+    {
+        group = g;
     	grouped = true;
     	relPos = relativePosition;
     	pos = relPos.copy().add(group.pos);
@@ -90,7 +93,6 @@ public class Enemy extends Entity
     
     public void update(float delta)
     {
-        
         if(exploding)
         {
             exp.update(delta);
@@ -100,17 +102,15 @@ public class Enemy extends Entity
         
         else
         {
-        	fireRateDT += delta;
+            fireRateDT += delta;
         	
-        	if (fireRateDT > fireRate)
-        	{
+            if (fireRateDT > fireRate)
+            {
                 fire();
                 fireRateDT = 0;
                 fireRate = rand.nextInt(MAX_FIRE);
             }
-        	
-        	move(delta);
-        	
+            move(delta);
         }
         
         
@@ -122,28 +122,28 @@ public class Enemy extends Entity
     
     public void draw(Graphics g)
     {
-    	int drawX = (int)(pos.x - size.x / 2);
+        int drawX = (int)(pos.x - size.x / 2);
         int drawY = (int)(pos.y - size.y / 2);
         float scale = size.x / ship.getWidth();
         if(!exploding){
-        	ship.draw(drawX, drawY, scale, Color.white);
+            ship.draw(drawX, drawY, scale, Color.white);
         } else {
-        	exp.render(g);
+            exp.render(g);
         }
     }
 
     public void Collide(Entity other)
     {
-    	if(other instanceof Bullet && ((Bullet)other).getAlliance()!=alliance)
+        if(other instanceof Bullet && ((Bullet)other).getAlliance()!=alliance)
     	{
-    		Hurt(((Bullet)other).getDamage());
+    	    Hurt(((Bullet)other).getDamage());
     	}
         
     }
     
     public void fire()
     {
-    	Vector2f bulletPosition = new Vector2f((pos.x - size.x / 2) + 3, pos.y);
+        Vector2f bulletPosition = new Vector2f((pos.x - size.x / 2) + 3, pos.y);
         Bullet newBullet = new Bullet(entities, bulletPosition, 1, alliance);
         newBullet.setSpeed(-250, 0);
         audioManager.playSFX(AudioAsset.SFX_FIRE2);
@@ -152,62 +152,62 @@ public class Enemy extends Entity
     
     public void move(float delta)
     {
-    	
-    	if(!pathing)
-    	{
-    	    if(grouped)
-    	    {
+        if(!pathing)
+        {
+            if(grouped)
+            {
                 pos = group.pos.copy().add(relPos);
             }
-    	    else
+            else
             {
-	            Vector2f adjustedVelocity = velocity.copy().scale(delta / 1000);
-	            pos.add(adjustedVelocity);
+                Vector2f adjustedVelocity = velocity.copy().scale(delta / 1000);
+                pos.add(adjustedVelocity);
 
-	            if(pos.y < 0)
-	            {
-	            	pos.y = 0;
-	                velocity.y *= -1;
-	            }
+                if(pos.y < 0)
+                {
+                    pos.y = 0;
+                    velocity.y *= -1;
+                }
 	            
-	            else if(pos.y > 720)
-	            {
-	            	pos.y = 720;
-	                velocity.y *= -1;
-	            }
+                else if(pos.y > 720)
+                {
+                    pos.y = 720;
+                    velocity.y *= -1;
+                }
             }
-    	}
-    	else
-    	{
-    		pathVelocity.x = (node.goalPos.x - startPos.x) / node.speed;
-    		pathVelocity.y = (node.goalPos.y - startPos.y) / node.speed;
-    		pos.x += pathVelocity.x * delta / 1000;
-    		pos.y += pathVelocity.y * delta / 1000;
+        }
+        else
+        {
+            pathVelocity.x = (node.goalPos.x - startPos.x) / node.speed;
+            pathVelocity.y = (node.goalPos.y - startPos.y) / node.speed;
+            pos.x += pathVelocity.x * delta / 1000;
+            pos.y += pathVelocity.y * delta / 1000;
     		
-    		if (pathVelocity.x * (node.goalPos.x - pos.x) < 0 
-    		 || pathVelocity.y * (node.goalPos.y - pos.y) < 0)
-    		{
-    			startPos = pos = node.goalPos;
+            if (pathVelocity.x * (node.goalPos.x - pos.x) < 0 
+             || pathVelocity.y * (node.goalPos.y - pos.y) < 0)
+            {
+                startPos = pos = node.goalPos;
     			
-    			if (path.hasNext())
-    			{
-    				node = path.next();
-    				if (grouped && !path.hasNext())
-    				{
-    					node.goalPos.x = group.pos.x + relPos.x;
-    					node.goalPos.y = group.getYAfterTime(node.speed) + relPos.y;
-    				}
-    			}
-    			else
-    			{
-    				pathing = false;
-    			}
-    		}
-    	}
+                if (path.hasNext())
+                {
+                    node = path.next();
+                    if (grouped && !path.hasNext())
+                    {
+                        node.goalPos.x = group.pos.x + relPos.x;
+                        node.goalPos.y = group.getYAfterTime(node.speed) + relPos.y;
+                    }
+                }
+                else
+                {
+                    pathing = false;
+                }
+            }
+        }
     }
     
-    private void Explode(){
-    	shape.type = Shape.ShapeType.Null;
+    private void Explode()
+    {
+        shape.type = Shape.ShapeType.Null;
 
         exp = new Explosion(pos, 41, 8, size);
         exp.SetImage(ship);

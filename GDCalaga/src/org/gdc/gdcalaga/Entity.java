@@ -8,7 +8,6 @@ import org.newdawn.slick.geom.Vector2f;
 
 public abstract class Entity
 {
-    
     public int id;
     protected EntityManager entities;
     protected float alliance, interp;

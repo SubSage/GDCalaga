@@ -11,26 +11,24 @@ import org.newdawn.slick.geom.Vector2f;
 
 public abstract class DroppableUpgrade extends Entity 
 {
-	private static final float SPEED = 50.f;
-	private static final float SIZE = 25.f;
+    private static final float SPEED = 50.f;
+    private static final float SIZE = 25.f;
 	
-	protected Vector2f pos, vel, size;
-	protected Shape shape;
-	protected Image image;
+    protected Vector2f pos, vel, size;
+    protected Shape shape;
+    protected Image image;
 	
+    protected Path path;
+    protected PathNode node;
 	
-	protected Path path;
-	protected PathNode node;
-	
-	
-	public DroppableUpgrade(EntityManager manager, Vector2f initPos) 
-	{
-		super(manager);
+    public DroppableUpgrade(EntityManager manager, Vector2f initPos) 
+    {
+        super(manager);
+        
+        pos = initPos;
+        vel.set(-SPEED, 0);
+        size.set(SIZE, SIZE);
 		
-		pos = initPos;
-		vel.set(-SPEED, 0);
-		size.set(SIZE, SIZE);
-		
-		shape = new RectShape(pos, size);
-	}
+        shape = new RectShape(pos, size);
+    }
 }

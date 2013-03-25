@@ -7,8 +7,8 @@ import org.newdawn.slick.geom.Vector2f;
 
 public class Bullet extends Entity
 {
-	private static final int SIZE_WIDTH = 9;
-	private static final int SIZE_HEIGHT = 5;
+    private static final int SIZE_WIDTH = 9;
+    private static final int SIZE_HEIGHT = 5;
 	
     private float damage;
     private Vector2f velocity, size;
@@ -27,10 +27,10 @@ public class Bullet extends Entity
         shape = new RectShape(pos, size);
         
         try {
-			bullet = new Image("Pics/Bullet.png");
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
+            bullet = new Image("Pics/Bullet.png");
+        } catch (SlickException e) {
+            e.printStackTrace();
+        }
     }
     
     
@@ -43,11 +43,11 @@ public class Bullet extends Entity
         rect.pos = this.pos;
         
         if (pos.x < 0    && velocity.x <= 0 ||
-        	pos.x > 1280 && velocity.x >= 0 ||
-        	pos.y < 0    && velocity.y <= 0 ||
-        	pos.y > 780  && velocity.y >= 0)
+            pos.x > 1280 && velocity.x >= 0 ||
+            pos.y < 0    && velocity.y <= 0 ||
+            pos.y > 780  && velocity.y >= 0)
         {
-        	Destroy();
+            Destroy();
         }
     }
     
@@ -68,7 +68,7 @@ public class Bullet extends Entity
     
     public void setSpeed(Vector2f speed)
     {
-    	velocity = speed;
+        velocity = speed;
     }
     
     public void Collide(Entity other)
@@ -88,7 +88,6 @@ public class Bullet extends Entity
             {
                 Destroy();
             }
-            
         }
     }
     
@@ -97,7 +96,7 @@ public class Bullet extends Entity
     }
 
 
-	public int getAlliance() {
-		return alliance;
-	}
+    public int getAlliance() {
+        return alliance;
+    }
 }
