@@ -1,23 +1,23 @@
 package org.gdc.gdcalaga;
 
+import org.newdawn.slick.geom.Vector2f;
+
 public class PathNode {
-	public float goalX, goalY, speed;
+	public float speed;
+	public Vector2f goalPos;
 	public boolean relative;
 	
-	PathNode(boolean rel, float x, float y, float moveSpeed){
+	PathNode(boolean rel, Vector2f position, float moveSpeed){
 		relative = rel;
-		goalX = x;
-		goalY = y;
+		goalPos = position;
 		speed = moveSpeed;
 	}
 	
-	public void setPos(float newX, float newY){
-		goalX = newX;
-		goalY = newY;
+	public void setPos(Vector2f newPosition){
+		goalPos = newPosition;
 	}
 	
-	public void translatePos(float addX, float addY){
-		goalX += addX;
-		goalY += addY;
+	public void translatePos(Vector2f translateVector){
+		goalPos.add(translateVector);
 	}
 }

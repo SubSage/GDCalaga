@@ -1,21 +1,20 @@
 package org.gdc.gdcalaga;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.geom.Vector2f;
 
 public class Explosion {
 
 	private int xtiles, ytiles;
-	public float xpos, ypos;
-	private float width, height, life, maxlife;
+	public Vector2f pos, size;
+	private float life, maxlife;
 	private ExplosionParticle[] particles;
 	private boolean dead;
 	
-	Explosion(float x, float y, int xnum, int ynum, float w, float h)
+	Explosion(Vector2f position, int xnum, int ynum, Vector2f size)
 	{
-		xpos = x;
-		ypos = y;
-		width = w;
-		height = h;
+		pos = position;
+		this.size = size;
 		xtiles = xnum;
 		ytiles = ynum;
 		particles = new ExplosionParticle[xtiles * ytiles];
@@ -37,10 +36,10 @@ public class Explosion {
 			int srcYPos = yTile * srch;
 			int srcXPos = xTile * srcw;
 			
-			float w = (width / xtiles);
-			float h = (height / ytiles);
-			float x = xTile * w + xpos - width/2;
-			float y = yTile * h + ypos - height/2;
+			float w = (size.x / xtiles);
+			float h = (size.y / ytiles);
+			float x = xTile * w + pos.x - size.x / 2;
+			float y = yTile * h + pos.y - size.y / 2;
 			particles[tile] = new ExplosionParticle(this, x, y, w, h);
 			particles[tile].SetImage(img, srcXPos, srcYPos, srcw, srch);
 		}

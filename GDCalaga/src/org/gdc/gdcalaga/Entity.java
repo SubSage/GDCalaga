@@ -1,6 +1,6 @@
 package org.gdc.gdcalaga;
 import org.newdawn.slick.Graphics;
-
+import org.newdawn.slick.geom.Vector2f;
 
 //Entity class. An entity is anything that moves and shoots. Main "thing" the player plays against.
 //The player is also an entity. interp is the time inteveral, so that we can update the entity according to time
@@ -11,7 +11,8 @@ public abstract class Entity
     
     public int id;
     protected EntityManager entities;
-    protected float x, y, width, height, alliance, interp;
+    protected float alliance, interp;
+    protected Vector2f pos, size;
     private boolean dying;
     
     protected Shape shape;
@@ -23,22 +24,30 @@ public abstract class Entity
         entities.AddEntity(this);
         
         dying = false;
-        x=y=alliance=0;
+        alliance = 0;
+        pos.set(0, 0);
     }
 
     public Entity(int xpos, int ypos)
     {
-        x=xpos;
-        y=ypos;//Thinking of things, x and xpos should be switched, but the convenience....
+        pos.x = xpos;
+        pos.y = ypos;
     }
     
     public Entity(int xpos, int ypos, float w, float h)
     {
-        x=xpos;
-        y=ypos;//Thinking of things, x and xpos should be switched, but the convenience....
-        width = w;
-        height = h;
-        alliance=0;
+        alliance = 0;
+        
+        pos.x = xpos;
+        pos.y = ypos;
+        size.x = w;
+        size.y = h;
+    }
+    
+    public Entity(Vector2f position, Vector2f size)
+    {
+    	this.pos = position;
+    	this.size = size;
     }
     
     public boolean IsDying()

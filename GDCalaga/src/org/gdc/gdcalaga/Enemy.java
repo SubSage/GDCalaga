@@ -7,49 +7,49 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Vector2f;
 
 
 public class Enemy extends Entity
 {
 	private static final int MAX_FIRE = 1500;
-	
-    protected float x, y, xVel, yVel, health;
-    protected int height, width, alliance, pointValue;
+	private static final int SIZE_WIDTH = 41;
+	private static final int SIZE_HEIGHT = 32;
+    
+    protected Vector2f pos, velocity, size;
+    protected float health;
+    protected int alliance, pointValue;
     Image ship;
     private Explosion exp;
     private boolean exploding, pathing;
     
     private Path path;
     private PathNode node;
-    private float startX, startY, pathXVel, pathYVel;
+    private Vector2f startPos, pathVelocity;
     private float fireRate;
     private float fireRateDT;
     private Random rand;
     
     private EnemyGroup group;
     private boolean grouped;
-    public float relX, relY;
+    public Vector2f relPos;
 
 	protected AudioManager audioManager;
     
-    public Enemy(EntityManager manager, float xpos, float ypos)
+    public Enemy(EntityManager manager, Vector2f position)
     {
         super(manager);
-        x=xpos;
-        y=ypos;
-        width=41;
-        height=32;
-        xVel=0;
-        yVel=100;
-        health=3;
-        alliance=0;
+        pos = position;
+        size.set(SIZE_WIDTH, SIZE_HEIGHT);
+        velocity.set(0, 100);
+        health = 3;
+        alliance = 0;
         pointValue = 10;
-        shape = new RectShape(x, y, width, height);
+        shape = new RectShape(pos, size);
         
         pathing = false;
         grouped = false;
-        relX = 0;
-        relY = 0;
+        relPos.set(0, 0);
         
         rand = new Random(System.currentTimeMillis());
         fireRate = rand.nextInt(MAX_FIRE);
@@ -69,25 +69,21 @@ public class Enemy extends Entity
     	
     	//Spawn at the first node in the path
     	PathNode spawnPos = path.next();
-    	x = spawnPos.goalX;
-    	y = spawnPos.goalY;
+    	pos = spawnPos.goalPos;
     	
     	//Then start moving toward the next node
     	if(path.hasNext()){
 	    	node = path.next();
-	    	startX = x;
-	    	startY = y;
+	    	startPos = pos;
 	    	pathing = true;
     	}
     }
     
-    public void setGroup(EnemyGroup g, float x, float y){
+    public void setGroup(EnemyGroup g, Vector2f relativePosition){
     	group = g;
     	grouped = true;
-    	relX = x;
-    	relY = y;
-    	x = relX + group.xPos;
-    	y = relY + group.yPos;
+    	relPos = relativePosition;
+    	pos = relPos.copy().add(group.pos);
     	g.addEnemy(this);
     }
     
@@ -119,24 +115,21 @@ public class Enemy extends Entity
         
         
         RectShape rect = (RectShape)shape;
-        rect.xpos = x;
-        rect.ypos = y;
+        rect.pos = this.pos;
     }
     
     
     
     public void draw(Graphics g)
     {
-
-        int drawX = (int) (x - width/2);
-        int drawY = (int) (y - height/2);
-        float scale = width / ship.getWidth();
+    	int drawX = (int)(pos.x - size.x / 2);
+        int drawY = (int)(pos.y - size.y / 2);
+        float scale = size.x / ship.getWidth();
         if(!exploding){
         	ship.draw(drawX, drawY, scale, Color.white);
         } else {
         	exp.render(g);
         }
-    	
     }
 
     public void Collide(Entity other)
@@ -150,7 +143,8 @@ public class Enemy extends Entity
     
     public void fire()
     {
-        Bullet newBullet = new Bullet(entities, (int)x - width/2 + 3, (int)y ,1 , alliance);
+    	Vector2f bulletPosition = new Vector2f((pos.x - size.x / 2) + 3, pos.y);
+        Bullet newBullet = new Bullet(entities, bulletPosition, 1, alliance);
         newBullet.setSpeed(-250, 0);
         audioManager.playSFX(AudioAsset.SFX_FIRE2);
     }
@@ -163,48 +157,45 @@ public class Enemy extends Entity
     	{
     	    if(grouped)
     	    {
-                y = group.yPos + relY;
-                x = group.xPos + relX;
+                pos = group.pos.copy().add(relPos);
             }
     	    else
             {
-	            x+= xVel * delta / 1000;
-	            y+= yVel * delta / 1000;
-	            
+	            Vector2f adjustedVelocity = velocity.copy().scale(delta / 1000);
+	            pos.add(adjustedVelocity);
 
-	            if(y<0)
+	            if(pos.y < 0)
 	            {
-	            	y = 0;
-	                yVel*=-1;
+	            	pos.y = 0;
+	                velocity.y *= -1;
 	            }
 	            
-	            else if(y>720)
+	            else if(pos.y > 720)
 	            {
-	            	y = 720;
-	                yVel*=-1;
+	            	pos.y = 720;
+	                velocity.y *= -1;
 	            }
             }
     	}
     	else
     	{
-            
-			pathXVel = (node.goalX - startX) / node.speed;
-			pathYVel = (node.goalY - startY) / node.speed;
-    		x += pathXVel * delta / 1000;
-    		y += pathYVel * delta / 1000;
-    		if(pathXVel * (node.goalX - x) < 0 || pathYVel * (node.goalY - y) < 0)
+    		pathVelocity.x = (node.goalPos.x - startPos.x) / node.speed;
+    		pathVelocity.y = (node.goalPos.y - startPos.y) / node.speed;
+    		pos.x += pathVelocity.x * delta / 1000;
+    		pos.y += pathVelocity.y * delta / 1000;
+    		
+    		if (pathVelocity.x * (node.goalPos.x - pos.x) < 0 
+    		 || pathVelocity.y * (node.goalPos.y - pos.y) < 0)
     		{
-    			x = node.goalX;
-    			y = node.goalY;
-    			startX = x;
-    			startY = y;
-    			if(path.hasNext())
+    			startPos = pos = node.goalPos;
+    			
+    			if (path.hasNext())
     			{
     				node = path.next();
-    				if(grouped && !path.hasNext())
+    				if (grouped && !path.hasNext())
     				{
-    				    node.goalX = group.xPos + relX;
-    				    node.goalY = group.getYAfterTime(node.speed) + relY;
+    					node.goalPos.x = group.pos.x + relPos.x;
+    					node.goalPos.y = group.getYAfterTime(node.speed) + relPos.y;
     				}
     			}
     			else
@@ -212,15 +203,13 @@ public class Enemy extends Entity
     				pathing = false;
     			}
     		}
-    		
-    		
     	}
     }
     
     private void Explode(){
     	shape.type = Shape.ShapeType.Null;
 
-        exp = new Explosion(x, y, 41, 8, width, height);
+        exp = new Explosion(pos, 41, 8, size);
         exp.SetImage(ship);
         
         exploding = true;    
