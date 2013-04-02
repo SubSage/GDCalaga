@@ -9,6 +9,14 @@ import org.newdawn.slick.geom.Vector2f;
  * Upgrades planned for the player:
  * Droppable: Health, shields, rapid fire mode, more bullets
  * Buyable: Speed 
+ * 
+ * TODO
+ * Store the upgrades in an easily retrievable, searchable, and identifiable manner
+ *  We want to have levels of upgrades, so this should be considered
+ * Create a shop at the end of a wave/stage (or something like that)
+ *  for the player to buy upgrades.
+ * Create functionality for the player to be able to activate shields/invuln mode
+ * Create functionality for the player to have more guns
  */
 
 public class Player extends Entity
@@ -19,7 +27,6 @@ public class Player extends Entity
 	
     private float health;
     protected Vector2f velocity;
-    private int alliance;
     private static int totalPoints = 0; //the score is static in case we give players multiple lives in the future
     Image ship;
     
@@ -32,7 +39,7 @@ public class Player extends Entity
         velocity = new Vector2f(SPEED, SPEED);
         
         health = 10;
-        alliance = 1;
+        alliance = Alliance.FRIENDLY;
         
         shape = new RectShape(pos, size);
         
@@ -85,6 +92,7 @@ public class Player extends Entity
     
     public void fire()
     {
+        //TODO add more firing positions and more bullets depending on the upgrades
     	Vector2f position = new Vector2f(pos.x + size.x / 2, pos.y);
         Bullet newBullet = new Bullet(entities, position, 1, alliance);
         newBullet.setSpeed(500, 0);
@@ -92,7 +100,7 @@ public class Player extends Entity
     
     public void Collide(Entity other)
     {
-    	if(other instanceof Bullet && ((Bullet)other).getAlliance()!=alliance)
+    	if(other instanceof Bullet && ((Bullet)other).getAlliance() != alliance)
     	{
     	    Hurt(((Bullet)other).getDamage());
     	}
@@ -107,7 +115,7 @@ public class Player extends Entity
         return health;
     }
     
-    public int getAlliance()
+    public Entity.Alliance getAlliance()
     {
         return alliance;
     }
@@ -131,5 +139,10 @@ public class Player extends Entity
     	else
     	    System.out.println("Can't spend any more points!"); //TODO Fix error message
     }
-  
+    
+    public static void upgrade(Upgrade.UpgradeType upgrade)
+    {
+        //TODO Change the health, hp/armor, fire rate, amount of guns, speed
+        //according to the upgrade passed in
+    } 
 }

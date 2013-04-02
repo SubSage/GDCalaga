@@ -8,9 +8,17 @@ import org.newdawn.slick.geom.Vector2f;
 
 public abstract class Entity
 {
+    public enum Alliance
+    {
+        ENEMY,
+        FRIENDLY,
+        UPGRADE
+    }
+    
     public int id;
     protected EntityManager entities;
-    protected float alliance, interp;
+    protected float interp;
+    protected Entity.Alliance alliance;
     public Vector2f pos, size;
     private boolean dying;
     
@@ -23,7 +31,7 @@ public abstract class Entity
         entities.AddEntity(this);
         
         dying = false;
-        alliance = 0;
+        alliance = Alliance.ENEMY;
         pos = new Vector2f(0, 0);
     }
 
@@ -34,7 +42,7 @@ public abstract class Entity
     
     public Entity(int xpos, int ypos, float w, float h)
     {
-        alliance = 0;
+        alliance = Alliance.ENEMY;
         
         pos = new Vector2f(xpos, ypos);
         size = new Vector2f(w, h);
