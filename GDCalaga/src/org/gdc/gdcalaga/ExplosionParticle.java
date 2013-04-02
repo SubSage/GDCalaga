@@ -1,5 +1,6 @@
 package org.gdc.gdcalaga;
 import org.newdawn.slick.Color;
+import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
@@ -7,21 +8,17 @@ import org.newdawn.slick.Image;
 public class ExplosionParticle{
 	
 	private Image img;
-	private float xpos, ypos, width, height, xvel, yvel;
+	private Vector2f pos, size, velocity;
 	private Color color;
 	private int srcx, srcy, srcwidth, srcheight;
 	private Explosion exp;
 
 	public ExplosionParticle(Explosion explosion, float x, float y, float w, float h) {
-		xpos = x;
-		ypos = y;
-		width = w;
-		height = h;
+	    pos = new Vector2f(x, y);
+	    size = new Vector2f(w, h);
+	    velocity = new Vector2f(5, 5);
 		color = new Color(1,1,1,1);
 		exp = explosion;
-		
-		xvel = 5;
-		yvel = 5;
 	}
 	
 	public void SetImage(Image image, int xoffset, int yoffset, int srcw, int srch){
@@ -33,8 +30,8 @@ public class ExplosionParticle{
 	}
 	
 	public void SetVelocity(){
-		xvel *= (xpos - exp.xpos) * (float)Math.random();
-		yvel *= (ypos - exp.ypos) * (float)Math.random();
+		velocity.x *= (pos.x - exp.pos.x) * (float)Math.random();
+		velocity.y *= (pos.y - exp.pos.y) * (float)Math.random(); 
 	}
 	
 	public void SetColor(float r, float g, float b, float a){
@@ -44,13 +41,15 @@ public class ExplosionParticle{
 		color.a = a;
 	}
 	
-	public void update(float delta){
-		xpos += xvel * delta / 1000;
-		ypos += yvel * delta / 1000;
+	public void update(float delta)
+	{
+		pos.x += velocity.x * delta / 1000;
+		pos.y += velocity.y * delta / 1000;
 	}
 	
 	public void render(Graphics g){
-		img.draw(xpos, ypos, xpos + width, ypos + height, srcx, srcy, srcx + srcwidth, srcy + srcheight, color);
+		img.draw(pos.x, pos.y, pos.x + size.x, pos.y + size.y, 
+		        srcx, srcy, srcx + srcwidth, srcy + srcheight, color);
 	}
 	
 }

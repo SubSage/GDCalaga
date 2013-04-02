@@ -3,82 +3,90 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Vector2f;
 
-
+/*
+ * Upgrades planned for the player:
+ * Droppable: Health, shields, rapid fire mode, more bullets
+ * Buyable: Speed 
+ */
 
 public class Player extends Entity
 {
-    private float xVel, yVel, health;
-    private int height, width, alliance;
+    private static final int SIZE_WIDTH = 49;
+    private static final int SIZE_HEIGHT = 29;
+    private static final int SPEED = 220;
+	
+    private float health;
+    protected Vector2f velocity;
+    private int alliance;
     private static int totalPoints = 0; //the score is static in case we give players multiple lives in the future
     Image ship;
     
-    public Player(EntityManager manager, int xpos, int ypos)
+    public Player(EntityManager manager, Vector2f position)
     {
         super(manager);
-        x=xpos;
-        y=ypos;
-        width=49;
-        height=29;
-        xVel=220;
-        yVel=220;
-        health=10;
-        alliance=1;
-        
-        shape = new RectShape(x, y, width, height);
-        
 
+        pos.set(position);
+        size = new Vector2f(SIZE_WIDTH, SIZE_HEIGHT);
+        velocity = new Vector2f(SPEED, SPEED);
+        
+        health = 10;
+        alliance = 1;
+        
+        shape = new RectShape(pos, size);
+        
         try {
-			ship= new Image("Pics/Player.png");
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
+            ship= new Image("Pics/Player.png");
+        } catch (SlickException e) {
+            e.printStackTrace();
+        }
     }
     
     
     public void update(float delta)
     {
     	RectShape rect = (RectShape)shape;
-        rect.xpos = x;
-        rect.ypos = y;
+        rect.pos.set(this.pos);
     }
     
     public void draw(Graphics g)
     {
-        int drawX = (int) (x - width/2);
-        int drawY = (int) (y - height/2);
-        float scale = width / ship.getWidth();
+        int drawX = (int)(pos.x - size.x / 2);
+        int drawY = (int)(pos.y - size.y / 2);
+        float scale = size.x / ship.getWidth();
         ship.draw(drawX, drawY, scale, Color.white);
     }
     
     
     public void moveUp(float delta)
     {
-        y-=yVel*delta/1000;
-        y = Math.max(height/2, y);
+        pos.y -= velocity.y * delta / 1000;
+        pos.y = Math.max(size.y / 2, pos.y);
     }
     
     public void moveDown(float delta)
-    {
-        y+=yVel*delta/1000;
-        y = Math.min(720 - height/2, y);
+    {    
+        pos.y += velocity.y * delta / 1000;
+        pos.y = Math.min(720 - size.y / 2, pos.y);
     }
     
     public void moveLeft(float delta)
     {
-        x-=xVel*delta/1000;
-        x = Math.max(0 + width/2, x);
+        pos.x -= velocity.x * delta / 1000;
+        pos.x = Math.max(0 + size.x / 2, pos.x);
     }
     
     public void moveRight(float delta)
     {
-        x+=xVel*delta/1000;
-        x = Math.min(1280 - width/2, x);
+        pos.x += velocity.x * delta / 1000;
+        pos.x = Math.min(1280 - size.x / 2, pos.x);
     }
     
     public void fire()
     {
-        Bullet newBullet = new Bullet(entities, (int)x + width/2, (int)y ,1 , alliance);
+    	Vector2f position = new Vector2f(pos.x + size.x / 2, pos.y);
+        Bullet newBullet = new Bullet(entities, position, 1, alliance);
         newBullet.setSpeed(500, 0);
     }
     
@@ -86,7 +94,7 @@ public class Player extends Entity
     {
     	if(other instanceof Bullet && ((Bullet)other).getAlliance()!=alliance)
     	{
-    		Hurt(((Bullet)other).getDamage());
+    	    Hurt(((Bullet)other).getDamage());
     	}
     }
     
@@ -94,9 +102,9 @@ public class Player extends Entity
         health-=dmg;
     }
     
-    public int getHealth()
+    public float getHealth()
     {
-        return (int)health;
+        return health;
     }
     
     public int getAlliance()
@@ -118,10 +126,10 @@ public class Player extends Entity
     {
     	if( (totalPoints - pointValue) >= 0)
     	{
-    		totalPoints -= pointValue;
+    	    totalPoints -= pointValue;
     	}
     	else
-    		System.out.println("Can't spend any more points!"); //TODO Fix error message
+    	    System.out.println("Can't spend any more points!"); //TODO Fix error message
     }
   
 }

@@ -3,71 +3,72 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
-
+import org.newdawn.slick.geom.Vector2f;
 
 public class Bullet extends Entity
 {
-    private float damage, xVel, yVel;
-    private int  width, height, alliance;
+    private static final int SIZE_WIDTH = 9;
+    private static final int SIZE_HEIGHT = 5;
+    
+    private float damage;
+    private Vector2f velocity;
+    private int alliance;
     private Image bullet;
     
-    public Bullet(EntityManager manager, int xpos, int ypos, int dmg, int alnc)
+    public Bullet(EntityManager manager, Vector2f position, int dmg, int alnc)
     {
         super(manager);
-        x=xpos;
-        y=ypos;
-        width=9;
-        height=5;
-        damage=dmg;
-        yVel=0;
-        xVel=0;
-        alliance=alnc;
+        pos.set(position);
+        size = new Vector2f(SIZE_WIDTH, SIZE_HEIGHT);
+        damage = dmg;
+        velocity = new Vector2f(0, 0);
+        alliance = alnc;
         
-        shape = new RectShape(x, y, width, height);
+        shape = new RectShape(pos, size);
         
-
         try {
-			bullet = new Image("Pics/Bullet.png");
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
+            bullet = new Image("Pics/Bullet.png");
+        } catch (SlickException e) {
+            e.printStackTrace();
+        }
     }
     
     
     public void update(float delta)
     {
-        
-        
-        x+= xVel * delta / 1000;
-        y+= yVel * delta / 1000;
-        
+        pos.x += velocity.x * delta / 1000;
+        pos.y += velocity.y * delta / 1000;
         
         RectShape rect = (RectShape)shape;
-        rect.xpos = x;
-        rect.ypos = y;
+        rect.pos.set(this.pos);
         
-        if( x<0    && xVel<=0 ||
-            x>1280 && xVel>=0 ||
-            y<0    && yVel<=0 ||
-            y>780  && yVel>=0){
-                Destroy();
-            }
+        if (pos.x < 0    && velocity.x <= 0 ||
+            pos.x > 1280 && velocity.x >= 0 ||
+            pos.y < 0    && velocity.y <= 0 ||
+            pos.y > 780  && velocity.y >= 0)
+        {
+            Destroy();
+        }
     }
     
     
     public void draw(Graphics g)
     {
-        int drawX = (int) (x - width/2);
-        int drawY = (int) (y - height/2);
+        int drawX = (int)(pos.x - size.x / 2);
+        int drawY = (int)(pos.y - size.y / 2);
         float bw = bullet.getWidth();
-        float scale = width / bw;
+        float scale = size.x / bw;
         bullet.draw(drawX, drawY, scale, Color.white);
     }
     
-    public void setSpeed(float a, float b)
+    public void setSpeed(float xSpeed, float ySpeed)
     {
-        xVel=a;
-        yVel=b;
+        velocity.set(xSpeed, ySpeed);
+    }
+    
+    public void setSpeed(Vector2f speed)
+    {
+        velocity = speed;
     }
     
     public void Collide(Entity other)
@@ -87,7 +88,6 @@ public class Bullet extends Entity
             {
                 Destroy();
             }
-            
         }
     }
     
@@ -96,7 +96,7 @@ public class Bullet extends Entity
     }
 
 
-	public int getAlliance() {
-		return alliance;
-	}
+    public int getAlliance() {
+        return alliance;
+    }
 }
