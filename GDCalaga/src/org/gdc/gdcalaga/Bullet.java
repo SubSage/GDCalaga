@@ -9,9 +9,9 @@ public class Bullet extends Entity
 {
     private static final int SIZE_WIDTH = 9;
     private static final int SIZE_HEIGHT = 5;
-	
+    
     private float damage;
-    private Vector2f velocity, size;
+    private Vector2f velocity, size, pos;
     private int alliance;
     private Image bullet;
     
@@ -19,9 +19,9 @@ public class Bullet extends Entity
     {
         super(manager);
         pos = position;
-        size.set(SIZE_WIDTH, SIZE_HEIGHT);
+        size = new Vector2f(SIZE_WIDTH, SIZE_HEIGHT);
         damage = dmg;
-        velocity.set(0, 0);
+        velocity = new Vector2f(0, 0);
         alliance = alnc;
         
         shape = new RectShape(pos, size);

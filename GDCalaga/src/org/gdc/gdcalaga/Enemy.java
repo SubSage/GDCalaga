@@ -37,11 +37,11 @@ public class Enemy extends Entity
     protected AudioManager audioManager;
     
     public Enemy(EntityManager manager, Vector2f position)
-    {
+    {   
         super(manager);
         pos = position;
-        size.set(SIZE_WIDTH, SIZE_HEIGHT);
-        velocity.set(0, 100);
+        size = new Vector2f(SIZE_WIDTH, SIZE_HEIGHT);
+        velocity = new Vector2f(0, 100);
         health = 3;
         alliance = 0;
         pointValue = 10;
@@ -49,7 +49,10 @@ public class Enemy extends Entity
         
         pathing = false;
         grouped = false;
-        relPos.set(0, 0);
+        relPos = new Vector2f(0, 0);
+        
+        startPos = new Vector2f(0, 0);
+        pathVelocity = new Vector2f(0, 0);
         
         rand = new Random(System.currentTimeMillis());
         fireRate = rand.nextInt(MAX_FIRE);

@@ -5,6 +5,11 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
+/*
+ * Upgrades planned for the player:
+ * Droppable: Health, shields, rapid fire mode, more bullets
+ * Buyable: Speed 
+ */
 
 public class Player extends Entity
 {
@@ -24,11 +29,11 @@ public class Player extends Entity
         super(manager);
 
         pos = position;
-        size.set(SIZE_WIDTH, SIZE_HEIGHT);
-        velocity.set(SPEED, SPEED);
+        size = new Vector2f(SIZE_WIDTH, SIZE_HEIGHT);
+        velocity = new Vector2f(SPEED, SPEED);
         
-        health=10;
-        alliance=1;
+        health = 10;
+        alliance = 1;
         
         shape = new RectShape(pos, size);
         

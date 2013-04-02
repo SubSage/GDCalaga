@@ -1,6 +1,7 @@
 package org.gdc.gdcalaga;
 import java.util.*;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.geom.Vector2f;
 
 public class Wave extends Entity {
     private EnemyGroup group;
@@ -12,18 +13,20 @@ public class Wave extends Entity {
     private float lastSpawn;
     private ArrayList<Enemy> enemies;
     
+    private Vector2f pos;
+    
 
     public Wave(EntityManager manager, String waveType, int rows, int cols, int numEnemies, float spawnDelay, Path wavePath)
     {
         super(manager);
         
-        x = 800;
-        y = 50;
+        pos = new Vector2f(800, 50);
+        
         type = waveType;
         yRows = rows;
         xCols = cols;
         delay = spawnDelay;
-        group = new EnemyGroup(manager, 100, x, y);
+        group = new EnemyGroup(manager, 100, pos.x, pos.y);
         path = wavePath;
         
         lastSpawn = 0;
@@ -70,9 +73,10 @@ public class Wave extends Entity {
         if(type == "block"){
             float newX = curX * 400 / xCols;
             float newY = curY * 620 / yRows;
-            Enemy newEnemy = new Enemy(entities, newX, newY);
-            newEnemy.setGroup(group, newX, newY);
-            newEnemy.setPath(path.copy(x + newX, y + newY));
+            Vector2f newPosition = new Vector2f(newX, newY);
+            Enemy newEnemy = new Enemy(entities, newPosition);
+            newEnemy.setGroup(group, newPosition);
+            newEnemy.setPath(path.copy(pos.copy().add(newPosition)));
             curY++;
             if(curY >= yRows){
                 curY = 0;
@@ -80,8 +84,8 @@ public class Wave extends Entity {
             }
             enemies.add(newEnemy);
         } else if(type == "stream"){
-            Enemy newEnemy = new Enemy(entities, x, y);
-            newEnemy.setPath(path.copy(x, y));
+            Enemy newEnemy = new Enemy(entities, pos);
+            newEnemy.setPath(path.copy(pos));
             enemies.add(newEnemy);
         }
         spawnedEnemies++;

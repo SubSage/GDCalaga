@@ -1,6 +1,6 @@
 package org.gdc.gdcalaga;
 import java.util.ArrayList;
-
+import org.newdawn.slick.geom.Vector2f;
 /*
  * I want this class to learn about the player constantly. It needs to observe the player and from there, decide how to suit the level
  * for the player. We don't have many enemies yet, but we should later have enemies with unique characteristics and features. The class
@@ -40,6 +40,8 @@ public class Spawn
         	x = (float)(Math.random()*400);
         	y = (float)(Math.random()*400);
         	
+        	Vector2f offsetPos = new Vector2f(x, y);
+        	
             /*
             Enemy newEnemy = new Enemy(mng,x,y);
             
@@ -48,7 +50,7 @@ public class Spawn
             enemyPath.addNode(false, 700, 300, 1);
             enemyPath.addNode(true, 0, 0, 1f);
             */
-            Path enemyPath = paths.getPath(pathNum, group.xPos + x, group.yPos + y);
+            Path enemyPath = paths.getPath(pathNum, group.pos.copy().add(offsetPos));
             
             int rows = (int)Math.ceil(Math.random() * 3 + 4);
             int cols = (int)Math.ceil(Math.random() * 3 + 2);

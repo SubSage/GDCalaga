@@ -6,6 +6,8 @@ import org.newdawn.slick.geom.Vector2f;
 /*
  * DroppableUpgrade class. DroppableUpgrades are dropped randomly when enemies 
  * die, and the player must pickup the upgrade to receive the upgrade.
+ * Change this class to just an Upgrade class, that only collides with the player
+ * to activate an upgrade() function
  */
 
 

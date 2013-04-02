@@ -1,41 +1,46 @@
 package org.gdc.gdcalaga;
 import java.util.*;
+import org.newdawn.slick.geom.Vector2f;
 
 public class Path extends Object {
-	private float goalX, goalY;
+	private Vector2f goalPos;
 	private ArrayList<PathNode> nodes;
 	private int currentNode;
 	
-	public Path(float x, float y){
-		goalX = x;
-		goalY = y;
-		currentNode = -1;
-		nodes = new ArrayList<PathNode>();
+	public Path(Vector2f pos)
+	{
+	    goalPos = pos;
+	    currentNode = -1;
+	    nodes = new ArrayList<PathNode>();
 	}
 	
-	public Path copy(float x, float y){
-	    Path newPath = new Path(x, y);
-	    for(PathNode node: nodes){
-	        newPath.addNode(node.relative, node.goalX, node.goalY, node.speed);
+	public Path copy(Vector2f pos)
+	{  
+	    Path newPath = new Path(pos);
+	    for (PathNode node : nodes)
+	    {
+	        newPath.addNode(node.relative, node.goalPos, node.speed);
 	    }
 	    return newPath;
 	}
-	
-	public void addNode(boolean relative, float x, float y, float speed){
-		if(relative){
-			x += goalX;
-			y += goalY;
-		}
-		
-		nodes.add(new PathNode(relative, x, y, speed));
+
+	public void addNode(boolean relative, Vector2f otherPos, float speed)
+	{
+	    if (relative)
+	    {
+	        otherPos.add(this.goalPos);
+	    }
+	    nodes.add(new PathNode(relative, otherPos, speed));
 	}
 	
-	public void setPos(float newX, float newY){
-		for(int i = 0; i < nodes.size(); i++){
-			nodes.get(i).translatePos(newX - goalX, newY - goalY);
-		}
-		goalX = newX;
-		goalY = newY;
+	public void setPos(Vector2f newPos)
+	{
+	    for (int i = 0; i < nodes.size(); i++)
+	    {
+	        //I wish operator overloading was in java
+	        nodes.get(i).translatePos(newPos.copy().sub(goalPos));
+	    }
+	    goalPos = newPos;
 	}
 	
 	public boolean hasNext(){

@@ -14,7 +14,7 @@ public class Enemy2 extends Enemy
 
     public Enemy2(EntityManager manager, Vector2f position) {
         super(manager, position);
-        size.set(SIZE_WIDTH, SIZE_HEIGHT);
+        size = new Vector2f(SIZE_WIDTH, SIZE_HEIGHT);
 		
         try {
             ship = new Image("Pics/EnemyShip2.png");

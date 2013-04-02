@@ -24,23 +24,20 @@ public abstract class Entity
         
         dying = false;
         alliance = 0;
-        pos.set(0, 0);
+        pos = new Vector2f(0, 0);
     }
 
     public Entity(int xpos, int ypos)
     {
-        pos.x = xpos;
-        pos.y = ypos;
+        pos = new Vector2f(xpos, ypos);
     }
     
     public Entity(int xpos, int ypos, float w, float h)
     {
         alliance = 0;
         
-        pos.x = xpos;
-        pos.y = ypos;
-        size.x = w;
-        size.y = h;
+        pos = new Vector2f(xpos, ypos);
+        size = new Vector2f(w, h);
     }
     
     public Entity(Vector2f position, Vector2f size)
