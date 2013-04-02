@@ -4,6 +4,7 @@ import java.io.*;
 import java.lang.reflect.*;
 import com.google.gson.Gson;
 import com.google.gson.reflect.*;
+import org.newdawn.slick.geom.Vector2f;
 
 public class PathRegistry {
     private ArrayList<Path> paths;
@@ -12,9 +13,11 @@ public class PathRegistry {
         paths = new ArrayList<Path>();
     }
     
-    public Path getPath(int id, float x, float y){
-        if(paths.size() > id){
-            Path retPath = paths.get(id).copy(x, y);
+    public Path getPath(int id, Vector2f pos)
+    {
+        if (paths.size() > id)
+        {
+            Path retPath = paths.get(id).copy(pos);
             return retPath;
         } else {
             return null;
@@ -50,10 +53,15 @@ public class PathRegistry {
         
         ArrayList<PathNode[]> nodes = new Gson().fromJson(buffer, collectionType);
         
-        for(PathNode[] nodeArray: nodes){
-            Path newPath = new Path(0, 0);
-            for(PathNode node : nodeArray){
-                newPath.addNode(node.relative, node.goalX, node.goalY, node.speed);
+        for(PathNode[] nodeArray: nodes)
+        {    
+            Vector2f pathPos = new Vector2f(0, 0);
+            Path newPath = new Path(pathPos);
+            
+            for(PathNode node : nodeArray)
+            {
+                node.initialize();  //to solve issues with json
+                newPath.addNode(node.relative, node.goalPos, node.speed);
             }
             registerPath(newPath);
         }

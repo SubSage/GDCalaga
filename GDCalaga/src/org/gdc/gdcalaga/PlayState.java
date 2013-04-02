@@ -1,7 +1,6 @@
 package org.gdc.gdcalaga;
 import java.util.LinkedList;
 import java.util.List;
-
 import org.gdc.gdcalaga.audio.AudioAsset;
 import org.gdc.gdcalaga.audio.AudioManager;
 import org.newdawn.slick.GameContainer;
@@ -10,6 +9,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.geom.Vector2f;
 
 public class PlayState extends BasicGameState {
 	public static final int ID = 0;
@@ -29,7 +29,8 @@ public class PlayState extends BasicGameState {
     @Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
         input = container.getInput();
-        player= new Player(entities,50,300);
+        Vector2f startPosition = new Vector2f(50, 300);
+        player= new Player(entities, startPosition);
         
         audioManager.loadAudioAssets();
         audioManager.playMusic(AudioAsset.MUSIC_LEVEL_1);
