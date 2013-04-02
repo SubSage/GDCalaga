@@ -16,7 +16,7 @@ public class Enemy extends Entity
     private static final int SIZE_WIDTH = 41;
     private static final int SIZE_HEIGHT = 32;
     
-    protected Vector2f pos, velocity, size;
+    protected Vector2f velocity;
     protected float health;
     protected int alliance, pointValue;
     Image ship;
@@ -39,7 +39,7 @@ public class Enemy extends Entity
     public Enemy(EntityManager manager, Vector2f position)
     {   
         super(manager);
-        pos = position;
+        pos.set(position);
         size = new Vector2f(SIZE_WIDTH, SIZE_HEIGHT);
         velocity = new Vector2f(0, 100);
         health = 3;
@@ -73,13 +73,13 @@ public class Enemy extends Entity
     	
     	//Spawn at the first node in the path
     	PathNode spawnPos = path.next();
-    	pos = spawnPos.goalPos;
+    	pos.set(spawnPos.goalPos);
     	
     	//Then start moving toward the next node
     	if(path.hasNext())
     	{
     	    node = path.next();
-    	    startPos = pos;
+    	    startPos.set(pos);
     	    pathing = true;
     	}
     }
@@ -88,8 +88,10 @@ public class Enemy extends Entity
     {
         group = g;
     	grouped = true;
-    	relPos = relativePosition;
-    	pos = relPos.copy().add(group.pos);
+    	relPos.set(relativePosition);
+    	pos.x = relPos.x + group.pos.x;
+    	pos.y = relPos.y + group.pos.y;
+
     	g.addEnemy(this);
     }
     
@@ -118,16 +120,16 @@ public class Enemy extends Entity
         
         
         RectShape rect = (RectShape)shape;
-        rect.pos = this.pos;
+        rect.pos.set(this.pos);
     }
     
     
     
     public void draw(Graphics g)
     {
-        int drawX = (int)(pos.x - size.x / 2);
-        int drawY = (int)(pos.y - size.y / 2);
-        float scale = size.x / ship.getWidth();
+        int drawX = (int)(pos.x - SIZE_WIDTH / 2);
+        int drawY = (int)(pos.y - SIZE_HEIGHT / 2);
+        float scale = SIZE_WIDTH / ship.getWidth();
         if(!exploding){
             ship.draw(drawX, drawY, scale, Color.white);
         } else {
@@ -159,12 +161,13 @@ public class Enemy extends Entity
         {
             if(grouped)
             {
-                pos = group.pos.copy().add(relPos);
+                pos.x = group.pos.x + relPos.x;
+                pos.y = group.pos.y + relPos.y;
             }
             else
             {
-                Vector2f adjustedVelocity = velocity.copy().scale(delta / 1000);
-                pos.add(adjustedVelocity);
+                pos.x += velocity.x * delta / 1000;
+                pos.y += velocity.y * delta / 1000;
 
                 if(pos.y < 0)
                 {
@@ -189,7 +192,8 @@ public class Enemy extends Entity
             if (pathVelocity.x * (node.goalPos.x - pos.x) < 0 
              || pathVelocity.y * (node.goalPos.y - pos.y) < 0)
             {
-                startPos = pos = node.goalPos;
+                pos.set(node.goalPos);
+                startPos.set(pos);
     			
                 if (path.hasNext())
                 {

@@ -14,8 +14,8 @@ public class RectShape extends Shape {
     RectShape(Vector2f position, Vector2f size){
         type = ShapeType.Rectangle;
         
-        this.pos = position;
-        this.size = size;
+        this.pos = new Vector2f(position);
+        this.size = new Vector2f(size);
     }
     
     public boolean Intersects(Shape other){
@@ -29,16 +29,7 @@ public class RectShape extends Shape {
     }
     
     private boolean Intersects(RectShape other){
-        /*if(other.xpos + other.width/2 < xpos - width/2 ||
-            other.xpos - other.width/2 > xpos + width/2 ||
-            other.ypos + other.height/2 < ypos - height/2 ||
-            other.ypos - other.height/2 > ypos + height/2){
-            
-            return false;
-        } else {
-            return true;
-        }*/
-        
+
         if (other.pos.x + other.size.x / 2 < this.pos.x - this.size.x / 2
          || other.pos.x - other.size.x / 2 > this.pos.x + this.size.x / 2
          || other.pos.y + other.size.y / 2 < this.pos.y - this.size.y / 2

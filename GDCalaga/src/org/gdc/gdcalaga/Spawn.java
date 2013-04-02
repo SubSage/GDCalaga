@@ -50,7 +50,10 @@ public class Spawn
             enemyPath.addNode(false, 700, 300, 1);
             enemyPath.addNode(true, 0, 0, 1f);
             */
-            Path enemyPath = paths.getPath(pathNum, group.pos.copy().add(offsetPos));
+           
+            Path enemyPath = paths.getPath(pathNum 
+                                         , new Vector2f(group.pos.x + offsetPos.x, 
+                                                        group.pos.y + offsetPos.y));
             
             int rows = (int)Math.ceil(Math.random() * 3 + 4);
             int cols = (int)Math.ceil(Math.random() * 3 + 2);

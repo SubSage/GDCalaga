@@ -17,7 +17,7 @@ public class PathNode {
     
     PathNode(boolean rel, Vector2f position, float moveSpeed){
         relative = rel;
-        goalPos = position;
+        goalPos = new Vector2f(position);
         speed = moveSpeed;
     }
 	

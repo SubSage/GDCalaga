@@ -18,8 +18,7 @@ public class Player extends Entity
     private static final int SPEED = 220;
 	
     private float health;
-    private Vector2f velocity;
-    private Vector2f size;
+    protected Vector2f velocity;
     private int alliance;
     private static int totalPoints = 0; //the score is static in case we give players multiple lives in the future
     Image ship;
@@ -28,7 +27,7 @@ public class Player extends Entity
     {
         super(manager);
 
-        pos = position;
+        pos.set(position);
         size = new Vector2f(SIZE_WIDTH, SIZE_HEIGHT);
         velocity = new Vector2f(SPEED, SPEED);
         
@@ -48,7 +47,7 @@ public class Player extends Entity
     public void update(float delta)
     {
     	RectShape rect = (RectShape)shape;
-        rect.pos = this.pos;
+        rect.pos.set(this.pos);
     }
     
     public void draw(Graphics g)

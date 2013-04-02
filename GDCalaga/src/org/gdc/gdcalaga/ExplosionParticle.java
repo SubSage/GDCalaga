@@ -43,7 +43,8 @@ public class ExplosionParticle{
 	
 	public void update(float delta)
 	{
-		pos.add(velocity.copy().scale(delta / 1000));
+		pos.x += velocity.x * delta / 1000;
+		pos.y += velocity.y * delta / 1000;
 	}
 	
 	public void render(Graphics g){

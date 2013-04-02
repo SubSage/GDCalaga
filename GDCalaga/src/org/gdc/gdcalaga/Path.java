@@ -9,7 +9,7 @@ public class Path extends Object {
 	
 	public Path(Vector2f pos)
 	{
-	    goalPos = pos;
+	    goalPos = new Vector2f(pos);
 	    currentNode = -1;
 	    nodes = new ArrayList<PathNode>();
 	}
@@ -40,7 +40,7 @@ public class Path extends Object {
 	        //I wish operator overloading was in java
 	        nodes.get(i).translatePos(newPos.copy().sub(goalPos));
 	    }
-	    goalPos = newPos;
+	    goalPos.set(newPos);
 	}
 	
 	public boolean hasNext(){

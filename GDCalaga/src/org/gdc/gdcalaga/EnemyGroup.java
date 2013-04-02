@@ -4,7 +4,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Vector2f;
 
 public class EnemyGroup extends Entity{
-	public Vector2f pos, velocity;
+	public Vector2f velocity;
 	private float top, bottom;
 	private ArrayList<Enemy> enemies;
 	
@@ -13,11 +13,10 @@ public class EnemyGroup extends Entity{
 		velocity = new Vector2f(0, vely);
 		pos = new Vector2f(x, y);
 		enemies = new ArrayList<Enemy>();
-		
 	}
 	
 	public void changeDir(){
-		velocity.negateLocal();
+		velocity.y *= -1;
 	}
 	
 	public void addEnemy(Enemy enemy){

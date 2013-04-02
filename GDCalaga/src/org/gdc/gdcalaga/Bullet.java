@@ -11,14 +11,14 @@ public class Bullet extends Entity
     private static final int SIZE_HEIGHT = 5;
     
     private float damage;
-    private Vector2f velocity, size, pos;
+    private Vector2f velocity;
     private int alliance;
     private Image bullet;
     
     public Bullet(EntityManager manager, Vector2f position, int dmg, int alnc)
     {
         super(manager);
-        pos = position;
+        pos.set(position);
         size = new Vector2f(SIZE_WIDTH, SIZE_HEIGHT);
         damage = dmg;
         velocity = new Vector2f(0, 0);
@@ -36,11 +36,11 @@ public class Bullet extends Entity
     
     public void update(float delta)
     {
-        Vector2f adjustedVelocity = velocity.copy().scale(delta / 1000);
-        pos.add(adjustedVelocity);
+        pos.x += velocity.x * delta / 1000;
+        pos.y += velocity.y * delta / 1000;
         
         RectShape rect = (RectShape)shape;
-        rect.pos = this.pos;
+        rect.pos.set(this.pos);
         
         if (pos.x < 0    && velocity.x <= 0 ||
             pos.x > 1280 && velocity.x >= 0 ||

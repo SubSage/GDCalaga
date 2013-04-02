@@ -12,8 +12,8 @@ public class Explosion {
 	
     Explosion(Vector2f position, int xnum, int ynum, Vector2f size)
     {
-        pos = position;
-        this.size = size;
+        pos = new Vector2f(position);
+        this.size = new Vector2f(size);
         xtiles = xnum;
         ytiles = ynum;
         particles = new ExplosionParticle[xtiles * ytiles];

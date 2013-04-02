@@ -11,7 +11,7 @@ public abstract class Entity
     public int id;
     protected EntityManager entities;
     protected float alliance, interp;
-    protected Vector2f pos, size;
+    public Vector2f pos, size;
     private boolean dying;
     
     protected Shape shape;
@@ -42,8 +42,8 @@ public abstract class Entity
     
     public Entity(Vector2f position, Vector2f size)
     {
-    	this.pos = position;
-    	this.size = size;
+    	this.pos.set(position);
+    	this.size.set(position);
     }
     
     public boolean IsDying()

@@ -13,9 +13,6 @@ public class Wave extends Entity {
     private float lastSpawn;
     private ArrayList<Enemy> enemies;
     
-    private Vector2f pos;
-    
-
     public Wave(EntityManager manager, String waveType, int rows, int cols, int numEnemies, float spawnDelay, Path wavePath)
     {
         super(manager);
@@ -76,7 +73,7 @@ public class Wave extends Entity {
             Vector2f newPosition = new Vector2f(newX, newY);
             Enemy newEnemy = new Enemy(entities, newPosition);
             newEnemy.setGroup(group, newPosition);
-            newEnemy.setPath(path.copy(pos.copy().add(newPosition)));
+            newEnemy.setPath(path.copy(new Vector2f(pos.x + newPosition.x, pos.y + newPosition.y)));
             curY++;
             if(curY >= yRows){
                 curY = 0;
@@ -84,8 +81,8 @@ public class Wave extends Entity {
             }
             enemies.add(newEnemy);
         } else if(type == "stream"){
-            Enemy newEnemy = new Enemy(entities, pos);
-            newEnemy.setPath(path.copy(pos));
+            Enemy newEnemy = new Enemy(entities, pos.copy());
+            newEnemy.setPath(path.copy(pos.copy()));
             enemies.add(newEnemy);
         }
         spawnedEnemies++;
