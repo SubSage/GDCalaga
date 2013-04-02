@@ -18,7 +18,7 @@ public class Enemy extends Entity
     
     protected Vector2f velocity;
     protected float health;
-    protected int alliance, pointValue;
+    protected int pointValue;
     Image ship;
     private Explosion exp;
     private boolean exploding, pathing;
@@ -43,7 +43,7 @@ public class Enemy extends Entity
         size = new Vector2f(SIZE_WIDTH, SIZE_HEIGHT);
         velocity = new Vector2f(0, 100);
         health = 3;
-        alliance = 0;
+        alliance = Alliance.ENEMY;
         pointValue = 10;
         shape = new RectShape(pos, size);
         
@@ -232,7 +232,7 @@ public class Enemy extends Entity
         if(health<=0) Explode();
     }
     
-    public int getAlliance(){
+    public Entity.Alliance getAlliance(){
         return alliance;
     }
 

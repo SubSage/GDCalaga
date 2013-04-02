@@ -12,10 +12,9 @@ public class Bullet extends Entity
     
     private float damage;
     private Vector2f velocity;
-    private int alliance;
     private Image bullet;
     
-    public Bullet(EntityManager manager, Vector2f position, int dmg, int alnc)
+    public Bullet(EntityManager manager, Vector2f position, int dmg, Entity.Alliance alnc)
     {
         super(manager);
         pos.set(position);
@@ -75,7 +74,7 @@ public class Bullet extends Entity
     {
         if(other instanceof Enemy)
         {
-            if(alliance!=((Enemy)other).getAlliance())
+            if(alliance != ((Enemy)other).getAlliance())
             {
                 Destroy();
             }
@@ -96,7 +95,7 @@ public class Bullet extends Entity
     }
 
 
-    public int getAlliance() {
+    public Entity.Alliance getAlliance() {
         return alliance;
     }
 }
