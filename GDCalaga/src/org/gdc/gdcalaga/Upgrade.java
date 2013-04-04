@@ -24,6 +24,13 @@ public class Upgrade extends Entity
 {
     public enum UpgradeType
     {
+        /* Whenever upgrades are added or removed, 
+         *  NUM_UPGRADES must be updated
+         *  getIndexedUpgrade() must be updated
+         *  the constructor of Upgrade() must be updated
+         *  A new image must be created for a new upgrade
+         */
+        
         //Droppable upgrades
         HEALTH,
         SHIELD,
@@ -31,7 +38,39 @@ public class Upgrade extends Entity
         NUM_GUNS,
         
         //Buyable upgrades
-        SPEED
+        SPEED,
+        
+        /* Error upgrade, should always be the last value in this enum 
+           and is not included in upgrade count */
+        INVALID_UPGRADE;
+        
+        //This number MUST be changed whenever an upgrade is added here
+        private static final int NUM_UPGRADES = 5;
+        
+        public static int getNumUpgrades()
+        {
+            return NUM_UPGRADES;
+        }
+        
+        //This method MUST be updated to include changes to the types
+        public static UpgradeType getIndexedUpgrade(int index)
+        {
+            switch (index)
+            {
+            case 1:
+                return UpgradeType.HEALTH;
+            case 2:
+                return UpgradeType.SHIELD;
+            case 3:
+                return UpgradeType.FIRE_RATE;
+            case 4:
+                return UpgradeType.NUM_GUNS;
+            case 5:
+                return UpgradeType.SPEED;
+            default:
+                return UpgradeType.INVALID_UPGRADE;
+            }
+        }
     }
     
     private static final float SPEED = 50.f;
@@ -53,16 +92,41 @@ public class Upgrade extends Entity
         super(manager);
         
         pos = new Vector2f(initPos);
-        vel.set(-SPEED, 0);
-        size.set(SIZE_WIDTH, SIZE_HEIGHT);
+        vel = new Vector2f(-SPEED, 0);
+        size = new Vector2f(SIZE_WIDTH, SIZE_HEIGHT);
 		
         shape = new RectShape(pos, size);
         
         upgradeType = type;
+        String imageDirectory;
+        switch (upgradeType)
+        {
+        case HEALTH:
+            imageDirectory = new String("Pics/upgrade_health.png");
+            break;
+        case SHIELD:
+            imageDirectory = new String("Pics/upgrade_shield.png");
+            break;
+        case FIRE_RATE:
+            imageDirectory = new String("Pics/upgrade_firerate.png");
+            break; 
+        case NUM_GUNS:
+            imageDirectory = new String("Pics/upgrade_firerate.png");
+            break;
+        case SPEED:
+            imageDirectory = new String("Pics/upgrade_speed.png");
+            break;
+        case INVALID_UPGRADE:
+            imageDirectory = new String("Pics/upgrade_invalid.png");
+            break;
+        default:
+            imageDirectory = new String("Pics/upgrade_invalid.png");
+            break;  
+        }
         
-        // TODO Instantiate the image depending on what upgrade type this is
+        // TODO Create images for the upgrades
         /*try {
-            image = new Image("Pics/...");
+            image = new Image(imageDirectory);
         } catch (SlickException e) {
             e.printStackTrace();
         }*/
@@ -77,11 +141,13 @@ public class Upgrade extends Entity
         rect.pos.set(this.pos);
     }
 
-    public void draw(Graphics g) {
+    public void draw(Graphics g) 
+    {
         int drawX = (int)(pos.x - size.x / 2);
         int drawY = (int)(pos.y - size.y / 2);
         float scale = size.x / image.getWidth();
-        image.draw(drawX, drawY, scale, Color.white);
+        //TODO Uncomment the below line when all upgrade images are made
+        //image.draw(drawX, drawY, scale, Color.white);
     }
 
     public void Collide(Entity other) {
