@@ -71,7 +71,7 @@ public class Upgrade extends Entity
     public void update(float delta)
     {
         //TODO Temporary right to left linear movement, perhaps sinusoidal movement?
-        this.pos.x += vel.x * delta / 1000;
+        this.pos.x += vel.x * delta / 1000 - 2*Math.sin(pos.x*Math.PI/180);
         
         RectShape rect = (RectShape)shape;
         rect.pos.set(this.pos);
