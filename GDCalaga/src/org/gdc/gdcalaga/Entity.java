@@ -64,6 +64,11 @@ public abstract class Entity
         dying = true;
     }
     
+    public Entity.Alliance getAlliance()
+    {
+        return alliance;
+    }
+    
     public abstract void update(float delta);
     
     public abstract void draw(Graphics g);

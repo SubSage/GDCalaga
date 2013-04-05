@@ -262,9 +262,4 @@ public class Enemy extends Entity
             Upgrade upgrade = new Upgrade(entities, this.pos, type);
         }
     }
-    
-    public Entity.Alliance getAlliance(){
-        return alliance;
-    }
-
 }
