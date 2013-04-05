@@ -30,9 +30,13 @@ public class Player extends Entity
     //Upgradable Player attributes
     private float health;
     private float shields;
-    private float fireRate;
+    private float fireRate; //fireRate in bullets per second
     private float damage;
     protected Vector2f velocity;
+    
+    //these values are intertwined with fireRate to create a standard fire rate
+    private int ticksPerBullet;
+    private int ticksSinceLastBullet;
     
     public Player(EntityManager manager, Vector2f position)
     {
@@ -42,8 +46,14 @@ public class Player extends Entity
         size = new Vector2f(SIZE_WIDTH, SIZE_HEIGHT);
         velocity = new Vector2f(220, 220);
         
-        health = 10;
         alliance = Alliance.FRIENDLY;
+        
+        health = 10;
+        shields = 0;
+        fireRate = 2;   //bullets per second
+        ticksPerBullet = (int)(1000 / fireRate);   //milliseconds in a second / fireRate
+                                                   //since delta time is in milliseconds
+        ticksSinceLastBullet = ticksPerBullet;  //so we can shoot right off the bat
         
         shape = new RectShape(pos, size);
         
@@ -94,12 +104,24 @@ public class Player extends Entity
         pos.x = Math.min(1280 - size.x / 2, pos.x);
     }
     
-    public void fire()
+    public boolean fire(float delta)
     {
         //TODO add more firing positions and more bullets depending on the upgrades
-    	Vector2f position = new Vector2f(pos.x + size.x / 2, pos.y);
-        Bullet newBullet = new Bullet(entities, position, 1, alliance);
-        newBullet.setSpeed(500, 0);
+        ticksSinceLastBullet += delta;
+        if (ticksSinceLastBullet >= ticksPerBullet)
+        {
+            Vector2f position = new Vector2f(pos.x + size.x / 2, pos.y);
+            Bullet newBullet = new Bullet(entities, position, 1, alliance);
+            newBullet.setSpeed(500, 0);
+            
+            ticksSinceLastBullet = 499;
+            return true;
+        }
+        else 
+        {
+            return false;
+        }
+            
     }
     
     public void Collide(Entity other)

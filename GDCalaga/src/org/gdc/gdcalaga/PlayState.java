@@ -79,10 +79,12 @@ public class PlayState extends BasicGameState {
                 player.moveRight(delta);
             }
             
-            if(input.isKeyPressed(Input.KEY_SPACE))
+            if(input.isKeyDown(Input.KEY_SPACE))
             {
-                player.fire();
-                audioManager.playSFX(AudioAsset.SFX_FIRE1);
+                if (player.fire(delta))
+                {
+                    audioManager.playSFX(AudioAsset.SFX_FIRE1);
+                }
             }
             
             for (DisplayObject obj : disObjs) {

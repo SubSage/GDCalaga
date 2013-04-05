@@ -1,5 +1,7 @@
 package org.gdc.gdcalaga;
 
+import java.util.Random;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -83,12 +85,13 @@ public class Upgrade extends Entity
     private static final float SIZE_WIDTH = 25.f;
     private static final float SIZE_HEIGHT = 25.f;
 	
-    public Vector2f pos, vel, size;
+    public Vector2f initPos, pos, vel, size;
     protected Shape shape;
     protected Image image;
 	
     protected Path path;
     protected PathNode node;
+    private int amplitude;
     
     public Upgrade.UpgradeType upgradeType;
 	
@@ -97,6 +100,7 @@ public class Upgrade extends Entity
         super(manager);
         
         pos = new Vector2f(initPos);
+        this.initPos = new Vector2f(initPos);
         vel = new Vector2f(-SPEED, 0);
         size = new Vector2f(SIZE_WIDTH, SIZE_HEIGHT);
 		
@@ -135,13 +139,23 @@ public class Upgrade extends Entity
         } catch (SlickException e) {
             e.printStackTrace();
         }
+        
+       //Initialize a random amplitude for the movement function
+        Random rand = new Random(System.currentTimeMillis());
+        int maxAmplitude = 50;
+        int minAmplitude = 10;
+        amplitude = rand.nextInt(maxAmplitude - minAmplitude + 1) + minAmplitude;
     }
     
     public void update(float delta)
-    {
-        //TODO Temporary right to left linear movement, perhaps sinusoidal movement?
-        this.pos.x += vel.x * delta / 1000 - 2*Math.sin(pos.x*Math.PI/180);
-        
+    { 
+        this.pos.x += vel.x * delta / 1000;
+        this.pos.y = (float)(amplitude * Math.sin(pos.x / 20)) + initPos.y;
+        if (this.pos.x <= -20)
+        {
+            Destroy();
+        }
+       
         RectShape rect = (RectShape)shape;
         rect.pos.set(this.pos);
     }
@@ -154,10 +168,13 @@ public class Upgrade extends Entity
         image.draw(drawX, drawY, scale, Color.white);
     }
 
-    public void Collide(Entity other) {
+    public void Collide(Entity other) 
+    {
+        //TODO Upgrades are not being checked for collisions
         if(other instanceof Player)
         {
             Player.upgrade(upgradeType);
+            Destroy();
         }
     }
 }
