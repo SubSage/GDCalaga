@@ -1,6 +1,7 @@
 package org.gdc.gdcalaga;
 import java.util.Random;
 
+import org.gdc.gdcalaga.Upgrade.UpgradeType;
 import org.gdc.gdcalaga.audio.AudioAsset;
 import org.gdc.gdcalaga.audio.AudioManager;
 import org.newdawn.slick.Color;
@@ -229,7 +230,37 @@ public class Enemy extends Entity
     public void Hurt(float dmg)
     {
         health -= dmg;
-        if(health<=0) Explode();
+        if(health <= 0) 
+        {
+            Explode();
+            tryDropUpgrade();
+        }
+    }
+    
+    /*
+     * Generates a random number to see if it is a ripe time to drop
+     * an upgrade
+     */
+    private void tryDropUpgrade()
+    {
+        Random rand = new Random(System.currentTimeMillis());
+        //percentageChance 1 - 100
+        final int percentageChance = 5;
+        int max = (100 / percentageChance);
+        int min = 1;
+        int chance = rand.nextInt(max - min + 1) + min;
+        if (chance == (int)(max / 2))   //chance can be compared to any number between min and max
+        {
+            //generate a random upgrade
+            int numUpgrades = UpgradeType.getNumDroppableUpgrades();
+            int minUpgrade = 1;
+            chance = rand.nextInt(numUpgrades - minUpgrade + 1) + minUpgrade;
+            
+            Upgrade.UpgradeType type;
+            type = UpgradeType.getIndexedUpgrade(chance);
+    
+            Upgrade upgrade = new Upgrade(entities, this.pos, type);
+        }
     }
     
     public Entity.Alliance getAlliance(){
