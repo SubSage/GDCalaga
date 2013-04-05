@@ -51,7 +51,7 @@ public class Player extends Entity
         
         health = 10;
         shields = 0;
-        fireRate = 5;   //bullets per second
+        fireRate = 20;   //bullets per second
         ticksPerBullet = (int)(1000 / fireRate);   //milliseconds in a second / fireRate
                                                    //since delta time is in milliseconds
         ticksSinceLastBullet = ticksPerBullet;  //so we can shoot right off the bat
@@ -181,7 +181,8 @@ public class Player extends Entity
             shields+=3;
             break;
         case FIRE_RATE:
-            fireRate+=10;//ticksPerBullet....might need some change/rework/etc
+            fireRate +=1;
+            ticksPerBullet = (int)(1000 / fireRate); //A little bit weird that we have to do these two things...
             break; 
         case NUM_GUNS:
             
