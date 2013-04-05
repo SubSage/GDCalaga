@@ -243,25 +243,22 @@ public class Enemy extends Entity
      */
     private void tryDropUpgrade()
     {
-        Random rand = new Random();
-        int percentageChance = 5;
+        Random rand = new Random(System.currentTimeMillis());
+        //percentageChance 1 - 100
+        final int percentageChance = 5;
         int max = (100 / percentageChance);
         int min = 1;
         int chance = rand.nextInt(max - min + 1) + min;
-        if (chance == (int)(max / 2))   //we have a winner
+        if (chance == (int)(max / 2))   //chance can be compared to any number between min and max
         {
-            int numUpgrades = UpgradeType.getNumUpgrades();
+            //generate a random upgrade
+            int numUpgrades = UpgradeType.getNumDroppableUpgrades();
             int minUpgrade = 1;
             chance = rand.nextInt(numUpgrades - minUpgrade + 1) + minUpgrade;
             
             Upgrade.UpgradeType type;
             type = UpgradeType.getIndexedUpgrade(chance);
-            
-            //Perhaps, in the future, we can implement a logging system
-            if (type == UpgradeType.INVALID_UPGRADE)
-                type = UpgradeType.HEALTH;  //in the future, maybe generate
-                                            //another upgrade?
-            
+    
             Upgrade upgrade = new Upgrade(entities, this.pos, type);
         }
     }

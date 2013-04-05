@@ -36,6 +36,7 @@ public class Upgrade extends Entity
         SHIELD,
         FIRE_RATE,
         NUM_GUNS,
+        DAMAGE,
         
         //Buyable upgrades
         SPEED,
@@ -45,16 +46,18 @@ public class Upgrade extends Entity
         INVALID_UPGRADE;
         
         //This number MUST be changed whenever an upgrade is added here
-        private static final int NUM_UPGRADES = 5;
+        private static final int NUM_DROPPABLE_UPGRADES = 5;
         
-        public static int getNumUpgrades()
+        public static int getNumDroppableUpgrades()
         {
-            return NUM_UPGRADES;
+            return NUM_DROPPABLE_UPGRADES;
         }
         
         //This method MUST be updated to include changes to the types
         public static UpgradeType getIndexedUpgrade(int index)
         {
+            //Droppable upgrades always go first
+            //When in doubt, use the same order as in the enum
             switch (index)
             {
             case 1:
@@ -66,6 +69,8 @@ public class Upgrade extends Entity
             case 4:
                 return UpgradeType.NUM_GUNS;
             case 5:
+                return UpgradeType.DAMAGE;
+            case 6:
                 return UpgradeType.SPEED;
             default:
                 return UpgradeType.INVALID_UPGRADE;
@@ -99,6 +104,7 @@ public class Upgrade extends Entity
         
         upgradeType = type;
         String imageDirectory;
+        //These upgrade types do not include Buyable upgrades
         switch (upgradeType)
         {
         case HEALTH:
@@ -111,10 +117,10 @@ public class Upgrade extends Entity
             imageDirectory = new String("Pics/upgrade_firerate.png");
             break; 
         case NUM_GUNS:
-            imageDirectory = new String("Pics/upgrade_firerate.png");
+            imageDirectory = new String("Pics/upgrade_numguns.png");
             break;
-        case SPEED:
-            imageDirectory = new String("Pics/upgrade_speed.png");
+        case DAMAGE:
+            imageDirectory = new String("Pics/upgrade_damage.png");
             break;
         case INVALID_UPGRADE:
             imageDirectory = new String("Pics/upgrade_invalid.png");
@@ -124,12 +130,11 @@ public class Upgrade extends Entity
             break;  
         }
         
-        // TODO Create images for the upgrades
-        /*try {
+        try {
             image = new Image(imageDirectory);
         } catch (SlickException e) {
             e.printStackTrace();
-        }*/
+        }
     }
     
     public void update(float delta)
@@ -146,8 +151,7 @@ public class Upgrade extends Entity
         int drawX = (int)(pos.x - size.x / 2);
         int drawY = (int)(pos.y - size.y / 2);
         float scale = size.x / image.getWidth();
-        //TODO Uncomment the below line when all upgrade images are made
-        //image.draw(drawX, drawY, scale, Color.white);
+        image.draw(drawX, drawY, scale, Color.white);
     }
 
     public void Collide(Entity other) {
