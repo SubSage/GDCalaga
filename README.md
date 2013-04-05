@@ -1,7 +1,9 @@
 GDCalaga
 ========
 
-The first game that I started with GDC.
+Side Scroller shooter. Game is currently in development with many of the chore mechanics done.
+
+What you need to work/contribute:
 
 The project is setup for compilation and execution within Eclipse. You may download it here:
 
