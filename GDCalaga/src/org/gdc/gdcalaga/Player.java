@@ -1,4 +1,5 @@
 package org.gdc.gdcalaga;
+import org.gdc.gdcalaga.Upgrade.UpgradeType;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -28,14 +29,14 @@ public class Player extends Entity
     Image ship;
     
     //Upgradable Player attributes
-    private float health;
-    private float shields;
-    private float fireRate; //fireRate in bullets per second
-    private float damage;
+    private static float health;
+    private static float shields;
+    private static float fireRate; //fireRate in bullets per second
+    private static float damage;
     protected Vector2f velocity;
     
     //these values are intertwined with fireRate to create a standard fire rate
-    private int ticksPerBullet;
+    private static int ticksPerBullet;
     private int ticksSinceLastBullet;
     
     public Player(EntityManager manager, Vector2f position)
@@ -45,12 +46,12 @@ public class Player extends Entity
         pos.set(position);
         size = new Vector2f(SIZE_WIDTH, SIZE_HEIGHT);
         velocity = new Vector2f(220, 220);
-        
+        damage=1;
         alliance = Alliance.FRIENDLY;
         
         health = 10;
         shields = 0;
-        fireRate = 2;   //bullets per second
+        fireRate = 5;   //bullets per second
         ticksPerBullet = (int)(1000 / fireRate);   //milliseconds in a second / fireRate
                                                    //since delta time is in milliseconds
         ticksSinceLastBullet = ticksPerBullet;  //so we can shoot right off the bat
@@ -111,7 +112,7 @@ public class Player extends Entity
         if (ticksSinceLastBullet >= ticksPerBullet)
         {
             Vector2f position = new Vector2f(pos.x + size.x / 2, pos.y);
-            Bullet newBullet = new Bullet(entities, position, 1, alliance);
+            Bullet newBullet = new Bullet(entities, position, (int)(damage), alliance);
             newBullet.setSpeed(500, 0);
             
             ticksSinceLastBullet = 0;
@@ -170,5 +171,30 @@ public class Player extends Entity
     {
         //TODO Change the health, hp/armor, fire rate, amount of guns, speed
         //according to the upgrade passed in
+    	switch (upgrade)
+        {
+        case HEALTH:
+            health+=5;
+            
+            break;
+        case SHIELD:
+            shields+=3;
+            break;
+        case FIRE_RATE:
+            fireRate+=10;//ticksPerBullet....might need some change/rework/etc
+            break; 
+        case NUM_GUNS:
+            
+            break;
+        case DAMAGE:
+            damage++;
+            break;
+        case INVALID_UPGRADE:
+            
+            break;
+        default:
+            
+            break;  
+        }
     } 
 }
