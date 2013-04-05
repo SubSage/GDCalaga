@@ -114,7 +114,7 @@ public class Player extends Entity
             Bullet newBullet = new Bullet(entities, position, 1, alliance);
             newBullet.setSpeed(500, 0);
             
-            ticksSinceLastBullet = 499;
+            ticksSinceLastBullet = 0;
             return true;
         }
         else 

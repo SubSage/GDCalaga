@@ -85,8 +85,7 @@ public class Upgrade extends Entity
     private static final float SIZE_WIDTH = 25.f;
     private static final float SIZE_HEIGHT = 25.f;
 	
-    public Vector2f initPos, pos, vel, size;
-    protected Shape shape;
+    public Vector2f initPos, vel;
     protected Image image;
 	
     protected Path path;
@@ -98,6 +97,8 @@ public class Upgrade extends Entity
     public Upgrade(EntityManager manager, Vector2f initPos, Upgrade.UpgradeType type) 
     {
         super(manager);
+        
+        alliance = Entity.Alliance.UPGRADE;
         
         pos = new Vector2f(initPos);
         this.initPos = new Vector2f(initPos);
@@ -170,7 +171,6 @@ public class Upgrade extends Entity
 
     public void Collide(Entity other) 
     {
-        //TODO Upgrades are not being checked for collisions
         if(other instanceof Player)
         {
             Player.upgrade(upgradeType);
