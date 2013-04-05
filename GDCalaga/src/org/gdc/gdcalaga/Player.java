@@ -7,7 +7,7 @@ import org.newdawn.slick.geom.Vector2f;
 
 /*
  * Upgrades planned for the player:
- * Droppable: Health, shields, rapid fire mode, more bullets
+ * Droppable: Health, shields, fire rate, more bullets, damage
  * Buyable: Speed 
  * 
  * TODO
@@ -23,12 +23,16 @@ public class Player extends Entity
 {
     private static final int SIZE_WIDTH = 49;
     private static final int SIZE_HEIGHT = 29;
-    private static final int SPEED = 220;
 	
-    private float health;
-    protected Vector2f velocity;
     private static int totalPoints = 0; //the score is static in case we give players multiple lives in the future
     Image ship;
+    
+    //Upgradable Player attributes
+    private float health;
+    private float shields;
+    private float fireRate;
+    private float damage;
+    protected Vector2f velocity;
     
     public Player(EntityManager manager, Vector2f position)
     {
@@ -36,7 +40,7 @@ public class Player extends Entity
 
         pos.set(position);
         size = new Vector2f(SIZE_WIDTH, SIZE_HEIGHT);
-        velocity = new Vector2f(SPEED, SPEED);
+        velocity = new Vector2f(220, 220);
         
         health = 10;
         alliance = Alliance.FRIENDLY;
