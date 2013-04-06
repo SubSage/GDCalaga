@@ -32,12 +32,17 @@ public class Player extends Entity
     private static float health;
     private static float shields;
     private static float fireRate; //fireRate in bullets per second
+    private static int numGuns;
     private static float damage;
     protected Vector2f velocity;
+    
+    private static boolean shieldActivated;
     
     //these values are intertwined with fireRate to create a standard fire rate
     private static int ticksPerBullet;
     private int ticksSinceLastBullet;
+    
+    private GunPositions gunPositions;
     
     public Player(EntityManager manager, Vector2f position)
     {
@@ -46,17 +51,22 @@ public class Player extends Entity
         pos.set(position);
         size = new Vector2f(SIZE_WIDTH, SIZE_HEIGHT);
         velocity = new Vector2f(220, 220);
-        damage=1;
+        damage = 1;
         alliance = Alliance.FRIENDLY;
         
         health = 10;
         shields = 0;
         fireRate = 5;   //bullets per second
+        numGuns = 1;
         ticksPerBullet = (int)(1000 / fireRate);   //milliseconds in a second / fireRate
                                                    //since delta time is in milliseconds
-        ticksSinceLastBullet = ticksPerBullet;  //so we can shoot right off the bat
+        ticksSinceLastBullet = ticksPerBullet;     //so we can shoot right off the bat
+        
+        shieldActivated = false;
         
         shape = new RectShape(pos, size);
+        
+        gunPositions = new GunPositions(SIZE_WIDTH, SIZE_HEIGHT);
         
         try {
             ship= new Image("Pics/Player.png");
@@ -68,6 +78,12 @@ public class Player extends Entity
     
     public void update(float delta)
     {
+        if (shields <= 0)
+        {
+            shieldActivated = false;
+            shields = 0;
+        }
+        
     	RectShape rect = (RectShape)shape;
         rect.pos.set(this.pos);
     }
@@ -111,9 +127,20 @@ public class Player extends Entity
         ticksSinceLastBullet += delta;
         if (ticksSinceLastBullet >= ticksPerBullet)
         {
-            Vector2f position = new Vector2f(pos.x + size.x / 2, pos.y);
-            Bullet newBullet = new Bullet(entities, position, (int)(damage), alliance);
-            newBullet.setSpeed(500, 0);
+            int max = 0;
+            if (numGuns < gunPositions.getSize())
+                max = numGuns;
+            else
+                max = gunPositions.getSize();
+            
+            for (int iii = 0; iii < max; iii++)
+            {
+                Vector2f position = new Vector2f(gunPositions.getPosition(iii));
+                position.add(pos);
+                Bullet newBullet = new Bullet(entities, position, (int)(damage), alliance);
+                Vector2f direction = new Vector2f(gunPositions.getDirection(iii));
+                newBullet.setSpeed(direction.scale(500));
+            }
             
             ticksSinceLastBullet = 0;
             return true;
@@ -125,6 +152,22 @@ public class Player extends Entity
             
     }
     
+    public boolean activateShield(float delta)
+    {
+        if (shields > 0)
+        {
+            shieldActivated = true;
+            shields -= delta;
+            return true;
+        }
+        else
+        {
+            shieldActivated = false;
+            shields = 0;
+            return false;
+        }
+    }
+    
     public void Collide(Entity other)
     {
     	if(other instanceof Bullet && ((Bullet)other).getAlliance() != alliance)
@@ -133,13 +176,22 @@ public class Player extends Entity
     	}
     }
     
-    public void Hurt(float dmg){
-        health-=dmg;
+    public void Hurt(float dmg)
+    {
+        if (shieldActivated)
+            return;
+        
+        health -= dmg;
     }
     
     public float getHealth()
     {
         return health;
+    }
+    
+    public float getShields()
+    {
+        return shields;
     }
     
     public Entity.Alliance getAlliance()
@@ -174,25 +226,21 @@ public class Player extends Entity
     	switch (upgrade)
         {
         case HEALTH:
-            health+=5;
+            health += 5;
             break;
-            
         case SHIELD:
-            shields+=3;
+            shields += 3000;    //Give 3 seconds worth of shielding
             break;
-            
         case FIRE_RATE:
-            fireRate +=1;
+            fireRate += 1;      //Having these two variables separated makes it easier to debug and read
             ticksPerBullet = (int)(1000 / fireRate); //A little bit weird that we have to do these two things...
             break;
-            
         case NUM_GUNS:
+            numGuns++;
             break;
-            
         case DAMAGE:
             damage++;
             break;
-            
         case INVALID_UPGRADE:
             
             break;
