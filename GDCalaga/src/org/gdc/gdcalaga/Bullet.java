@@ -63,11 +63,22 @@ public class Bullet extends Entity
     public void setSpeed(float xSpeed, float ySpeed)
     {
         velocity.set(xSpeed, ySpeed);
-    }
-    
-    public void setSpeed(Vector2f speed)
-    {
-        velocity = speed;
+        
+        //Rotate the bullet image according to the angle of the vector
+        //relative to (1, 0), or zero degrees
+        
+        Vector2f direction = velocity.copy().normalise();
+        Vector2f zeroDegrees = new Vector2f(1, 0);
+        
+        float dotProduct = direction.x * zeroDegrees.x + direction.y * zeroDegrees.y;
+        float cosTheta = dotProduct / (direction.length() * zeroDegrees.length());
+        float angle = (float)Math.acos(cosTheta);
+        angle *= (180 / Math.PI);
+        
+        if (direction.y < 0)
+            angle *= -1;
+        
+        bullet.rotate(angle);
     }
     
     public void Collide(Entity other)
