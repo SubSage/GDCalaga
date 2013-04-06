@@ -47,7 +47,27 @@ public class PlayState extends BasicGameState {
         	obj.draw(g);
         }
 		entities.draw(g);
-        g.drawString("Player HP: " + player.getHealth() + "        Round " + Spawn.getWave() + "        Points " + Player.getTotalPoints(), 5, 30);
+		
+		/* If we use this same monospace font, each letter takes up 10 pixels
+		 * so we can space the text according to this metric
+		 */
+		final int desiredSpacing = 15;    //Spacing in pixels between each statistic
+		
+		String playerHP = new String("Player HP: " + player.getHealth());
+		int xPixel = 5;
+        g.drawString(playerHP, xPixel, 30);
+        
+        String shieldsLeft = new String("Player Shields: " + player.getShields());
+        xPixel = xPixel + (playerHP.length() * 10) + desiredSpacing;
+        g.drawString(shieldsLeft, xPixel, 30);
+        
+        String waveCount = new String("Round: " + Spawn.getWave());
+        xPixel = xPixel + (shieldsLeft.length() * 10) + desiredSpacing;
+        g.drawString(waveCount, xPixel, 30);
+        
+        String pointCount = new String("Points " + Player.getTotalPoints());
+        xPixel = xPixel + (waveCount.length() * 10) + desiredSpacing;
+        g.drawString(pointCount, xPixel, 30);
 	}
 
 	@Override
@@ -84,6 +104,15 @@ public class PlayState extends BasicGameState {
                 if (player.fire(delta))
                 {
                     audioManager.playSFX(AudioAsset.SFX_FIRE1);
+                }
+            }
+            
+            if(input.isKeyDown(Input.KEY_Z))
+            {
+                if (player.activateShield(delta))
+                {
+                    //audioManager.playSFX(AudioAsset.SFX_SHIELD1);
+                    //should we play a sound, or just show a graphic?
                 }
             }
             
