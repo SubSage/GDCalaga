@@ -78,9 +78,10 @@ public class Player extends Entity
     
     public void update(float delta)
     {
+        ticksSinceLastBullet += delta;
         if (shields <= 0)
         {
-            shieldActivated = false;
+            deactivateShield();
             shields = 0;
         }
         
@@ -124,7 +125,6 @@ public class Player extends Entity
     public boolean fire(float delta)
     {
         //TODO add more firing positions and more bullets depending on the upgrades
-        ticksSinceLastBullet += delta;
         if (ticksSinceLastBullet >= ticksPerBullet)
         {
             int max = 0;
@@ -139,7 +139,7 @@ public class Player extends Entity
                 position.add(pos);
                 Bullet newBullet = new Bullet(entities, position, (int)(damage), alliance);
                 Vector2f direction = new Vector2f(gunPositions.getDirection(iii));
-                newBullet.setSpeed(direction.scale(500));
+                newBullet.setSpeed(direction.x * 500, direction.y * 500);
             }
             
             ticksSinceLastBullet = 0;
@@ -162,10 +162,15 @@ public class Player extends Entity
         }
         else
         {
-            shieldActivated = false;
+            deactivateShield();
             shields = 0;
             return false;
         }
+    }
+    
+    public void deactivateShield()
+    {
+        shieldActivated = false;
     }
     
     public void Collide(Entity other)

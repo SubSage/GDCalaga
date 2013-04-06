@@ -115,6 +115,10 @@ public class PlayState extends BasicGameState {
                     //should we play a sound, or just show a graphic?
                 }
             }
+            else
+            {
+                player.deactivateShield();
+            }
             
             for (DisplayObject obj : disObjs) {
             	obj.update(delta);
