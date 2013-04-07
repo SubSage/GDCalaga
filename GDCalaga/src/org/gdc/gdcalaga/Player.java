@@ -237,7 +237,7 @@ public class Player extends Entity
             shields += 3000;    //Give 3 seconds worth of shielding
             break;
         case FIRE_RATE:
-            fireRate += 1;      //Having these two variables separated makes it easier to debug and read
+            fireRate += .5;      //Having these two variables separated makes it easier to debug and read
             ticksPerBullet = (int)(1000 / fireRate); //A little bit weird that we have to do these two things...
             break;
         case NUM_GUNS:

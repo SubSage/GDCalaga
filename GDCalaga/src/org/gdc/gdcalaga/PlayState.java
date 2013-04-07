@@ -57,7 +57,7 @@ public class PlayState extends BasicGameState {
 		int xPixel = 5;
         g.drawString(playerHP, xPixel, 30);
         
-        String shieldsLeft = new String("Player Shields: " + player.getShields());
+        String shieldsLeft = new String("Player Shields: " + player.getShields()/1000.0);
         xPixel = xPixel + (playerHP.length() * 10) + desiredSpacing;
         g.drawString(shieldsLeft, xPixel, 30);
         
