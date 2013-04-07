@@ -58,15 +58,15 @@ public class PlayState extends BasicGameState {
         g.drawString(playerHP, xPixel, 30);
         
         String shieldsLeft = new String("Player Shields: " + player.getShields()/1000.0);
-        xPixel = xPixel + (playerHP.length() * 10) + desiredSpacing;
+        xPixel += (playerHP.length() * 10) + desiredSpacing;
         g.drawString(shieldsLeft, xPixel, 30);
         
         String waveCount = new String("Round: " + Spawn.getWave());
-        xPixel = xPixel + (shieldsLeft.length() * 10) + desiredSpacing;
+        xPixel += (shieldsLeft.length() * 10) + desiredSpacing;
         g.drawString(waveCount, xPixel, 30);
         
         String pointCount = new String("Points " + Player.getTotalPoints());
-        xPixel = xPixel + (waveCount.length() * 10) + desiredSpacing;
+        xPixel += (waveCount.length() * 10) + desiredSpacing;
         g.drawString(pointCount, xPixel, 30);
 	}
 

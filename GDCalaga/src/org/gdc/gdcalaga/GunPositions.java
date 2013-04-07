@@ -77,14 +77,9 @@ public class GunPositions
     
     public int getSize()
     {
-        if (positions.size() == directions.size())
-        {
-            return positions.size();
-        }
-        else
-        {
+        if (positions.size() != directions.size()) {
             build();
-            return positions.size();
         }
+        return positions.size();
     }
 }
