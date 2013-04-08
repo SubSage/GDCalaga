@@ -247,7 +247,7 @@ public class Enemy extends Entity
         if (Math.random() < decimalChance)
         {
             //generate a random upgrade
-            int numUpgrades = UpgradeType.getNumDroppableUpgrades();            
+            int numUpgrades = UpgradeType.getUpgradeCount();            
             Upgrade.UpgradeType type = UpgradeType.getIndexedUpgrade((int) (numUpgrades * Math.random()) + 1); // Add 1 because the indices start at 1
             new Upgrade(entities, this.pos, type);
         }
