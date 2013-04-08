@@ -26,58 +26,47 @@ public class Upgrade extends Entity
 {
     public enum UpgradeType
     {
-        /* Whenever upgrades are added or removed, 
-         *  NUM_UPGRADES must be updated
-         *  getIndexedUpgrade() must be updated
-         *  the constructor of Upgrade() must be updated
+        /*
          *  A new image must be created for a new upgrade
          */
-        
-        //Droppable upgrades
-        HEALTH,
-        SHIELD,
-        FIRE_RATE,
-        NUM_GUNS,
-        DAMAGE,
-        
-        //Buyable upgrades
-        SPEED,
+    	
+        HEALTH (new String("Pics/upgrade_health.png")),
+        SHIELD (new String("Pics/upgrade_shield.png")),
+        FIRE_RATE (new String("Pics/upgrade_firerate.png")),
+        NUM_GUNS (new String("Pics/upgrade_numguns.png")),
+        DAMAGE (new String("Pics/upgrade_damage.png")),
         
         /* Error upgrade, should always be the last value in this enum 
            and is not included in upgrade count */
-        INVALID_UPGRADE;
+        INVALID_UPGRADE (new String("Pics/upgrade_invalid.png"));
         
-        //This number MUST be changed whenever an upgrade is added here
-        private static final int NUM_DROPPABLE_UPGRADES = 5;
+        private String path;
         
-        public static int getNumDroppableUpgrades()
-        {
-            return NUM_DROPPABLE_UPGRADES;
+        private UpgradeType(String path) {
+        	this.path = path;
         }
         
-        //This method MUST be updated to include changes to the types
-        public static UpgradeType getIndexedUpgrade(int index)
-        {
-            //Droppable upgrades always go first
-            //When in doubt, use the same order as in the enum
-            switch (index)
-            {
-            case 1:
-                return UpgradeType.HEALTH;
-            case 2:
-                return UpgradeType.SHIELD;
-            case 3:
-                return UpgradeType.FIRE_RATE;
-            case 4:
-                return UpgradeType.NUM_GUNS;
-            case 5:
-                return UpgradeType.DAMAGE;
-            case 6:
-                return UpgradeType.SPEED;
-            default:
-                return UpgradeType.INVALID_UPGRADE;
-            }
+        public String getImagePath() {
+        	return path;
         }
+        
+        /**
+         * Returns the number of upgrades.
+         */
+        public static int getUpgradeCount() {
+        	return values().length;
+        }
+        
+        /**
+         * Indices start at zero and are ordered as listed.
+         */
+        public static UpgradeType getIndexedUpgrade(int index) {
+        	if (index < values().length)
+        		return values()[index];
+        	else
+        		return INVALID_UPGRADE;
+        }
+        
     }
     
     private static final float SPEED = 50.f;
@@ -108,35 +97,9 @@ public class Upgrade extends Entity
         shape = new RectShape(pos, size);
         
         upgradeType = type;
-        String imageDirectory;
-        //These upgrade types do not include Buyable upgrades
-        switch (upgradeType)
-        {
-        case HEALTH:
-            imageDirectory = new String("Pics/upgrade_health.png");
-            break;
-        case SHIELD:
-            imageDirectory = new String("Pics/upgrade_shield.png");
-            break;
-        case FIRE_RATE:
-            imageDirectory = new String("Pics/upgrade_firerate.png");
-            break; 
-        case NUM_GUNS:
-            imageDirectory = new String("Pics/upgrade_numguns.png");
-            break;
-        case DAMAGE:
-            imageDirectory = new String("Pics/upgrade_damage.png");
-            break;
-        case INVALID_UPGRADE:
-            imageDirectory = new String("Pics/upgrade_invalid.png");
-            break;
-        default:
-            imageDirectory = new String("Pics/upgrade_invalid.png");
-            break;  
-        }
         
         try {
-            image = new Image(imageDirectory);
+            image = new Image(type.getImagePath());
         } catch (SlickException e) {
             e.printStackTrace();
         }
