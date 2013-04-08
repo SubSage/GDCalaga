@@ -1,5 +1,4 @@
 package org.gdc.gdcalaga;
-import org.gdc.gdcalaga.Upgrade.UpgradeType;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -127,18 +126,13 @@ public class Player extends Entity
         //TODO add more firing positions and more bullets depending on the upgrades
         if (ticksSinceLastBullet >= ticksPerBullet)
         {
-            int max = 0;
-            if (numGuns < gunPositions.getSize())
-                max = numGuns;
-            else
-                max = gunPositions.getSize();
-            
-            for (int iii = 0; iii < max; iii++)
+            int max = numGuns < gunPositions.getSize() ? numGuns : gunPositions.getSize();
+            for (int i = 0; i < max; i++)
             {
-                Vector2f position = new Vector2f(gunPositions.getPosition(iii));
+                Vector2f position = new Vector2f(gunPositions.getPosition(i));
                 position.add(pos);
                 Bullet newBullet = new Bullet(entities, position, (int)(damage), alliance);
-                Vector2f direction = new Vector2f(gunPositions.getDirection(iii));
+                Vector2f direction = gunPositions.getDirection(i);
                 newBullet.setSpeed(direction.x * 500, direction.y * 500);
             }
             
@@ -216,10 +210,8 @@ public class Player extends Entity
     //my idea here is that ship upgrades will cost points to buy, like in most games.
     public static void decreaseTotalPoints(int pointValue)
     {
-    	if( (totalPoints - pointValue) >= 0)
-    	{
+    	if(totalPoints - pointValue >= 0)
     	    totalPoints -= pointValue;
-    	}
     	else
     	    System.out.println("Can't spend any more points!"); //TODO Fix error message
     }
