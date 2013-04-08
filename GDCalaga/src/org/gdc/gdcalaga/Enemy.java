@@ -243,23 +243,13 @@ public class Enemy extends Entity
      */
     private void tryDropUpgrade()
     {
-        Random rand = new Random(System.currentTimeMillis());
-        //percentageChance 1 - 100
-        final int percentageChance = 5;
-        int max = (100 / percentageChance);
-        int min = 1;
-        int chance = rand.nextInt(max - min + 1) + min;
-        if (chance == (int)(max / 2))   //chance can be compared to any number between min and max
+        final double decimalChance = 0.05; // TODO Make static final
+        if (Math.random() < decimalChance)
         {
             //generate a random upgrade
-            int numUpgrades = UpgradeType.getNumDroppableUpgrades();
-            int minUpgrade = 1;
-            chance = rand.nextInt(numUpgrades - minUpgrade + 1) + minUpgrade;
-            
-            Upgrade.UpgradeType type;
-            type = UpgradeType.getIndexedUpgrade(chance);
-    
-            Upgrade upgrade = new Upgrade(entities, this.pos, type);
+            int numUpgrades = UpgradeType.getNumDroppableUpgrades();            
+            Upgrade.UpgradeType type = UpgradeType.getIndexedUpgrade((int) (numUpgrades * Math.random()) + 1); // Add 1 because the indices start at 1
+            new Upgrade(entities, this.pos, type);
         }
     }
 }
