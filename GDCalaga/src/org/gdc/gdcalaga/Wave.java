@@ -58,12 +58,12 @@ public class Wave extends Entity {
 
     public void draw(Graphics g)
     {
-        
+        //A wave can not be drawn for it is unimaginable!
     }
 
     public void Collide(Entity other)
     {
-        
+    	//other.Destroy(); No body wins in a collision with a wave!
     }
     
     private void spawnEnemy(){
