@@ -1,7 +1,7 @@
 [
 	//Path 0
 	[
-	{goalX : 400,
+	{goalX : 200,
 	goalY : 0,
 	speed : 1,
 	relative : true},
@@ -37,12 +37,12 @@
 	
 	//Path 2
 	[
-	{goalX : 400,
+	{goalX : 500,
 	goalY : -50,
 	speed : 1,
 	relative : false},
 	
-	{goalX : 200,
+	{goalX : 250,
 	goalY : 600,
 	speed : 2,
 	relative : false},

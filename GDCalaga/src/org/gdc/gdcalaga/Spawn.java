@@ -12,9 +12,7 @@ import org.newdawn.slick.geom.Vector2f;
 
 public class Spawn 
 {
-    
     private static int wave=0;
-    
     
     public static void spawnWave(PathRegistry paths, EntityManager mng) {
         
@@ -23,7 +21,6 @@ public class Spawn
         
         for(Entity e : ents)
         {
-            
             if(e instanceof Wave){
                 countWaves++;
             }
@@ -34,7 +31,8 @@ public class Spawn
         {
         	EnemyGroup group = new EnemyGroup(mng, 100, 800, 0);
 
-            int pathNum = (int)Math.floor(Math.random() * 3);
+            int pathNum = (int)Math.floor(Math.random() * paths.getNumOfPaths());
+            
             
         	float x, y;
         	x = (float)(Math.random()*400);

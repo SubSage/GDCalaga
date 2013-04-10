@@ -66,4 +66,8 @@ public class PathRegistry {
             registerPath(newPath);
         }
     }
+    
+    public int getNumOfPaths(){
+    	return paths.size();
+    }
 }
