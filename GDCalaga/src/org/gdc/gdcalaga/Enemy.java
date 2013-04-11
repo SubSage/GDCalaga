@@ -123,7 +123,7 @@ public class Enemy extends Entity
         RectShape rect = (RectShape)shape;
         rect.pos.set(this.pos);
         
-        if(pos.x < -800 || pos.x > 3000 || pos.y < -800 || pos.y >3000){
+        if(pos.x < -500 || pos.x > 5000 || pos.y < -5000 || pos.y >5000){
         	Destroy();
         }
     }

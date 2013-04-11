@@ -32,7 +32,7 @@ public class Spawn
         	EnemyGroup group = new EnemyGroup(mng, 100, 800, 0);
 
             int pathNum = (int)Math.floor(Math.random() * paths.getNumOfPaths());
-            
+            pathNum=0;
             
         	float x, y;
         	x = (float)(Math.random()*400);
