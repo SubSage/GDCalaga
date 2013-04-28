@@ -156,7 +156,7 @@ public class Enemy extends Entity
         Vector2f bulletPosition = new Vector2f((pos.x - size.x / 2) + 3, pos.y);
         Bullet newBullet = new Bullet(entities, bulletPosition, 1, alliance);
         newBullet.setSpeed(-250, 0);
-        audioManager.playSFX(AudioAsset.SFX_FIRE2);
+        //audioManager.playSFX(AudioAsset.SFX_FIRE2);
     }
     
     

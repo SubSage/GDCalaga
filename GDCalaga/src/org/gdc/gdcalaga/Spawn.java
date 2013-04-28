@@ -55,7 +55,7 @@ public class Spawn
             int rows = (int)Math.ceil(Math.random() * 3 + 4);
             int cols = (int)Math.ceil(Math.random() * 3 + 2);
             
-            new Wave(mng, "block", rows, cols, 10, 200, enemyPath);
+            new Wave(mng, "block", rows, cols, 10, 2000, enemyPath);
             
             wave++;
         }
