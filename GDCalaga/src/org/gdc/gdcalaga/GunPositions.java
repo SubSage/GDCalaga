@@ -43,6 +43,38 @@ public class GunPositions
         positions.add(new Vector2f(playerWidth / 4, -playerHeight / 3));
         directions.add(new Vector2f(1, 0));
         
+        //diagonal front lefterest
+        positions.add(new Vector2f(playerWidth / 2, playerHeight / 2));
+        directions.add(new Vector2f(1, (float) .1));
+        
+        //diagonal front righterest
+        positions.add(new Vector2f(playerWidth / 2, -playerHeight / 2));
+        directions.add(new Vector2f(1, (float) -.1));
+        
+        //diagonal front lefterest INVERTED
+        positions.add(new Vector2f(playerWidth / 2, playerHeight / 2));
+        directions.add(new Vector2f(1, (float) -.1));
+        
+        //diagonal front righterest INVERTED
+        positions.add(new Vector2f(playerWidth / 2, -playerHeight / 2));
+        directions.add(new Vector2f(1, (float) .1));
+        
+        //diagonal front lefter
+        positions.add(new Vector2f(playerWidth / 2, playerHeight / 2));
+        directions.add(new Vector2f((float) .5, 1));
+        
+        //diagonal front righter
+        positions.add(new Vector2f(playerWidth / 2, -playerHeight / 2));
+        directions.add(new Vector2f((float) .5,-1));
+        
+         //diagonal front left
+        positions.add(new Vector2f(playerWidth / 2, playerHeight / 2));
+        directions.add(new Vector2f(1, 1));
+        
+        //diagonal front right
+        positions.add(new Vector2f(playerWidth / 2, -playerHeight / 2));
+        directions.add(new Vector2f(1, -1));
+        
         //left side mounted gun
         positions.add(new Vector2f(-playerWidth / 15, playerHeight / 2));
         directions.add(new Vector2f(0, 1));
@@ -54,15 +86,6 @@ public class GunPositions
         //backwards
         positions.add(new Vector2f(-playerWidth / 2, 0));
         directions.add(new Vector2f(-1, 0));
-        
-        //diagonal front left
-        positions.add(new Vector2f(playerWidth / 2, playerHeight / 2));
-        directions.add(new Vector2f(1, 1));
-        
-        //diagonal front right
-        positions.add(new Vector2f(playerWidth / 2, -playerHeight / 2));
-        directions.add(new Vector2f(1, -1));
-        
     }
     
     public Vector2f getPosition(int index)

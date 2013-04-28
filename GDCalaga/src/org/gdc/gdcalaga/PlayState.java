@@ -107,7 +107,7 @@ public class PlayState extends BasicGameState {
                 }
             }
             
-            if(input.isKeyDown(Input.KEY_Z))
+            if(input.isKeyDown(Input.KEY_Q))
             {
                 if (player.activateShield(delta))
                 {
