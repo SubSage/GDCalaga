@@ -182,11 +182,6 @@ public class Player extends Entity
             return;
         
         health -= dmg;
-        
-        if(health <= 0)
-        {
-        	Destroy();
-        }
     }
     
     public float getHealth()
