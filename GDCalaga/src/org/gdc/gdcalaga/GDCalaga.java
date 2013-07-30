@@ -8,6 +8,10 @@ import org.newdawn.slick.SlickException;
 
 public class GDCalaga {
 
+	static final int SCREEN_SIZE_X = 1280;
+	static final int SCREEN_SIZE_Y = 720;
+	
+	
 	static {
 		String path = System.getProperties().get("java.library.path").toString();
 
@@ -41,7 +45,7 @@ public class GDCalaga {
 	public static void main(String[] argv) {
 		try {
 			AppGameContainer container = new AppGameContainer(new GDCalagaGame());
-			container.setDisplayMode(1280, 720, false);
+			container.setDisplayMode(SCREEN_SIZE_X, SCREEN_SIZE_Y, false);
 			container.start();
 		} catch (SlickException e) {
 			e.printStackTrace();

@@ -29,6 +29,7 @@ public class Enemy extends Entity
     private Vector2f startPos, pathVelocity;
     private float fireRate;
     private float fireRateDT;
+    private Gun shipGun;
     private Random rand;
     
     private EnemyGroup group;
@@ -36,6 +37,9 @@ public class Enemy extends Entity
     public Vector2f relPos;
 
     protected AudioManager audioManager;
+    
+    protected static Player player;
+    
     
     public Enemy(EntityManager manager, Vector2f position)
     {   
@@ -58,12 +62,17 @@ public class Enemy extends Entity
         rand = new Random(System.currentTimeMillis());
         fireRate = rand.nextInt(MAX_FIRE);
         fireRateDT = 0;
-
+        
         try {
             ship = new Image("Pics/Enemy.png");
         } catch (SlickException e) {
             e.printStackTrace();
         }
+        
+        Gun.GunType gunType = Gun.GunType.values()[rand.nextInt(Gun.MAX_GUN_TYPES)];
+    	shipGun = new Gun(entities, 250, alliance, gunType);
+        
+        
         
         audioManager = AudioManager.getAudioManager();
     }
@@ -146,17 +155,15 @@ public class Enemy extends Entity
     {
         if(other instanceof Bullet && ((Bullet)other).getAlliance()!=alliance)
     	{
-    	    Hurt(((Bullet)other).getDamage());
+    	    Hurt(((Entity)other).getCollisionDamage());
     	}
         
     }
     
     public void fire()
     {
-        Vector2f bulletPosition = new Vector2f((pos.x - size.x / 2) + 3, pos.y);
-        Bullet newBullet = new Bullet(entities, bulletPosition, 1, alliance);
-        newBullet.setSpeed(-250, 0);
-        //audioManager.playSFX(AudioAsset.SFX_FIRE2);
+    	Vector2f bulletPosition = new Vector2f((pos.x - size.x / 2) + 3, pos.y);
+    	shipGun.shoot(bulletPosition, player);
     }
     
     

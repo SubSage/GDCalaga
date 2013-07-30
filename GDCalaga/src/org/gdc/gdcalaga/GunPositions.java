@@ -20,7 +20,7 @@ public class GunPositions
     
     public GunPositions(float width, float height)
     {
-        playerWidth = width;
+    	playerWidth = width;
         playerHeight = height;
         
         positions = new ArrayList<Vector2f>();
