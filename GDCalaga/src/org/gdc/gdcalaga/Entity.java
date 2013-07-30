@@ -24,6 +24,7 @@ public abstract class Entity
     
     protected Shape shape;
     
+    protected float collisionDamage;
     
     public Entity(EntityManager manager)
     {
@@ -33,11 +34,14 @@ public abstract class Entity
         dying = false;
         alliance = Alliance.ENEMY;
         pos = new Vector2f(0, 0);
+        
+        collisionDamage = 1;
     }
 
     public Entity(int xpos, int ypos)
     {
         pos = new Vector2f(xpos, ypos);
+        collisionDamage = 1;
     }
     
     public Entity(int xpos, int ypos, float w, float h)
@@ -46,6 +50,7 @@ public abstract class Entity
         
         pos = new Vector2f(xpos, ypos);
         size = new Vector2f(w, h);
+        collisionDamage = 1;
     }
     
     public Entity(Vector2f position, Vector2f size)
@@ -62,6 +67,10 @@ public abstract class Entity
     public void Destroy()
     {
         dying = true;
+    }
+    
+    public float getCollisionDamage(){
+    	return collisionDamage;
     }
     
     public Entity.Alliance getAlliance()

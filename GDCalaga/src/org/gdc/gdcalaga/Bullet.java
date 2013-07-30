@@ -10,7 +10,6 @@ public class Bullet extends Entity
     private static final int SIZE_WIDTH = 9;
     private static final int SIZE_HEIGHT = 5;
     
-    private float damage;
     private Vector2f velocity;
     private Image bullet;
     
@@ -19,7 +18,7 @@ public class Bullet extends Entity
         super(manager);
         pos.set(position);
         size = new Vector2f(SIZE_WIDTH, SIZE_HEIGHT);
-        damage = dmg;
+        collisionDamage = dmg;
         velocity = new Vector2f(0, 0);
         alliance = alnc;
         
@@ -101,9 +100,6 @@ public class Bullet extends Entity
         }
     }
     
-    public float getDamage(){
-    	return damage;
-    }
 
 
     public Entity.Alliance getAlliance() {

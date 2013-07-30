@@ -169,9 +169,10 @@ public class Player extends Entity
     
     public void Collide(Entity other)
     {
-    	if(other instanceof Bullet && ((Bullet)other).getAlliance() != alliance)
+    	if(other instanceof Bullet && ((Bullet)other).getAlliance() != alliance
+    			|| other instanceof Enemy)
     	{
-    	    Hurt(((Bullet)other).getDamage());
+    	    Hurt(((Entity)other).getCollisionDamage());
     	}
     }
     
@@ -181,6 +182,11 @@ public class Player extends Entity
             return;
         
         health -= dmg;
+        
+        if(health <= 0)
+        {
+        	Destroy();
+        }
     }
     
     public float getHealth()
@@ -196,6 +202,11 @@ public class Player extends Entity
     public Entity.Alliance getAlliance()
     {
         return alliance;
+    }
+    
+    public Vector2f getPosition()
+    {
+    	return pos;
     }
     
     public static int getTotalPoints()
@@ -218,7 +229,7 @@ public class Player extends Entity
     
     public static void upgrade(Upgrade.UpgradeType upgrade)
     {
-        //TODO Change the health, hp/armor, fire rate, amount of guns, speed
+        //TODO Change the ealth, hp/armor, fire rate, amount of guns, speed
         //according to the upgrade passed in
     	switch (upgrade)
         {
