@@ -53,8 +53,8 @@ public class HighscoreList {
 		if(scores.size() == 0)
 		{
 			try {
-				String current = new java.io.File( "." ).getCanonicalPath();
-		        System.out.println("Current dir:"+current);
+				//String current = new java.io.File( "." ).getCanonicalPath();
+		        //System.out.println("Current dir:"+current);
 		        
 				BufferedReader in = new BufferedReader(new FileReader("highscore.dat"));
 				
@@ -92,8 +92,8 @@ public class HighscoreList {
 	public void saveHighscore()
 	{
 		try {
-			String current = new java.io.File( "." ).getCanonicalPath();
-	        System.out.println("Current dir:"+current);
+			//String current = new java.io.File( "." ).getCanonicalPath();
+	        //System.out.println("Current dir:"+current);
 	        
 			BufferedWriter out = new BufferedWriter(new FileWriter("highscore.dat"));
 			

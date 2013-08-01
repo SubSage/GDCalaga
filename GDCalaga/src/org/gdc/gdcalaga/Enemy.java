@@ -163,7 +163,7 @@ public class Enemy extends Entity
     public void fire()
     {
     	Vector2f bulletPosition = new Vector2f((pos.x - size.x / 2) + 3, pos.y);
-    	shipGun.shoot(bulletPosition, player);
+    	shipGun.shoot(bulletPosition, player.getPosition());
     }
     
     

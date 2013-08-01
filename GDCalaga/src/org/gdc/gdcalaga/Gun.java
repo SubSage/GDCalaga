@@ -1,12 +1,12 @@
 package org.gdc.gdcalaga;
 
+import org.gdc.gdcalaga.Entity.Alliance;
 import org.newdawn.slick.geom.Vector2f;
 
 
 public class  Gun {
 
 	public static int MAX_GUN_TYPES = 3; //fixme use enum max value correctly.
-	
 	
 	enum GunType {
 		StraightShot,
@@ -18,6 +18,8 @@ public class  Gun {
 	protected GunType gunType;
 	protected EntityManager entityManager;
 	protected Entity.Alliance alliance;
+	protected int bulletDamage = 1;
+	
 	
 	public Gun(EntityManager entityManager, float velocity, Entity.Alliance alliance, GunType gunType)
 	{
@@ -28,7 +30,7 @@ public class  Gun {
 		
 	}
 	
-	public void shoot(Vector2f bulletPosition, Player player)
+	public void shoot(Vector2f bulletPosition, Vector2f target)
 	{
     	switch(gunType)
     	{
@@ -36,7 +38,7 @@ public class  Gun {
     		straightShot(bulletPosition);
     		break;
     	case AimedShot:
-    		aimedShot(bulletPosition, player);
+    		aimedShot(bulletPosition, target);
     		break;
     	case TripleShot:
     		tripleShot(bulletPosition);
@@ -47,25 +49,30 @@ public class  Gun {
 	}
 	
 	private void straightShot(Vector2f bulletPosition) {
-        Bullet newBullet = new Bullet(entityManager, bulletPosition, 1, alliance);        
-        newBullet.setSpeed(-250, 0);
+        Bullet newBullet = new Bullet(entityManager, bulletPosition, bulletDamage, alliance);
+        if(alliance == Alliance.ENEMY)
+        	newBullet.setSpeed(-250, 0);
+        else
+        	newBullet.setSpeed(250, 0);
 	}
 	
-	private void aimedShot(Vector2f bulletPosition, Player player) {
+	private void aimedShot(Vector2f bulletPosition,  Vector2f target) {
         
-        Bullet newBullet = new Bullet(entityManager, bulletPosition, 1, alliance);
+        Bullet newBullet = new Bullet(entityManager, bulletPosition, bulletDamage, alliance);
         
-        Vector2f directionOfPlayer = new Vector2f(player.getPosition());
-        directionOfPlayer.x -= bulletPosition.x;
-        directionOfPlayer.y += (-bulletPosition.y) + (Math.random() * 20) - 10;
-        directionOfPlayer.normalise();
+        // change the x direction to point towards target, 
+        // add random y direction to make the shot seem not 100% accurate.
+        Vector2f directionOfTarget = new Vector2f(target);  
+        directionOfTarget.x -= bulletPosition.x;
+        directionOfTarget.y += (-bulletPosition.y) + (Math.random() * 20) - 10;
+        directionOfTarget.normalise();
         
-        newBullet.setSpeed(directionOfPlayer.x * 250,directionOfPlayer.y  * 250);
+        newBullet.setSpeed(directionOfTarget.x * 250, directionOfTarget.y  * 250);
 	}
 	
 	private void tripleShot(Vector2f bulletPosition){
 	
-		Bullet diagonalUpBullet = new Bullet(entityManager, bulletPosition, 1, alliance);
+		Bullet diagonalUpBullet = new Bullet(entityManager, bulletPosition, bulletDamage, alliance);
 		Vector2f diagonalUp = new Vector2f(-2,1);
 		diagonalUp.normalise();
 		diagonalUpBullet.setSpeed(diagonalUp.x * velocity, diagonalUp.y * velocity);
@@ -74,8 +81,12 @@ public class  Gun {
         
         Vector2f diagonalDown = new Vector2f(-2,-1);
 		diagonalDown.normalise();
-        Bullet diagonalDownBullet = new Bullet(entityManager, bulletPosition, 1, alliance);        
+        Bullet diagonalDownBullet = new Bullet(entityManager, bulletPosition, bulletDamage, alliance);        
         
         diagonalDownBullet.setSpeed(diagonalDown.x * velocity, diagonalDown.y * velocity);
+	}
+	
+	public String getName() {
+		return gunType.toString();
 	}
 }

@@ -1,4 +1,5 @@
 package org.gdc.gdcalaga;
+import org.gdc.gdcalaga.Gun.GunType;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -29,10 +30,14 @@ public class Player extends Entity
     
     //Upgradable Player attributes
     private static float health;
+    private static final float maxHealth = 10;
     private static float shields;
     private static float fireRate; //fireRate in bullets per second
     private static int numGuns;
     private static float damage;
+    private static int lives;
+    
+    private Gun gun;
     protected Vector2f velocity;
     
     private static boolean shieldActivated;
@@ -57,6 +62,7 @@ public class Player extends Entity
         shields = 0;
         fireRate = 5;   //bullets per second
         numGuns = 1;
+        lives = 3;
         ticksPerBullet = (int)(1000 / fireRate);   //milliseconds in a second / fireRate
                                                    //since delta time is in milliseconds
         ticksSinceLastBullet = ticksPerBullet;     //so we can shoot right off the bat
@@ -66,6 +72,8 @@ public class Player extends Entity
         shape = new RectShape(pos, size);
         
         gunPositions = new GunPositions(SIZE_WIDTH, SIZE_HEIGHT);
+        
+        gun = new Gun(manager, 250, Entity.Alliance.FRIENDLY, GunType.StraightShot);
         
         try {
             ship= new Image("Pics/Player.png");
@@ -129,11 +137,8 @@ public class Player extends Entity
             int max = numGuns < gunPositions.getSize() ? numGuns : gunPositions.getSize();
             for (int i = 0; i < max; i++)
             {
-                Vector2f position = new Vector2f(gunPositions.getPosition(i));
-                position.add(pos);
-                Bullet newBullet = new Bullet(entities, position, (int)(damage), alliance);
-                Vector2f direction = gunPositions.getDirection(i);
-                newBullet.setSpeed(direction.x * 500, direction.y * 500);
+            	Vector2f shotOrigin = new Vector2f(gunPositions.getPosition(i));
+            	gun.shoot(shotOrigin.add(pos), gunPositions.getPosition(i));
             }
             
             ticksSinceLastBullet = 0;
@@ -185,8 +190,16 @@ public class Player extends Entity
         
         if(health <= 0)
         {
-        	Destroy();
-        }
+        	--lives;
+        	if(lives < 0)
+        	{
+        		Destroy();
+    		}
+        	else
+        	{
+        		health = maxHealth;
+        	}
+		}
     }
     
     public float getHealth()
@@ -209,6 +222,15 @@ public class Player extends Entity
     	return pos;
     }
     
+    public int getLives()
+    {
+    	return lives;
+    }
+    
+    public Gun getWeapon() {
+    	return gun;
+    }
+    
     public static int getTotalPoints()
     {
     	return totalPoints;
@@ -218,6 +240,7 @@ public class Player extends Entity
     {
     	totalPoints += pointValue;
     }
+    
     //my idea here is that ship upgrades will cost points to buy, like in most games.
     public static void decreaseTotalPoints(int pointValue)
     {
