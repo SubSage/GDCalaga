@@ -96,7 +96,6 @@ public class Player extends Entity
         ship.draw(drawX, drawY, scale, Color.white);
     }
     
-    
     public void moveUp(float delta)
     {
         pos.y -= velocity.y * delta / 1000;
