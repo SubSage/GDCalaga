@@ -23,7 +23,8 @@ public class PlayState extends BasicGameState {
 		PostGame,
 	}
 	
-	public static final int ID = 0;
+    public static final int ID = 0;
+    
     private Player player;
 
     final int menuKeyDelay = 250; 
@@ -40,7 +41,7 @@ public class PlayState extends BasicGameState {
     private AudioManager audioManager = AudioManager.getAudioManager();
     private HighscoreList highscoreList = new HighscoreList(GDCalaga.SCREEN_SIZE_X,GDCalaga.SCREEN_SIZE_Y);
     private Menu mainMenu = new Menu(GDCalaga.SCREEN_SIZE_X,GDCalaga.SCREEN_SIZE_Y);
-    
+    private HeadsUpDisplay hud;
     
     private List<DisplayObject> disObjs = new LinkedList<DisplayObject>();
     
@@ -60,6 +61,7 @@ public class PlayState extends BasicGameState {
         paths.loadFromJson("./data/paths.json");
         
         disObjs.add(new Background(container.getWidth(), container.getHeight()));
+        hud = new HeadsUpDisplay(player);
 	}
 
 	@Override
@@ -73,6 +75,7 @@ public class PlayState extends BasicGameState {
 		switch(state)
 		{
 		case Playing:
+			hud.render(g);
 			break;
 		case Pause:
 			break;
@@ -85,9 +88,7 @@ public class PlayState extends BasicGameState {
 		case PostGame:
 			renderPostGame(g);
 			break;
-		}
-		
-		
+		}		
 		renderDebugText(g);
 	}
 
@@ -150,6 +151,7 @@ public class PlayState extends BasicGameState {
         }
 	}
 	
+
 	
 	private void renderDebugText(Graphics g) {
 		/* If we use this same monospace font, each letter takes up 10 pixels
@@ -200,8 +202,6 @@ public class PlayState extends BasicGameState {
 			highscoreList.addHighscore(Player.getTotalPoints(), playerName);
 			changeState(State.MainMenu);
 		}
-		
-		
 	}
 
 
