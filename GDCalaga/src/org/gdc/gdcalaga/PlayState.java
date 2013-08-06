@@ -32,6 +32,8 @@ public class PlayState extends BasicGameState {
     
     private State state = State.MainMenu;
     boolean gameInProgress = false;
+
+    
     
     private String playerName = "Player1"; //storing player entered name;
     
@@ -53,7 +55,6 @@ public class PlayState extends BasicGameState {
         Vector2f startPosition = new Vector2f(50, 300);
         player= new Player(entities, startPosition);
         Enemy.player = player;
-        
         audioManager.loadAudioAssets();
         audioManager.playMusic(AudioAsset.MUSIC_LEVEL_1);
         
@@ -62,7 +63,6 @@ public class PlayState extends BasicGameState {
         
         disObjs.add(new Background(container.getWidth(), container.getHeight()));
         hud = new HeadsUpDisplay(player);
-        
 	}
 
 	@Override
@@ -152,6 +152,7 @@ public class PlayState extends BasicGameState {
         }
 	}
 	
+
 	
 	private void renderDebugText(Graphics g) {
 		/* If we use this same monospace font, each letter takes up 10 pixels
@@ -202,25 +203,25 @@ public class PlayState extends BasicGameState {
 			highscoreList.addHighscore(Player.getTotalPoints(), playerName);
 			changeState(State.MainMenu);
 		}
-		
-		
 	}
 
 
 	private void shipInput(int delta) {
 		
-		if(input.isKeyDown(Input.KEY_W)){
+		if(input.isKeyDown(Input.KEY_W)) {
 		    player.moveUp(delta);
 		}
 		else if (input.isKeyDown(Input.KEY_S)) {
 			player.moveDown(delta);
 		}
+
 		if(input.isKeyDown(Input.KEY_A)){
 		    player.moveLeft(delta);
 		}
 		else if (input.isKeyDown(Input.KEY_D)){
 		    player.moveRight(delta);
 		}
+
 		if(input.isKeyDown(Input.KEY_SPACE))
 		{
 		    if (player.fire(delta))
@@ -285,7 +286,8 @@ public class PlayState extends BasicGameState {
 
 	private void startNewGame() {
 		gameInProgress = true;		
-		changeState(State.Playing); //fixme reinitialize game.
+		changeState(State.Playing);
+		
 	}
 
 	private void changeState(State newState) {

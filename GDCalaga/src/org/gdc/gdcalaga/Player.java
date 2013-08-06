@@ -1,4 +1,5 @@
 package org.gdc.gdcalaga;
+import org.gdc.gdcalaga.Gun.GunType;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -29,6 +30,7 @@ public class Player extends Entity
     
     //Upgradable Player attributes
     private static float health;
+    private static final float maxHealth = 10;
     private static float shields;
     private static float fireRate; //fireRate in bullets per second
     private static int numGuns;
@@ -36,6 +38,7 @@ public class Player extends Entity
     private static int lives;
     
     private Gun gun;
+    private Explosion exp;
     protected Vector2f velocity;
     
     private static boolean shieldActivated;
@@ -108,8 +111,6 @@ public class Player extends Entity
 	        rect.pos.set(this.pos);
     	}
         
-    	RectShape rect = (RectShape)shape;
-        rect.pos.set(this.pos);
     }
     
     public void draw(Graphics g)
@@ -168,7 +169,6 @@ public class Player extends Entity
             	Vector2f shotOrigin = new Vector2f(gunPositions.getPosition(i));
             	gun.shoot(shotOrigin.add(pos), gunPositions.getPosition(i));
             }
-            
             ticksSinceLastBullet = 0;
             return true;
         }
@@ -238,7 +238,7 @@ public class Player extends Entity
         		flyIn = true;
         		health = maxHealth;
         	}	
-	}
+	}        		
     }
     
     public float getHealth()
@@ -312,11 +312,30 @@ public class Player extends Entity
             damage++;
             break;
         case INVALID_UPGRADE:
-            
             break;
         default:
-            
             break;  
         }
-    } 
+    }
+    
+    
+    private void flyInBehaviour(float delta)
+    {
+    	
+		pos.x += velocity.y * (delta * 2 / 1000);        
+    	if(pos.x >= 300)
+    	{
+    		flyIn = false;
+    		
+    	}
+    }
+    
+    private void Explode()
+    {
+        //exp = new Explosion(pos, 41, 8, size);
+        //exp.SetImage(ship);
+        //exploding = true;    
+    }
+    
+    
 }
