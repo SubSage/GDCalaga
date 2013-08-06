@@ -38,6 +38,7 @@ public class Player extends Entity
     private static int lives;
     
     private Gun gun;
+    private Explosion exp;
     protected Vector2f velocity;
     
     private static boolean shieldActivated;
@@ -47,6 +48,10 @@ public class Player extends Entity
     private int ticksSinceLastBullet;
     
     private GunPositions gunPositions;
+        
+    private boolean allowUserControl = true;
+    private boolean flyIn = true;
+    private boolean exploding = false;
     
     public Player(EntityManager manager, Vector2f position)
     {
@@ -73,7 +78,7 @@ public class Player extends Entity
         
         gunPositions = new GunPositions(SIZE_WIDTH, SIZE_HEIGHT);
         
-        gun = new Gun(manager, 250, Entity.Alliance.FRIENDLY, GunType.StraightShot);
+        gun = new Gun(manager, 500, Entity.Alliance.FRIENDLY, GunType.StraightShot);
         
         try {
             ship= new Image("Pics/Player.png");
@@ -85,15 +90,27 @@ public class Player extends Entity
     
     public void update(float delta)
     {
-        ticksSinceLastBullet += delta;
-        if (shields <= 0)
+    	if(flyIn)
+    	{
+    		flyInBehaviour(delta);
+    	}
+    	else if(exploding)
         {
-            deactivateShield();
-            shields = 0;
+            exp.update(delta);
         }
+    	else
+    	{
+	        ticksSinceLastBullet += delta;
+	        if (shields <= 0)
+	        {
+	            deactivateShield();
+	            shields = 0;
+	        }
+	        
+	    	RectShape rect = (RectShape)shape;
+	        rect.pos.set(this.pos);
+    	}
         
-    	RectShape rect = (RectShape)shape;
-        rect.pos.set(this.pos);
     }
     
     public void draw(Graphics g)
@@ -104,32 +121,45 @@ public class Player extends Entity
         ship.draw(drawX, drawY, scale, Color.white);
     }
     
+    
     public void moveUp(float delta)
     {
-        pos.y -= velocity.y * delta / 1000;
+    	if(flyIn)
+    		return;
+    	
+    	pos.y -= velocity.y * (delta / 1000);
         pos.y = Math.max(size.y / 2, pos.y);
     }
     
     public void moveDown(float delta)
-    {    
-        pos.y += velocity.y * delta / 1000;
+    {
+    	if(flyIn)
+    		return;
+    	pos.y += velocity.y * (delta / 1000);
         pos.y = Math.min(720 - size.y / 2, pos.y);
     }
     
     public void moveLeft(float delta)
     {
-        pos.x -= velocity.x * delta / 1000;
+    	if(flyIn)
+    		return;
+ 	pos.x -= velocity.x * (delta / 1000);
         pos.x = Math.max(0 + size.x / 2, pos.x);
     }
     
     public void moveRight(float delta)
     {
-        pos.x += velocity.x * delta / 1000;
+    	if(flyIn)
+    		return;
+	pos.x += velocity.y * (delta / 1000);
         pos.x = Math.min(1280 - size.x / 2, pos.x);
     }
     
     public boolean fire(float delta)
     {
+    	if(flyIn)
+    		return false;
+    	
         //TODO add more firing positions and more bullets depending on the upgrades
         if (ticksSinceLastBullet >= ticksPerBullet)
         {
@@ -139,7 +169,6 @@ public class Player extends Entity
             	Vector2f shotOrigin = new Vector2f(gunPositions.getPosition(i));
             	gun.shoot(shotOrigin.add(pos), gunPositions.getPosition(i));
             }
-            
             ticksSinceLastBullet = 0;
             return true;
         }
@@ -152,6 +181,9 @@ public class Player extends Entity
     
     public boolean activateShield(float delta)
     {
+    	if(!allowUserControl)
+    		return false;
+    	
         if (shields > 0)
         {
             shieldActivated = true;
@@ -173,6 +205,9 @@ public class Player extends Entity
     
     public void Collide(Entity other)
     {
+    	if(flyIn)
+    		return;
+    	
     	if(other instanceof Bullet && ((Bullet)other).getAlliance() != alliance
     			|| other instanceof Enemy)
     	{
@@ -192,13 +227,18 @@ public class Player extends Entity
         	--lives;
         	if(lives < 0)
         	{
+        		Explode();
         		Destroy();
     		}
         	else
         	{
+        		Explode();
+        		pos = new Vector2f(-size.x, GDCalaga.SCREEN_SIZE_Y / 2);
+        		allowUserControl = false;
+        		flyIn = true;
         		health = maxHealth;
-        	}
-		}
+        	}	
+	}        		
     }
     
     public float getHealth()
@@ -272,11 +312,30 @@ public class Player extends Entity
             damage++;
             break;
         case INVALID_UPGRADE:
-            
             break;
         default:
-            
             break;  
         }
-    } 
+    }
+    
+    
+    private void flyInBehaviour(float delta)
+    {
+    	
+		pos.x += velocity.y * (delta * 2 / 1000);        
+    	if(pos.x >= 300)
+    	{
+    		flyIn = false;
+    		
+    	}
+    }
+    
+    private void Explode()
+    {
+        //exp = new Explosion(pos, 41, 8, size);
+        //exp.SetImage(ship);
+        //exploding = true;    
+    }
+    
+    
 }

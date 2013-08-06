@@ -11,7 +11,6 @@ public class GDCalaga {
 	static final int SCREEN_SIZE_X = 1280;
 	static final int SCREEN_SIZE_Y = 720;
 	
-	
 	static {
 		String path = System.getProperties().get("java.library.path").toString();
 
