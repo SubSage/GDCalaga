@@ -51,9 +51,9 @@ public class  Gun {
 	private void straightShot(Vector2f bulletPosition) {
         Bullet newBullet = new Bullet(entityManager, bulletPosition, bulletDamage, alliance);
         if(alliance == Alliance.ENEMY)
-        	newBullet.setSpeed(-250, 0);
+        	newBullet.setSpeed(-velocity, 0);
         else
-        	newBullet.setSpeed(250, 0);
+        	newBullet.setSpeed(velocity, 0);
 	}
 	
 	private void aimedShot(Vector2f bulletPosition,  Vector2f target) {
@@ -67,7 +67,7 @@ public class  Gun {
         directionOfTarget.y += (-bulletPosition.y) + (Math.random() * 20) - 10;
         directionOfTarget.normalise();
         
-        newBullet.setSpeed(directionOfTarget.x * 250, directionOfTarget.y  * 250);
+        newBullet.setSpeed(directionOfTarget.x * velocity, directionOfTarget.y  * 250);
 	}
 	
 	private void tripleShot(Vector2f bulletPosition){

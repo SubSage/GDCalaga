@@ -35,7 +35,7 @@ public class Enemy extends Entity
     private EnemyGroup group;
     private boolean grouped;
     public Vector2f relPos;
-
+    
     protected AudioManager audioManager;
     
     protected static Player player;
