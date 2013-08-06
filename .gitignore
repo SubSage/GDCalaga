@@ -1,6 +1,6 @@
 *.class
 
-highscore.dat
+GDCalaga/highscore.dat
 
 # Package Files #
 *.jar
