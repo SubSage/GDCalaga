@@ -1,5 +1,7 @@
 *.class
 
+highscore.dat
+
 # Package Files #
 *.jar
 *.war
