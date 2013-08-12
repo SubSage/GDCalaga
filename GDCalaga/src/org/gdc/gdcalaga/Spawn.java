@@ -14,6 +14,10 @@ public class Spawn
 {
     private static int wave=0;
     
+    public static void resetSpawner(EntityManager entityManager) {
+    	wave = 0;
+    }
+    
     public static void spawnWave(PathRegistry paths, EntityManager mng) {
         
         int countWaves = 0;
