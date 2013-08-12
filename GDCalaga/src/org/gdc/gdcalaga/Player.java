@@ -34,7 +34,6 @@ public class Player extends Entity
     private static float shields;
     private static float fireRate; //fireRate in bullets per second
     private static int numGuns;
-    private static float damage;
     private static int lives;
     
     private Gun gun;
@@ -60,7 +59,6 @@ public class Player extends Entity
         pos.set(position);
         size = new Vector2f(SIZE_WIDTH, SIZE_HEIGHT);
         velocity = new Vector2f(220, 220);
-        damage = 1;
         alliance = Alliance.FRIENDLY;
         
         health = 10;
@@ -89,8 +87,8 @@ public class Player extends Entity
     
     
     public void update(float delta)
-    {
-    	if(flyIn)
+    {    	
+		if(flyIn)
     	{
     		flyInBehaviour(delta);
     	}
@@ -309,7 +307,7 @@ public class Player extends Entity
             numGuns++;
             break;
         case DAMAGE:
-            damage++;
+            //damage++;
             break;
         case INVALID_UPGRADE:
             break;

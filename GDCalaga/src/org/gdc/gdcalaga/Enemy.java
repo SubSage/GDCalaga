@@ -40,7 +40,6 @@ public class Enemy extends Entity
     
     protected static Player player;
     
-    
     public Enemy(EntityManager manager, Vector2f position)
     {   
         super(manager);
