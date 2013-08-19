@@ -35,7 +35,7 @@ public class EntityManager {
         removedEnts.clear();
     }
     
-    private void RemoveEntity(Entity ent)
+    public void RemoveEntity(Entity ent)
     {
         removedEnts.add(ent);
     }
