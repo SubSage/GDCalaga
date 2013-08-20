@@ -2,7 +2,6 @@ package org.gdc.gdcalaga;
 import java.util.Random;
 
 import org.gdc.gdcalaga.Upgrade.UpgradeType;
-import org.gdc.gdcalaga.audio.AudioAsset;
 import org.gdc.gdcalaga.audio.AudioManager;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
